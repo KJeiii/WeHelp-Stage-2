@@ -8,7 +8,7 @@ db_config = {
     "database": "taipei_travel"
 }
 
-class MySQLtool(pooling.MySQLConnectionPool):
+class MySQLTool(pooling.MySQLConnectionPool):
     def __init__(self, **kargs):
         super().__init__(pool_name = "travel",
                          pool_size = 10,
@@ -18,6 +18,7 @@ class MySQLtool(pooling.MySQLConnectionPool):
         self.id = kargs.get('id')
         self.keyword = kargs.get("keyword")  
         self.attractions_to_update = kargs.get("attractions_to_update")
+        self.images_to_update = kargs.get("images_to_update")
     
     def Update_attraction(self):
         connection = self.get_connection()
@@ -45,16 +46,33 @@ class MySQLtool(pooling.MySQLConnectionPool):
         connection.commit()
         connection.close()
 
+    def Update_image(self):
+        connection = self.get_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        update_string = (
+                        "insert into image(attraction_id, image)"
+                        "values(%s,%s)"
+                        )
+        
+        data_list = [(_["id"],_["image"]) for _ in self.images_to_update]
+                    
+        cursor.executemany(update_string, data_list)
+        connection.commit()
+        connection.close()
         
     def Search_attraction(self):      
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # create string for selecting data
-        select_string = "select * from image"
+        select_string = "select * from attraction"
         cursor.execute(select_string)
         result = cursor.fetchall()
 
         connection.close()
         return result
 
+# test = MySQLTool()
+# reuslt =test.Search_attraction()
+# print(reuslt)

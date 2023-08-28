@@ -1,3 +1,4 @@
+from MySQLTool import MySQLtool
 import json
 
 with open('data/taipei-attractions.json', mode = "r") as file:
@@ -10,43 +11,46 @@ with open('data/taipei-attractions.json', mode = "r") as file:
 #   2-b. image : id, foreign_key (attractions's id), img_url
 
 # 2-a. organize data for table "attractions"
-attraction = []
+attractions = []
 for _ in data:
 
     # append orgaized data to "attraction" list
     info = {
         "name": _["name"],
-        "CAT": _["CAT"],
+        "category": _["CAT"],
         "description": _["description"],
-        "MRT": _["MRT"],
         "address": _["address"],
-        "diretion": _["direction"]
+        "transport": _["direction"],
+        "mrt": _["MRT"],
+        "lat": _["latitude"],
+        "lng": _["longitude"]
     }
-    attraction.append(info)
+    attractions.append(info)
 
-# 2-b. organize data for table "image"
-image = []
-id = 0
-for _ in data:
-    id += 1
+db = MySQLtool(attractions_to_update = attractions)
+db.Update_attraction()
 
-    # delete img files which are not JPG or PNG
-    file = _["file"]
-    file_list = file.split("https://")
+# # 2-b. organize data for table "image"
+# image = []
+# id = 0
+# for _ in data:
+#     id += 1
 
-    img_url = []
-    for file in file_list:
-        if len(file) >= 4 and (file[-4:].lower() == ".jpg" or file[-4:].lower() == ".PNG"):
-            url = "https://" + file
-            img_url.append(url)
+#     # delete img files which are not JPG or PNG
+#     file = _["file"]
+#     file_list = file.split("https://")
 
-    # append orgaized data to "attraction" list
-    info = {
-        "id": id,
-        "image": img_url
-    }
-    image.append(info)
+#     img_url = []
+#     for file in file_list:
+#         if len(file) >= 4 and (file[-4:].lower() == ".jpg" or file[-4:].lower() == ".PNG"):
+#             url = "https://" + file
+#             img_url.append(url)
 
-# print(attraction)
-print(image)
+#     # append orgaized data to "attraction" list
+#     info = {
+#         "id": id,
+#         "image": img_url
+#     }
+#     image.append(info)
+
 

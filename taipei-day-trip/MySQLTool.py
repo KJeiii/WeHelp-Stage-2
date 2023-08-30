@@ -89,18 +89,57 @@ class MySQLTool(pooling.MySQLConnectionPool):
         connection.close()
         
 
-    def Search_attraction(self):      
+    def Search_attraction(self, id_start, id_end, keyword):      
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # create string for selecting data
-        select_string = "select * from attraction"
-        cursor.execute(select_string)
-        result = cursor.fetchall()
+        select_string = (
+                        "select * "
+                        "from mrt inner join attraction on mrt.mrt_id = attraction.mrt_id "
+                        "where attraction.attraction_id between %s and %s "
+                        "and "
+                        "(mrt.mrt_name = %s or attraction.attraction_name like %s)"
+                         )
+        data_string = (id_start, id_end, keyword, '%' + keyword + '%')
 
+        cursor.execute(select_string, data_string)
+        result = cursor.fetchall()
+        connection.close()
+        return result
+    
+
+    def Search_image(self, attraction_id):
+        connection = self.get_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # create string for selecting data
+        select_string = (
+                        "select * from image "
+                        "where attraction_id in (%s)"
+                         )
+        data_string = (attraction_id,)
+
+        cursor.execute(select_string, data_string)
+        result = cursor.fetchall()
+        connection.close()
+        return result
+    
+
+
+    def total_attractions(self):
+        connection = self.get_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # count total data
+        count_string = ("select count(*) from attraction") 
+
+        cursor.execute(count_string)
+        result = cursor.fetchall()[0]['count(*)']
         connection.close()
         return result
 
-# test = MySQLTool()
-# reuslt =test.Search_attraction()
-# print(reuslt)
+a = "1,2,3,4,5"
+test = MySQLTool()
+reuslt =test.Search_image(a)
+print(reuslt)

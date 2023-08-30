@@ -12,9 +12,8 @@ def to_dict(attraction_result:list, image_result:list):
 		"mrt": _["mrt_name"],
 		"lat": _["lat"],
 		"lng": _["lng"],
-		"img":''
+		"img": image_result[_["attraction_id"]]
 	} for _ in attraction_result]
-	print(image_result)
 	return data
 
 app=Flask(__name__)
@@ -41,39 +40,39 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-
+# API
 @app.route("/api/attractions")
 def attractions():
 
-	# A. according to page parameter, 
-	# 1. caculate id 
-	# 2. select data in attraction table by id column
-
-	# B. filter data after step A,
-	# 1. if keyword input is empty, do not filter;
-	# 2. otherwise, exact match mrt name in mrt table, or fuzzily match attraction name in attraction table
-
-	page  = int(request.args.get("page"))
+	# parse parameters
+	page  = request.args.get("page")
 	keyword = request.args.get("keyword")
+
+	# build MySQL connection
 	db = MySQLTool()
 
+	# count total attractions data and total pages 
 	total_attraction_amount = db.total_attractions()
 	total_pages = int(round(total_attraction_amount/12, 0)) - 1
 
+	# ------- Response error if it is not provided (page parameter is required) --------
 	if page == None:
 		response = {
 			"error": True,
 			"message": f'please provide page parameter ranged from 0 to {total_pages}.'
 		}
-		return jsonify(response)
-		
+		return jsonify(response), 412
+	
+	# ------- Response error if page parameter exceeds maximum. ------
+	page = int(page)
 	if page > total_pages:
 		response = {
 			"error": True,
 			"message": f'maximum page is {total_pages}'
 		}
-		return jsonify(response)
+		return jsonify(response), 412
 	
+	# ------ if page parameter is given, reponse data. ------
 	# set nextPage value
 	attraction_range = (page*12+1, page*12+12)
 	if page == 4:
@@ -82,9 +81,19 @@ def attractions():
 		nextPage = page + 1
 
 	# search image
-	attraction_id_tuple = (_ for _ in range(attraction_range[0], attraction_range[1]+1))
-	attraction_id_str = f'{str(attraction_id_tuple).replace("(","").replace(")","")}'
-	image_result = db.Search_image(attraction_id = attraction_id_str)
+	image_list = db.Search_image(
+		attraction_id_start = attraction_range[0],
+		attraction_id_end = attraction_range[1]
+	)
+	image_result = {}
+	for n in range(attraction_range[0], attraction_range[1]+1):
+		for _ in image_list:
+			if _["attraction_id"] == n:
+				try:
+					image_result[n].append(_["image"])
+				except:
+					image_result[n] = [_["image"]]
+		
 		
 	# set keyword value
 	if keyword == None:

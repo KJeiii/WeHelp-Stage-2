@@ -109,16 +109,16 @@ class MySQLTool(pooling.MySQLConnectionPool):
         return result
     
 
-    def Search_image(self, attraction_id):
+    def Search_image(self, attraction_id_start, attraction_id_end):
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # create string for selecting data
         select_string = (
                         "select * from image "
-                        "where attraction_id in (%s)"
+                        "where attraction_id between %s and %s"
                          )
-        data_string = (attraction_id,)
+        data_string = (attraction_id_start, attraction_id_end)
 
         cursor.execute(select_string, data_string)
         result = cursor.fetchall()
@@ -139,7 +139,3 @@ class MySQLTool(pooling.MySQLConnectionPool):
         connection.close()
         return result
 
-a = "1,2,3,4,5"
-test = MySQLTool()
-reuslt =test.Search_image(a)
-print(reuslt)

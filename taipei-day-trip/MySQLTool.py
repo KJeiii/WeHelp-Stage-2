@@ -138,4 +138,20 @@ class MySQLTool(pooling.MySQLConnectionPool):
         result = cursor.fetchall()[0]['count(*)']
         connection.close()
         return result
+    
+    def Search_mrt(self):
+        connection = self.get_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # create string for selecting data
+        select_string = (
+                        "select * from mrt "
+                        "where mrt_id < 40 "
+                        "order by attraction_amount desc"
+                         )
+
+        cursor.execute(select_string)
+        result = cursor.fetchall()
+        connection.close()
+        return result
 

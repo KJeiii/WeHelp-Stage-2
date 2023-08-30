@@ -20,6 +20,9 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
+# build MySQL connection
+db = MySQLTool()
+
 # Pages
 @app.route("/")
 def index():
@@ -48,9 +51,6 @@ def attractions():
 	page  = request.args.get("page")
 	keyword = request.args.get("keyword")
 
-	# build MySQL connection
-	db = MySQLTool()
-
 	# count total attractions data and total pages 
 	total_attraction_amount = db.total_attractions()
 	total_pages = int(round(total_attraction_amount/12, 0)) - 1
@@ -61,7 +61,7 @@ def attractions():
 			"error": True,
 			"message": f'please provide page parameter ranged from 0 to {total_pages}.'
 		}
-		return jsonify(response), 412
+		return jsonify(response), 500
 	
 	# ------- Response error if page parameter exceeds maximum. ------
 	page = int(page)
@@ -70,13 +70,13 @@ def attractions():
 			"error": True,
 			"message": f'maximum page is {total_pages}'
 		}
-		return jsonify(response), 412
+		return jsonify(response), 500
 	
 	# ------ if page parameter is given, reponse data. ------
 	# set nextPage value
 	attraction_range = (page*12+1, page*12+12)
 	if page == 4:
-		nextPage = "This is the last page."
+		nextPage = None
 	else:
 		nextPage = page + 1
 
@@ -115,6 +115,20 @@ def attractions():
 	}
 	return jsonify(response)
 
+@app.route("/api/mrts")
+def mrts():
+	try:
+		result = db.Search_mrt()
+		mrt_list = [_["mrt_name"] for _ in result]
+		response = {"data": mrt_list}
+		return jsonify(response)
+	
+	except:
+		response = {
+			"error": True,
+			"message": "The database is empty."
+		}
+		return jsonify(response), 500
 
 
 app.run(host="0.0.0.0", port=3000, debug=True)

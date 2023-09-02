@@ -89,43 +89,46 @@ class MySQLTool(pooling.MySQLConnectionPool):
         connection.close()
         
 
-    def Search_attraction(self, id_start, id_end, keyword):      
+    def Search_attraction(self, keyword):      
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # create string for selecting data
         select_string = (
-                        "select * "
-                        "from mrt inner join attraction on mrt.mrt_id = attraction.mrt_id "
-                        "where attraction.attraction_id between %s and %s "
-                        "and "
-                        "(mrt.mrt_name = %s or attraction.attraction_name like %s)"
-                         )
-        data_string = (id_start, id_end, keyword, '%' + keyword + '%')
+                "select * "
+                "from mrt inner join attraction on mrt.mrt_id = attraction.mrt_id "
+                "where mrt.mrt_name = %s or attraction.attraction_name like %s"
+                 )
+        data_string = (keyword, '%' + keyword + '%')
 
         cursor.execute(select_string, data_string)
         result = cursor.fetchall()
         connection.close()
+
         return result
     
 
-    def Search_image(self, attraction_id_start, attraction_id_end):
+    def Search_image(self, attraction_id_list:list):
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
+        # count how many attraction_id in list
+        attraction_amount = len(attraction_id_list)
+
         # create string for selecting data
-        select_string = (
+        select_string_part1 = (
                         "select * from image "
-                        "where attraction_id between %s and %s"
-                         )
-        data_string = (attraction_id_start, attraction_id_end)
+                        "where attraction_id in (")
+        
+        variable_part = "%s, "*(attraction_amount-1) + "%s)"
+        select_string_part2 = select_string_part1 + variable_part
+        data_string = tuple(attraction_id_list)
 
-        cursor.execute(select_string, data_string)
+        cursor.execute(select_string_part2, data_string)
         result = cursor.fetchall()
         connection.close()
         return result
     
-
 
     def total_attractions(self):
         connection = self.get_connection()

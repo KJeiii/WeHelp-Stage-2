@@ -1,7 +1,6 @@
 from flask import *
 from MySQLTool import MySQLTool
-
-
+import math
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -23,7 +22,7 @@ def to_dict(attraction_result:list, image_result:dict):
 		"mrt": _["mrt_name"],
 		"lat": _["lat"],
 		"lng": _["lng"],
-		"img": image_result[_["attraction_id"]]
+		"images": image_result[_["attraction_id"]]
 	} for _ in attraction_result]
 	return data
 
@@ -55,9 +54,32 @@ def attractions():
 	page  = request.args.get("page")
 	keyword = request.args.get("keyword")
 
-	# count total attractions data and total pages 
-	total_attraction_amount = db.total_attractions()
-	total_pages = int(round(total_attraction_amount/12, 0)) - 1
+	# search MySQL data by keyword
+	if keyword == None:
+		keyword = ""
+	attraction_result = db.Search_attraction(keyword = keyword)
+
+	# count total data and total pages matching keyword 
+	total_attraction_amount = len(attraction_result)
+	total_pages = int(math.ceil(total_attraction_amount/12))
+
+	# Search attraction and build page_attraction_dict 
+	page_attraction_dict = {}
+	count = total_attraction_amount
+	for _ in range(total_pages):
+		if count >= 12:
+			for n in range(_*12, 12+_*12):
+				try:
+					page_attraction_dict[_].append(attraction_result[n])
+				except:
+					page_attraction_dict[_] = [attraction_result[n]]
+		else:
+			for n in range(_*12, _*12 + count):
+				try:
+					page_attraction_dict[_].append(attraction_result[n])
+				except:
+					page_attraction_dict[_] = [attraction_result[n]]	
+		count -= 12
 
 	# ------- Response error if page is not provided (page parameter is required) --------
 	if page == None:
@@ -66,10 +88,10 @@ def attractions():
 			"message": "伺服器內部錯誤"
 		}
 		return jsonify(response), 500
-	
+
 	# ------- Response error if page parameter exceeds maximum. ------
 	page = int(page)
-	if page > total_pages:
+	if page > total_pages-1:
 		response = {
 			"error": True,
 			"message": "伺服器內部錯誤"
@@ -78,41 +100,29 @@ def attractions():
 	
 	# ------ Reponse data, if page parameter is given correctly. ------
 	# set nextPage value
-	attraction_range = (page*12+1, page*12+12)
-	if page == 4:
+	if page + 1 == total_pages:
 		nextPage = None
 	else:
 		nextPage = page + 1
 
 	# search image
-	image_list = db.Search_image(
-		attraction_id_start = attraction_range[0],
-		attraction_id_end = attraction_range[1]
-	)
+	attraction_id_list = [_["attraction_id"] for _ in page_attraction_dict[page]]
+	image_list = db.Search_image(attraction_id_list=attraction_id_list)
 	image_result = {}
-	for n in range(attraction_range[0], attraction_range[1]+1):
+	for id in attraction_id_list:
 		for _ in image_list:
-			if _["attraction_id"] == n:
+			if _["attraction_id"] == id:
 				try:
-					image_result[n].append(_["image"])
+					image_result[id].append(_["image"])
 				except:
-					image_result[n] = [_["image"]]
+					image_result[id] = [_["image"]]
+	print(image_result)
 			
-	# set keyword value
-	if keyword == None:
-		keyword = ""
-
-	# search attraction
-	attraction_result = db.Search_attraction(
-		id_start = attraction_range[0],
-		id_end = attraction_range[1],
-		keyword = keyword
-	)
 	# orgainze response
 	response = {
 		"nextPage": nextPage,
 		"data": to_dict(
-		attraction_result = attraction_result, 
+		attraction_result = page_attraction_dict[page], 
 		image_result = image_result
 		)
 	}

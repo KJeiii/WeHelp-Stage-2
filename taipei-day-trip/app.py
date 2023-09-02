@@ -117,59 +117,65 @@ def attractions():
 	}
 	return jsonify(response)
 
+
 @app.route("/api/attraction/<attraction_id>")
 def attraction_by_id(attraction_id):
 	# count total attractions data and total pages 
 	total_attraction_amount = db.total_attractions()
 
+	try:
+		# ------- Response error if attraction_id is incorrect --------
+		attraction_id = int(attraction_id)
+		if attraction_id > total_attraction_amount or attraction_id <= 0:
+			response = {
+				"error": True,
+				"message": '景點編號不正確'
+			}
+			return jsonify(response), 400
+		
+		# ------ Reponse data, if attraction_id is given correctly. ------
+		# set keyword value
+		keyword = ""
 
-	# ------- Response error if page is not provided (page parameter is required) --------
-	attraction_id = int(attraction_id)
-	if attraction_id > total_attraction_amount or attraction_id <= 0:
+		# search attraction
+		attraction_result = db.Search_attraction(
+			id_start = attraction_id,
+			id_end = attraction_id,
+			keyword = keyword
+		)
+
+		# search image
+		image_list = db.Search_image(
+			attraction_id_start = attraction_id,
+			attraction_id_end = attraction_id
+		)
+
+		image_result = {}
+		for _ in image_list:
+			try:
+				image_result[attraction_id].append(_["image"])
+			except:
+				image_result[attraction_id] = [_["image"]]
+
+		# orgainze response
+		response = {
+			"data": to_dict(
+			attraction_result = attraction_result, 
+			image_result = image_result
+			)
+		}
+
+		return response
+	
+	except:
+	# ------- Response error --------
 		response = {
 			"error": True,
-			"message": '景點編號不正確'
+			"message": "伺服器內部錯誤"
 		}
-		return jsonify(response), 400
-	
-	# ------ Reponse data, if attraction_id is given correctly. ------
-	# set keyword value
-	keyword = ""
-
-	# search attraction
-	attraction_result = db.Search_attraction(
-		id_start = attraction_id,
-		id_end = attraction_id,
-		keyword = keyword
-	)
-
-	# search image
-	image_list = db.Search_image(
-		attraction_id_start = attraction_id,
-		attraction_id_end = attraction_id
-	)
-
-	image_result = {}
-	for _ in image_list:
-		try:
-			image_result[attraction_id].append(_["image"])
-		except:
-			image_result[attraction_id] = [_["image"]]
-	print(image_result)
-
-
-	# orgainze response
-	response = {
-		"data": to_dict(
-		attraction_result = attraction_result, 
-		image_result = image_result
-		)
-	}
-
-	return response
+		return jsonify(response), 500
 
  
-
 @app.route("/api/mrts")
 def mrts():
 	try:

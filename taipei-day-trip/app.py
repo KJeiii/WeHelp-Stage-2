@@ -1,6 +1,16 @@
 from flask import *
 from MySQLTool import MySQLTool
 
+
+
+app=Flask(__name__)
+app.config["JSON_AS_ASCII"]=False
+app.config["TEMPLATES_AUTO_RELOAD"]=True
+
+# build MySQL connection
+db = MySQLTool()
+
+# build funfciton for json format 
 def to_dict(attraction_result:list, image_result:list):
 	data = [{
 		"id": _["attraction_id"],
@@ -15,13 +25,6 @@ def to_dict(attraction_result:list, image_result:list):
 		"img": image_result[_["attraction_id"]]
 	} for _ in attraction_result]
 	return data
-
-app=Flask(__name__)
-app.config["JSON_AS_ASCII"]=False
-app.config["TEMPLATES_AUTO_RELOAD"]=True
-
-# build MySQL connection
-db = MySQLTool()
 
 # Pages
 @app.route("/")

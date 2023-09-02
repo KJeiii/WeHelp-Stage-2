@@ -162,7 +162,7 @@ def attraction_by_id(attraction_id):
 			"data": to_dict(
 			attraction_result = attraction_result, 
 			image_result = image_result
-			)
+			)[0]
 		}
 
 		return response

@@ -89,17 +89,28 @@ class MySQLTool(pooling.MySQLConnectionPool):
         connection.close()
         
 
-    def Search_attraction(self, keyword):      
+    def Search_attraction(self, **kwarg):      
+        keyword = kwarg.get("keyword")
+        attraction_id = kwarg.get("attraction_id")
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # create string for selecting data
-        select_string = (
+        if attraction_id == None:
+            select_string = (
+                    "select * "
+                    "from mrt inner join attraction on mrt.mrt_id = attraction.mrt_id "
+                    "where mrt.mrt_name = %s or attraction.attraction_name like %s"
+                    )
+            data_string = (keyword, '%' + keyword + '%')
+
+        if keyword == None:
+            select_string = (
                 "select * "
                 "from mrt inner join attraction on mrt.mrt_id = attraction.mrt_id "
-                "where mrt.mrt_name = %s or attraction.attraction_name like %s"
-                 )
-        data_string = (keyword, '%' + keyword + '%')
+                "where attraction_id = %s"
+                )
+            data_string = (attraction_id,)
 
         cursor.execute(select_string, data_string)
         result = cursor.fetchall()

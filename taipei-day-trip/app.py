@@ -63,7 +63,7 @@ def attractions():
 	total_attraction_amount = len(attraction_result)
 	total_pages = int(math.ceil(total_attraction_amount/12))
 
-	# Search attraction and build page_attraction_dict 
+	# build page_attraction_dict 
 	page_attraction_dict = {}
 	count = total_attraction_amount
 	for _ in range(total_pages):
@@ -116,7 +116,6 @@ def attractions():
 					image_result[id].append(_["image"])
 				except:
 					image_result[id] = [_["image"]]
-	print(image_result)
 			
 	# orgainze response
 	response = {
@@ -145,28 +144,24 @@ def attraction_by_id(attraction_id):
 			return jsonify(response), 400
 		
 		# ------ Reponse data, if attraction_id is given correctly. ------
-		# set keyword value
-		keyword = ""
-
+		
 		# search attraction
-		attraction_result = db.Search_attraction(
-			id_start = attraction_id,
-			id_end = attraction_id,
-			keyword = keyword
-		)
+		attraction_result = db.Search_attraction(attraction_id = attraction_id)
 
 		# search image
-		image_list = db.Search_image(
-			attraction_id_start = attraction_id,
-			attraction_id_end = attraction_id
-		)
+		attraction_id_list = [attraction_result[0]["attraction_id"]]
+		print(attraction_id_list)
 
+		image_list = db.Search_image(attraction_id_list=attraction_id_list)
 		image_result = {}
-		for _ in image_list:
-			try:
-				image_result[attraction_id].append(_["image"])
-			except:
-				image_result[attraction_id] = [_["image"]]
+		for id in attraction_id_list:
+			for _ in image_list:
+				if _["attraction_id"] == id:
+					try:
+						image_result[id].append(_["image"])
+					except:
+						image_result[id] = [_["image"]]
+		print(image_result)
 
 		# orgainze response
 		response = {
@@ -175,6 +170,8 @@ def attraction_by_id(attraction_id):
 			image_result = image_result
 			)[0]
 		}
+
+		print(response)
 
 		return response
 	

@@ -55,11 +55,11 @@ def attractions():
 	total_attraction_amount = db.total_attractions()
 	total_pages = int(round(total_attraction_amount/12, 0)) - 1
 
-	# ------- Response error if it is not provided (page parameter is required) --------
+	# ------- Response error if page is not provided (page parameter is required) --------
 	if page == None:
 		response = {
 			"error": True,
-			"message": f'please provide page parameter ranged from 0 to {total_pages}.'
+			"message": "伺服器內部錯誤"
 		}
 		return jsonify(response), 500
 	
@@ -68,11 +68,11 @@ def attractions():
 	if page > total_pages:
 		response = {
 			"error": True,
-			"message": f'maximum page is {total_pages}'
+			"message": "伺服器內部錯誤"
 		}
 		return jsonify(response), 500
 	
-	# ------ if page parameter is given, reponse data. ------
+	# ------ Reponse data, if page parameter is given correctly. ------
 	# set nextPage value
 	attraction_range = (page*12+1, page*12+12)
 	if page == 4:
@@ -114,6 +114,54 @@ def attractions():
 		)
 	}
 	return jsonify(response)
+
+@app.route("/api/attraction/<attraction_id>")
+def attraction_by_id(attraction_id):
+	# count total attractions data and total pages 
+	total_attraction_amount = db.total_attractions()
+
+
+	# ------- Response error if page is not provided (page parameter is required) --------
+	attraction_id = int(attraction_id)
+	if attraction_id > total_attraction_amount or attraction_id <= 0:
+		response = {
+			"error": True,
+			"message": '景點編號不正確'
+		}
+		return jsonify(response), 400
+	
+	# ------ Reponse data, if attraction_id is given correctly. ------
+	# set keyword value
+	if keyword == None:
+		keyword = ""
+
+	# search attraction
+	attraction_result = db.Search_attraction(
+		id_start = attraction_id,
+		id_end = attraction_id,
+		keyword = keyword
+	)
+
+	# search image
+	image_list = db.Search_image(
+		attraction_id_start = attraction_id,
+		attraction_id_end = attraction_id
+	)
+	image_result = {attraction_id : [_] for _ in image_list}
+
+	# orgainze response
+	response = {
+		"data": to_dict(
+		attraction_result = attraction_result, 
+		image_result = image_result
+		)
+	}
+
+	print(response)
+
+	return "hi"
+
+ 
 
 @app.route("/api/mrts")
 def mrts():

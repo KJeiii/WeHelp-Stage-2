@@ -92,6 +92,8 @@ class MySQLTool(pooling.MySQLConnectionPool):
     def Search_attraction(self, **kwarg):      
         keyword = kwarg.get("keyword")
         attraction_id = kwarg.get("attraction_id")
+        limit = kwarg.get("limit")
+
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -100,9 +102,10 @@ class MySQLTool(pooling.MySQLConnectionPool):
             select_string = (
                     "select * "
                     "from mrt inner join attraction on mrt.mrt_id = attraction.mrt_id "
-                    "where mrt.mrt_name = %s or attraction.attraction_name like %s"
+                    "where mrt.mrt_name = %s or attraction.attraction_name like %s "
+                    "limit %s,%s"
                     )
-            data_string = (keyword, '%' + keyword + '%')
+            data_string = (keyword, '%' + keyword + '%', limit[0], limit[1])
 
         if keyword == None:
             select_string = (
@@ -141,14 +144,25 @@ class MySQLTool(pooling.MySQLConnectionPool):
         return result
     
 
-    def total_attractions(self):
+    def total_attractions(self, **kwarg):
+        keyword = kwarg.get("keyword")
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # count total data
-        count_string = ("select count(*) from attraction") 
+        if keyword == None:
+            count_string = ("select count(*) from attraction") 
+            cursor.execute(count_string)
 
-        cursor.execute(count_string)
+        else:
+            count_string = (
+                            "select count(*) "
+                            "from mrt inner join attraction on mrt.mrt_id = attraction.mrt_id "
+                            "where mrt.mrt_name = %s or attraction.attraction_name like %s"
+                            )
+            data_string = (keyword, '%' + keyword + '%')
+            cursor.execute(count_string, data_string)
+
         result = cursor.fetchall()[0]['count(*)']
         connection.close()
         return result
@@ -168,4 +182,3 @@ class MySQLTool(pooling.MySQLConnectionPool):
         result = cursor.fetchall()
         connection.close()
         return result
-

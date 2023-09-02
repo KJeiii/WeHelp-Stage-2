@@ -50,82 +50,67 @@ def thankyou():
 @app.route("/api/attractions")
 def attractions():
 
-	# parse parameters
-	page  = request.args.get("page")
-	keyword = request.args.get("keyword")
+	try: 
+		# parse parameters
+		page  = int(request.args.get("page"))
+		keyword = request.args.get("keyword")
 
-	# search MySQL data by keyword
-	if keyword == None:
-		keyword = ""
-	attraction_result = db.Search_attraction(keyword = keyword)
+		# count total data and total pages matching keyword 
+		if keyword == None:
+			keyword = ""
+		total_attraction_amount = db.total_attractions(keyword = keyword)
+		total_pages = int(math.ceil(total_attraction_amount/12))
 
-	# count total data and total pages matching keyword 
-	total_attraction_amount = len(attraction_result)
-	total_pages = int(math.ceil(total_attraction_amount/12))
+		# build page_attraction_dict
+		page_attraction_dict = {}
+		count = total_attraction_amount
+		for _ in range(total_pages):
+			if count >= 12:
+				page_attraction_dict[_] = 12
+			else:
+				page_attraction_dict[_] = count
+			count -= 12
+		
+		# search MySQL data by keyword
+		limit = (page, page_attraction_dict[page])
+		attraction_result = db.Search_attraction(keyword = keyword, limit = limit)
 
-	# build page_attraction_dict 
-	page_attraction_dict = {}
-	count = total_attraction_amount
-	for _ in range(total_pages):
-		if count >= 12:
-			for n in range(_*12, 12+_*12):
-				try:
-					page_attraction_dict[_].append(attraction_result[n])
-				except:
-					page_attraction_dict[_] = [attraction_result[n]]
+		# # set nextPage value
+		if page + 1 == total_pages:
+			nextPage = None
 		else:
-			for n in range(_*12, _*12 + count):
-				try:
-					page_attraction_dict[_].append(attraction_result[n])
-				except:
-					page_attraction_dict[_] = [attraction_result[n]]	
-		count -= 12
+			nextPage = page + 1
 
-	# ------- Response error if page is not provided (page parameter is required) --------
-	if page == None:
+		# # search image
+		attraction_id_list = [_["attraction_id"] for _ in attraction_result]
+		print(attraction_id_list)
+		image_list = db.Search_image(attraction_id_list=attraction_id_list)
+		image_result = {}
+		for id in attraction_id_list:
+			for _ in image_list:
+				if _["attraction_id"] == id:
+					try:
+						image_result[id].append(_["image"])
+					except:
+						image_result[id] = [_["image"]]
+
+		# # orgainze response
 		response = {
-			"error": True,
-			"message": "伺服器內部錯誤"
+			"nextPage": nextPage,
+			"data": to_dict(
+			attraction_result = attraction_result, 
+			image_result = image_result
+			)
 		}
-		return jsonify(response), 500
+		return jsonify(response)
 
-	# ------- Response error if page parameter exceeds maximum. ------
-	page = int(page)
-	if page > total_pages-1:
+	except:
 		response = {
 			"error": True,
 			"message": "伺服器內部錯誤"
 		}
 		return jsonify(response), 500
 	
-	# ------ Reponse data, if page parameter is given correctly. ------
-	# set nextPage value
-	if page + 1 == total_pages:
-		nextPage = None
-	else:
-		nextPage = page + 1
-
-	# search image
-	attraction_id_list = [_["attraction_id"] for _ in page_attraction_dict[page]]
-	image_list = db.Search_image(attraction_id_list=attraction_id_list)
-	image_result = {}
-	for id in attraction_id_list:
-		for _ in image_list:
-			if _["attraction_id"] == id:
-				try:
-					image_result[id].append(_["image"])
-				except:
-					image_result[id] = [_["image"]]
-			
-	# orgainze response
-	response = {
-		"nextPage": nextPage,
-		"data": to_dict(
-		attraction_result = page_attraction_dict[page], 
-		image_result = image_result
-		)
-	}
-	return jsonify(response)
 
 
 @app.route("/api/attraction/<attraction_id>")
@@ -161,7 +146,6 @@ def attraction_by_id(attraction_id):
 						image_result[id].append(_["image"])
 					except:
 						image_result[id] = [_["image"]]
-		print(image_result)
 
 		# orgainze response
 		response = {
@@ -170,8 +154,6 @@ def attraction_by_id(attraction_id):
 			image_result = image_result
 			)[0]
 		}
-
-		print(response)
 
 		return response
 	

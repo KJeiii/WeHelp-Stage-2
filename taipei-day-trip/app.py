@@ -11,7 +11,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 db = MySQLTool()
 
 # build funfciton for json format 
-def to_dict(attraction_result:list, image_result:list):
+def to_dict(attraction_result:list, image_result:dict):
 	data = [{
 		"id": _["attraction_id"],
 		"name": _["attraction_name"],
@@ -96,8 +96,7 @@ def attractions():
 					image_result[n].append(_["image"])
 				except:
 					image_result[n] = [_["image"]]
-		
-		
+			
 	# set keyword value
 	if keyword == None:
 		keyword = ""
@@ -135,8 +134,7 @@ def attraction_by_id(attraction_id):
 	
 	# ------ Reponse data, if attraction_id is given correctly. ------
 	# set keyword value
-	if keyword == None:
-		keyword = ""
+	keyword = ""
 
 	# search attraction
 	attraction_result = db.Search_attraction(
@@ -150,7 +148,15 @@ def attraction_by_id(attraction_id):
 		attraction_id_start = attraction_id,
 		attraction_id_end = attraction_id
 	)
-	image_result = {attraction_id : [_] for _ in image_list}
+
+	image_result = {}
+	for _ in image_list:
+		try:
+			image_result[attraction_id].append(_["image"])
+		except:
+			image_result[attraction_id] = [_["image"]]
+	print(image_result)
+
 
 	# orgainze response
 	response = {
@@ -160,9 +166,7 @@ def attraction_by_id(attraction_id):
 		)
 	}
 
-	print(response)
-
-	return "hi"
+	return response
 
  
 

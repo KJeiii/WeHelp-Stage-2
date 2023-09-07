@@ -83,7 +83,6 @@ def attractions():
 
 		# # search image
 		attraction_id_list = [_["attraction_id"] for _ in attraction_result]
-		print(attraction_id_list)
 		image_list = db.Search_image(attraction_id_list=attraction_id_list)
 		image_result = {}
 		for id in attraction_id_list:
@@ -135,7 +134,6 @@ def attraction_by_id(attraction_id):
 
 		# search image
 		attraction_id_list = [attraction_result[0]["attraction_id"]]
-		print(attraction_id_list)
 
 		image_list = db.Search_image(attraction_id_list=attraction_id_list)
 		image_result = {}

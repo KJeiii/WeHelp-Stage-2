@@ -1,5 +1,6 @@
 body {
     font-family: "Noto Sans TC";
+    margin: 0px;
 }
 
 /* --- topDiv --- */
@@ -30,7 +31,6 @@ body {
     display: flex;
     flex: auto;
     justify-content: end;
-    /* margin-left: 100px; */
     align-items: center;
 }
 

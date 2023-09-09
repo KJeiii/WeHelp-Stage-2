@@ -70,9 +70,11 @@ def attractions():
 			else:
 				page_attraction_dict[_] = count
 			count -= 12
-		
+		print(page_attraction_dict)
+
 		# search MySQL data by keyword
-		limit = (page, page_attraction_dict[page])
+		limit = (page*12, page_attraction_dict[page])
+		print(limit)
 		attraction_result = db.Search_attraction(keyword = keyword, limit = limit)
 
 		# # set nextPage value

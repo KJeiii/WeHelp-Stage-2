@@ -54,7 +54,6 @@ body {
 /* --- midDiv --- */
 .midDiv {
     display: flex;
-    flex: none;
     align-items: center;
     justify-content: center;
     height: 480px;
@@ -150,10 +149,6 @@ body {
     background-size: 32px;
 }
 
-/* .mrtDiv-mrtlistBar-leftImg {
-    width: 32px;
-} */
-
 .mrtDiv-mrtlistBar-rightArrow {
     width: 32px;
     height: 32px;
@@ -172,26 +167,30 @@ body {
 
 }
 
-
-/* .mrtDiv-mrtlistBar-rightImg {
-    width: 32px;
-} */
-
 .mrtDiv-mrtlistBar-content {
     width: 1106px;
     display: flex;
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
     align-items: center;
     overflow: hidden;
     white-space: nowrap;
+    scroll-behavior: smooth;
 
 }
 
 .mrtDiv-mrtlistBar-item {
     font-size: 16px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     color: #666666;
+    padding: 5px 15px 5px 15px;
+}
+
+.mrtDiv-mrtlistBar-item:hover {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #000000;
     padding: 5px 15px 5px 15px;
 }
 
@@ -280,3 +279,5 @@ body {
     font-weight: 700;
     color: #FFFFFF;
 }
+
+/* RWD for 1200-360px */

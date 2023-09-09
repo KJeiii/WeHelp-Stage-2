@@ -1,4 +1,4 @@
-const url = "/api/attractions"
+// const url = "http://3.106.20.120/api/attractions"
 
 // ----- build function for creating html element -----
 const createElement = (TagName, className) => {
@@ -62,7 +62,7 @@ const loadPage = async(page, keyword) => {
         
         // get data from api
         try {
-            let response = await fetch(url + params_string);
+            let response = await fetch("http://3.106.20.120/api/attractions" + params_string);
             let data = await response.json();
             let result = await data["data"];
     
@@ -186,10 +186,10 @@ const searchKeyword = () => {
 
 // ------ dynamically create mrt ------
 const showMrt = async () => {
-    let url = "/api/mrts"
+    // let url = "/api/mrts"
 
     try{
-        let response = await fetch(url);
+        let response = await fetch('http://3.106.20.120/api/mrts');
         let data = await response.json();
         let result = await data["data"];
 

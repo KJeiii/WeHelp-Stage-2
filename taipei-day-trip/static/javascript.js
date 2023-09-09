@@ -62,7 +62,7 @@ const loadPage = async(page, keyword) => {
         
         // get data from api
         try {
-            let response = await fetch("http://3.106.20.120/api/attractions" + params_string);
+            let response = await fetch("http://3.106.20.120:3000/api/attractions" + params_string);
             let data = await response.json();
             let result = await data["data"];
     
@@ -189,7 +189,7 @@ const showMrt = async () => {
     // let url = "/api/mrts"
 
     try{
-        let response = await fetch('http://3.106.20.120/api/mrts');
+        let response = await fetch('http://3.106.20.120:3000/api/mrts');
         let data = await response.json();
         let result = await data["data"];
 

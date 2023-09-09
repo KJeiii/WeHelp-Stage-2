@@ -143,18 +143,8 @@ const searchKeyword = () => {
 
     fetch(`http://3.106.20.120:3000/api/attractions?page=${nextPage}&keyword=${keyword}`)
     .then(response => {
-        if (!response.ok) { 
-
-            // report no attraction text
-            document.querySelector(".midDiv-container-searchBar-text").value = "無相符合景點";
-
-            // remove all child element in bottomDiv-container
-            let bottomDivContainer = document.querySelector(".bottomDiv-container");
-            while (bottomDivContainer.hasChildNodes()) {
-            bottomDivContainer.removeChild(bottomDivContainer.firstChild);
-            };
-        }
-        else{
+        if (response.ok && !isloaded) { 
+                        
             // remove all child element in bottomDiv-container
             let bottomDivContainer = document.querySelector(".bottomDiv-container");
             while (bottomDivContainer.hasChildNodes()) {
@@ -162,7 +152,20 @@ const searchKeyword = () => {
             };
 
             // update attraction
-            loadPage(nextPage, keywordRecord);
+            isloaded = true;
+            if (isloaded) {
+                loadPage(nextPage, keywordRecord);
+            };
+        }
+        else{
+            // report no attraction text
+            document.querySelector(".midDiv-container-searchBar-text").value = "無相符合景點";
+            
+            // remove all child element in bottomDiv-container
+            let bottomDivContainer = document.querySelector(".bottomDiv-container");
+            while (bottomDivContainer.hasChildNodes()) {
+            bottomDivContainer.removeChild(bottomDivContainer.firstChild);
+            };
         }
     })
     .catch(error => {

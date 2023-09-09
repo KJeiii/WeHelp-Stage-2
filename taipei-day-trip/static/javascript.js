@@ -60,7 +60,6 @@ const loadPage = async(page, keyword) => {
             params_string = "?page=" + page + "&keyword=" + keyword;
         }
         
-        console.log(params_string);
         // get data from api
         try {
             let response = await fetch(url + params_string);
@@ -71,7 +70,6 @@ const loadPage = async(page, keyword) => {
             nextPage = data["nextPage"];
             console.log(`nextPage updated to ${nextPage}`);
             console.log(`data amount to load ${result.length}`);
-            console.log(result);
     
             // create elements dynamically
             let bottomDivContainer = document.querySelector(".bottomDiv-container");
@@ -107,7 +105,6 @@ const observer = new IntersectionObserver ((entries) => {
     if (entries[0].isIntersecting) {
         // remmove target for prevent fetching pulse
         observer.unobserve(entries[0].target);
-        console.log(entries[0].target);
 
         if (isloaded) {
             // update page
@@ -119,21 +116,11 @@ const observer = new IntersectionObserver ((entries) => {
                     let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
                     let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
                     observer.observe(elementForObserved);
-                }, 2000)
+                }, 500)
                 isloaded = true;
             }
 
         }
-        // // update page
-        // if (nextPage !== null) {
-        //     loadPage(nextPage, keywordRecord);
-
-        //     setTimeout(() => {
-        //         let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
-        //         let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
-        //         observer.observe(elementForObserved);
-        //     }, 2000)
-        // }
     };
 }, options);
 
@@ -155,17 +142,30 @@ const searchKeyword = () => {
     // initialize nextPage and update keword
     nextPage = 0;
     keywordRecord = keyword;
+    console.log(`nextPage: ${nextPage}`);
+    console.log(`kewordRecord: ${keywordRecord}`);
 
-    try {
-        fetch(`/api/attraction?page=${nextPage}&keyword=${keyword}`)
-        .then(response => {
+
+    fetch(`/api/attractions?page=${nextPage}&keyword=${keyword}`)
+    .then(response => {
+        if (!response.ok) { 
+
+            // report no attraction text
+            document.querySelector(".midDiv-container-searchBar-text").value = "無相符合景點";
+
+            // remove all child element in bottomDiv-container
+            let bottomDivContainer = document.querySelector(".bottomDiv-container");
+            while (bottomDivContainer.hasChildNodes()) {
+            bottomDivContainer.removeChild(bottomDivContainer.firstChild);
+            };
+        }
+        else{
             // remove all child element in bottomDiv-container
             let bottomDivContainer = document.querySelector(".bottomDiv-container");
             while (bottomDivContainer.hasChildNodes()) {
             bottomDivContainer.removeChild(bottomDivContainer.firstChild);
             };
 
-            
             // update attraction
             loadPage(nextPage, keywordRecord);
 
@@ -174,15 +174,13 @@ const searchKeyword = () => {
                 let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
                 let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
                 observer.observe(elementForObserved);
-            },1000);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
-    catch(error) {
-        document.querySelector(".midDiv-container-searchBar-text").value = "無相符合景點";
-    };
+            },500);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
+
 };
 
 
@@ -213,13 +211,11 @@ showMrt();
 
 // ----- scroll left or right when clicking arrow
 const moveLeft = () => {
-    console.log("click");
     let mrtDivMrtlistBarContent = document.querySelector(".mrtDiv-mrtlistBar-content");
     mrtDivMrtlistBarContent.scrollLeft += 80;
 };
 
 const moveRight = () => {
-    console.log("click");
     let mrtDivMrtlistBarContent = document.querySelector(".mrtDiv-mrtlistBar-content");
     mrtDivMrtlistBarContent.scrollLeft -= 80;
 };
@@ -249,6 +245,6 @@ const searchMrt = element => {
         let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
         let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
         observer.observe(elementForObserved);
-    },1000);
+    },500);
 
 };

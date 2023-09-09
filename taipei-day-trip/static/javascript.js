@@ -63,7 +63,7 @@ const loadPage = async(page, keyword) => {
         
         // get data from api
         try {
-            let response = await fetch("/api/attractions" + params_string);
+            let response = await fetch("http://3.106.20.120:3000/api/attractions" + params_string);
             let data = await response.json();
             let result = await data["data"];
     
@@ -141,7 +141,7 @@ const searchKeyword = () => {
     console.log(`kewordRecord: ${keywordRecord}`);
 
 
-    fetch(`/api/attractions?page=${nextPage}&keyword=${keyword}`)
+    fetch(`http://3.106.20.120:3000/api/attractions?page=${nextPage}&keyword=${keyword}`)
     .then(response => {
         if (!response.ok) { 
 
@@ -177,7 +177,7 @@ const showMrt = async () => {
     // let url = "/api/mrts"
 
     try{
-        let response = await fetch('/api/mrts');
+        let response = await fetch('http://3.106.20.120:3000/api/mrts');
         let data = await response.json();
         let result = await data["data"];
 

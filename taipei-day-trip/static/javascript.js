@@ -1,4 +1,5 @@
-// const url = "http://3.106.20.120/api/attractions"
+// aws "http://3.106.20.120:3000/api/attractions"
+// local "/api/attractions"
 
 // ----- build function for creating html element -----
 const createElement = (TagName, className) => {
@@ -43,7 +44,7 @@ const createBottomDivElement = (element) => {
 // ------ recored nextPage and keword------
 var nextPage = 0;
 var keywordRecord;
-var isloaded = true;
+var isloaded = false;
 
 // ------ build function for create new attraction element ------
 const loadPage = async(page, keyword) => {
@@ -62,7 +63,7 @@ const loadPage = async(page, keyword) => {
         
         // get data from api
         try {
-            let response = await fetch("http://3.106.20.120:3000/api/attractions" + params_string);
+            let response = await fetch("/api/attractions" + params_string);
             let data = await response.json();
             let result = await data["data"];
     
@@ -77,8 +78,15 @@ const loadPage = async(page, keyword) => {
             result.forEach(element => { 
                 let bottomDivContainerElement = createBottomDivElement(element);
                 bottomDivContainer.appendChild(bottomDivContainerElement);
-            
             })
+
+            // update element to track
+            let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
+            let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
+            observer.observe(elementForObserved);
+            
+            // recover isLoaded state
+            isloaded = false;
         }
         catch (error){
             console.log(error);
@@ -102,36 +110,23 @@ options = {
 };
 
 const observer = new IntersectionObserver ((entries) => {
-    if (entries[0].isIntersecting) {
+    console.log('1:',isloaded);
+    if (entries[0].isIntersecting && !isloaded) {
+
         // remmove target for prevent fetching pulse
         observer.unobserve(entries[0].target);
 
+        // change isLoaded state to update attraction
+        isloaded = true;
         if (isloaded) {
             // update page
             if (nextPage !== null) {
                 isloaded = false;
                 loadPage(nextPage, keywordRecord);
-    
-                setTimeout(() => {
-                    let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
-                    let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
-                    observer.observe(elementForObserved);
-                }, 500)
-                isloaded = true;
             }
-
         }
     };
 }, options);
-
-
-setTimeout (() => {
-    let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
-    let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
-    observer.observe(elementForObserved);
-
-},1000);
-
 
 
 // ------ update page by keyword searching ------
@@ -168,13 +163,6 @@ const searchKeyword = () => {
 
             // update attraction
             loadPage(nextPage, keywordRecord);
-
-            // update element for intersection observation
-            setTimeout (() => {
-                let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
-                let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
-                observer.observe(elementForObserved);
-            },500);
         }
     })
     .catch(error => {
@@ -189,7 +177,7 @@ const showMrt = async () => {
     // let url = "/api/mrts"
 
     try{
-        let response = await fetch('http://3.106.20.120:3000/api/mrts');
+        let response = await fetch('/api/mrts');
         let data = await response.json();
         let result = await data["data"];
 
@@ -239,12 +227,4 @@ const searchMrt = element => {
 
     // update attraction
     loadPage(nextPage, keywordRecord);
-
-    // update element for intersection observation
-    setTimeout (() => {
-        let lenthOfElement = document.querySelectorAll('.bottomDiv-container-element').length;
-        let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
-        observer.observe(elementForObserved);
-    },500);
-
 };

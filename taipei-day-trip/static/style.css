@@ -285,6 +285,9 @@ body {
 
 /* RWD for 1200-360px */
 @media (max-width: 1200px) {
+    .topDiv {
+        padding: 0 2.5% 0 2.5%;
+    }
 
     .midDiv-container {
         width: 1180px;

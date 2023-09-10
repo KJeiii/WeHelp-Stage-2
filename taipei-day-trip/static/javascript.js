@@ -48,10 +48,11 @@ var isloaded = false;
 
 // ------ build function for create new attraction element ------
 const loadPage = async(page, keyword) => {
-    console.log(page, keyword);
+    // console.log(page, keyword);
 
     // load next page unless nextPage = null
     if ( page !== null ) {
+
         // two way search depending on whether keyword is given
         var params_string;
         if (keyword === undefined) {
@@ -59,22 +60,21 @@ const loadPage = async(page, keyword) => {
         }
         else {
             params_string = "?page=" + page + "&keyword=" + keyword;
-        }
+        };
         
         // get data from api
         try {
-            let response = await fetch("http://3.106.20.120:3000/api/attractions" + params_string);
+            let response = await fetch("/api/attractions" + params_string);
             let data = await response.json();
             let result = await data["data"];
     
             // update nextPage
             nextPage = data["nextPage"];
-            console.log(`nextPage updated to ${nextPage}`);
-            console.log(`data amount to load ${result.length}`);
+            // console.log(`nextPage updated to ${nextPage}`);
+            // console.log(`data amount to load ${result.length}`);
     
             // create elements dynamically
             let bottomDivContainer = document.querySelector(".bottomDiv-container");
-    
             result.forEach(element => { 
                 let bottomDivContainerElement = createBottomDivElement(element);
                 bottomDivContainer.appendChild(bottomDivContainerElement);
@@ -85,17 +85,23 @@ const loadPage = async(page, keyword) => {
             let elementForObserved = document.querySelectorAll('.bottomDiv-container-element')[lenthOfElement-1];
             observer.observe(elementForObserved);
             
-            // recover isLoaded state
+            // turn off isloaded
             isloaded = false;
         }
         catch (error){
             console.log(error);
             console.log(response.status);
+
+            // turn off isloaded in case of try condition is not triggered
+            isloaded = false;
             return response.status;
         }
     }
     else{
-        console.log("沒有下一頁")
+        console.log("沒有下一頁");
+
+        // turn off isloaded in case of if condition is not triggered
+        isloaded = false;
     }
 };
 
@@ -110,7 +116,6 @@ options = {
 };
 
 const observer = new IntersectionObserver ((entries) => {
-    console.log('1:',isloaded);
     if (entries[0].isIntersecting && !isloaded) {
 
         // remmove target for prevent fetching pulse
@@ -121,9 +126,14 @@ const observer = new IntersectionObserver ((entries) => {
         if (isloaded) {
             // update page
             if (nextPage !== null) {
-                isloaded = false;
                 loadPage(nextPage, keywordRecord);
-            }
+            };
+
+            //keyword search and intersectingObserver could happen in same time
+            //if intersectingObserver runs, but nextPage is null, it would not call loadPage function and it leads to 
+            //not turning off the isLoaded inside loadPage function.
+            //Herein, turn off isloaded here.
+            isloaded = false; 
         }
     };
 }, options);
@@ -141,8 +151,11 @@ const searchKeyword = () => {
     console.log(`kewordRecord: ${keywordRecord}`);
 
 
-    fetch(`http://3.106.20.120:3000/api/attractions?page=${nextPage}&keyword=${keyword}`)
+    fetch(`/api/attractions?page=${nextPage}&keyword=${keywordRecord}`)
     .then(response => {
+        console.log(`isloaded state in before if ${isloaded}`);
+        console.log(`response.ok before if ${response.ok}`);
+
         if (response.ok && !isloaded) { 
                         
             // remove all child element in bottomDiv-container
@@ -158,9 +171,11 @@ const searchKeyword = () => {
             };
         }
         else{
+            console.log(`isloaded state in else ${isloaded}`);
+
             // report no attraction text
             document.querySelector(".midDiv-container-searchBar-text").value = "無相符合景點";
-            
+
             // remove all child element in bottomDiv-container
             let bottomDivContainer = document.querySelector(".bottomDiv-container");
             while (bottomDivContainer.hasChildNodes()) {
@@ -170,6 +185,7 @@ const searchKeyword = () => {
     })
     .catch(error => {
         console.log(error);
+        console.log(`isloaded state in catch ${isloaded}`);
     })
 
 };
@@ -180,7 +196,7 @@ const showMrt = async () => {
     // let url = "/api/mrts"
 
     try{
-        let response = await fetch('http://3.106.20.120:3000/api/mrts');
+        let response = await fetch('/api/mrts');
         let data = await response.json();
         let result = await data["data"];
 

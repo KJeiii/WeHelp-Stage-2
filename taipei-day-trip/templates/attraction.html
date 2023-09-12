@@ -1,5 +1,28 @@
-{% includes "header.html" %}
+{% include "header.html" %}
+<div class="attraction">
+    <div class="attraction-booking">
+        <div class="attraction-booking-img"></div>
+        <div class="attraction-booking-schedule">
+            <p class="attraction-booking-name">平安鐘</p>
+            <p class="attraction-booking-CatMRT">公共藝術&忠孝復興</p>
+            <div class="attraction-booking-menu">
+                <p class="attraction-booking-title">訂購導覽行程</p>
+                <p class="attraction-booking-intro">以此景點為中心的一日行程，帶您探索城市角落故事</p>
+                <form class="attraction-menu-form" action="">
+                    <label for="date">選擇日期：</label>
+                    <input type="date" name="date">
+                    <br>
+                    <label for="interval">選擇時間：</label>
+                    <input type="radio" name="interval">
+                    <br>
+                    <!-- <label for="">導覽費用：</label>
+                    <br> -->
+                    <input type="submit" value="開始預約行程">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-
-{% includes "footer.html" %}
+{% include "footer.html" %}

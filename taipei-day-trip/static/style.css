@@ -31,6 +31,14 @@ body {
     margin-left: 0px;
 }
 
+.navbar-title-link {
+    text-decoration: none;
+}
+
+.navbar-title-link:visited {
+    color: #448899;
+}
+
 .topDiv-navbar-btn {
     display: flex;
     flex: auto;

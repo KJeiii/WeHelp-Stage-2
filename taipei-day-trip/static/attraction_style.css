@@ -1,0 +1,102 @@
+/* General style */
+.body {
+    margin: 0;
+    font-family: "Noto Sans TC";
+}
+
+
+/* upper booking pannel */
+.attraction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.attraction-booking {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin-top: 40px;
+    color:#666666;
+
+}
+
+.attraction-booking-img {
+    width: 540px;
+    height: 406px;
+    margin: 0 15px;
+    background-image: url(../static/image/attraction-test.png);
+    background-size: cover;
+    background-position: center;
+}
+
+.attraction-booking-schedule {
+    width: 600px;
+    margin: 0 15px;
+}
+
+.attraction-booking-menu {
+    text-align: start;
+}
+
+.attraction-booking-name {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+}
+
+.attraction-booking-CatMRT {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    margin: 15px 0 20px 0;
+}
+
+.attraction-booking-menu {
+    background-color: #e8e8e8;
+    padding: 15px 20px;
+    border-radius: 5px;
+}
+
+.attraction-booking-title {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+}
+
+.attraction-booking-intro {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    margin: 15px 0;
+}
+
+/* general style of form */
+.attraction-menu-form label {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.attraction-menu-form input {
+    margin: 15px 0;
+    border: 0px;
+}
+
+/* specific style of input */
+.attraction-menu-form input[type=date] {
+    width: 193px;
+    height: 35px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+
+}
+
+.attraction-menu-form input[type=date]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+
+}
+

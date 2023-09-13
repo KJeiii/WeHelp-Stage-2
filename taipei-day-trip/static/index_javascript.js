@@ -15,7 +15,9 @@ const createBottomDivElement = (element) => {
     // 2. intro > mrt & category
 
     // build element > image elemnt & intro element
-    let bottomDivContainerElement = createElement("div", "bottomDiv-container-element");
+    let bottomDivContainerElement = createElement("a", "bottomDiv-container-element");
+    bottomDivContainerElement.style.display = "block";
+    bottomDivContainerElement.setAttribute("href", `/attraction/${element["id"]}`);
 
     // build image elemet > background > name
     let bottomDivContainerImage = createElement("div", "bottomDiv-container-image");

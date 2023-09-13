@@ -1,8 +1,9 @@
 let //
 attractionURL = window.location.href,
-lenOfURL = attractionURL.length,
-fetchURL = `/api/attraction/${attractionURL[lenOfURL-1]}`;
-console.log(attractionURL);
+listOfURL = attractionURL.split("/"),
+lenOfList = listOfURL.length,
+fetchURL = `/api/attraction/${listOfURL[lenOfList-1]}`;
+
 
 const fillContent = (cssSelector, content) => {
     let element = document.querySelector(cssSelector);

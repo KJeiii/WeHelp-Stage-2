@@ -86,7 +86,7 @@ body {
     width: 540px;
     height: 406px;
     margin: 0 15px;
-    background-image: url(../static/image/attraction-test.png);
+    /* background-image: url(../static/image/attraction-test.png); */
     background-size: cover;
     background-position: center;
 }

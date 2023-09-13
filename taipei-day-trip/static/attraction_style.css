@@ -1,9 +1,68 @@
 /* General style */
-.body {
+body {
     margin: 0;
     font-family: "Noto Sans TC";
 }
 
+/* --- topDiv --- */
+.topDiv {
+    display: flex;
+    justify-content: center;
+    padding: 0 10px 0 10px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.topDiv-navbar {
+    display: flex;
+    width: 1200px;
+    margin: 10px 0 10px 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.topDiv-navbar-title {
+    flex: none;
+    width: 150px;
+    color:#448899;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    margin-left: 0px;
+}
+
+.navbar-title-link {
+    text-decoration: none;
+}
+
+.navbar-title-link:visited {
+    color: #448899;
+}
+
+.topDiv-navbar-btn {
+    display: flex;
+    flex: auto;
+    justify-content: end;
+    align-items: center;
+}
+
+.topDiv-navbar-schedule {
+    color:#666666;
+    margin: 10px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.topDiv-navbar-sign {
+    color:#666666;
+    margin: 10px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+
+}
 
 /* upper booking pannel */
 .attraction {
@@ -16,8 +75,10 @@
     display: flex;
     justify-content: center;
     align-items: start;
-    margin-top: 40px;
+    margin-top: 37px;
     color:#666666;
+    height: 443px;
+    border-bottom: 1px solid #e8e8e8;
 
 }
 
@@ -92,11 +153,117 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
+    margin: 0 0 15px 5px;
 
 }
 
+/* date-typed input calender icon */
 .attraction-menu-form input[type=date]::-webkit-calendar-picker-indicator {
-    opacity: 0;
+    background-image: url(../static/image/calender.png);
+    width: 24px;
+    height: 24px;
+}
+
+/* radio-typed input*/
+.attraction-menu-interval {
+    display: flex;
+    align-items: center;
+    margin: 0 0 15px 0;
+}
+
+.attraction-menu-form input[type=radio] {
+    appearance: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    background-color: #ffffff;
+    margin: 0 8px 0 13px;
+    
+}
+
+.attraction-menu-form input[type=radio]:checked {
+    appearance: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    border: 3px solid #ffffff;
+    background-color: #448899;
+    margin: 0 8px 0 13px;
+}
+
+.attraction-menu-form span {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* .attraction-form-interval {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+} */
+
+
+/* submit-typed input*/
+.attraction-menu-form input[type=submit] {
+    width: 154px;
+    height: 36px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #448899;
+    color: #ffffff;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    line-height: 16px;
+    margin: 25px 0 41px 0;
+}
+
+
+/* detail part */
+.detail-outer {
+    display: flex;
+    justify-content: center;
+}
+
+.detail {
+    width: 1200px;
+    margin: 40px 0;
+    padding: 10px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    color: #666666;
+}
+
+.address-title {
+    font-weight: 700;
+}
+
+.transport-title {
+    font-weight: 700;
+}
+
+.detail-address {
+    margin: 20px 0;
+}
+
+
+/* --- footerDiv --- */
+.footerDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 104px;
+    background-color: #757575;
 
 }
 
+.footerDiv-text {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    color: #FFFFFF;
+}

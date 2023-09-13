@@ -1,48 +1,79 @@
-{% include "header.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taiper Travel</title>
 
+    <!-- Custome css -->
+    <link rel="stylesheet" href="../static/index_style.css">
+    <link rel="stylesheet" href="../static/attraction_style.css">
+</head>
 
-<div class="midDiv">
-    <div class="midDiv-container">
-        <div class="midDiv-container-title">輕鬆享受台北一日悠閒</div>
-        <div class="midDiv-container-intro">探索每個角落，體驗城市的深度旅遊行程</div>
-        <div class="midDiv-container-searchBar">
-            <input class="midDiv-container-searchBar-text" type="text"
-            placeholder="輸入景點名稱查詢">
-            <button class="midDiv-container-searchBar-btn" onclick="searchKeyword()">
-                <img src="../static/image/home-attraction-search.png" alt="home-attraction-search">
-            </button>
+<body>
+    <div class="topDiv">
+        <div class="topDiv-navbar">
+            <div class="topDiv-navbar-title">
+                <a class="navbar-title-link" href="/">台北一日遊</a>
+            </div>
+            <div class="topDiv-navbar-btn">
+                <div class="topDiv-navbar-schedule">預定行程</div>
+                <div class="topDiv-navbar-sign">登入/註冊</div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="mrtDiv">
-    <div class="mrtDiv-mrtlistBar">
-        <div class="mrtDiv-mrtlistBar-leftArrow" onclick="moveRight()"></div>
-        <div class="mrtDiv-mrtlistBar-content">
-            <!-- <div class="mrtDiv-mrtlistBar-item">
-                item1
+
+    <div class="midDiv">
+        <div class="midDiv-container">
+            <div class="midDiv-container-title">輕鬆享受台北一日悠閒</div>
+            <div class="midDiv-container-intro">探索每個角落，體驗城市的深度旅遊行程</div>
+            <div class="midDiv-container-searchBar">
+                <input class="midDiv-container-searchBar-text" type="text"
+                placeholder="輸入景點名稱查詢">
+                <button class="midDiv-container-searchBar-btn" onclick="searchKeyword()">
+                    <img src="../static/image/home-attraction-search.png" alt="home-attraction-search">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mrtDiv">
+        <div class="mrtDiv-mrtlistBar">
+            <div class="mrtDiv-mrtlistBar-leftArrow" onclick="moveRight()"></div>
+            <div class="mrtDiv-mrtlistBar-content">
+                <!-- <div class="mrtDiv-mrtlistBar-item">
+                    item1
+                </div> -->
+            </div>
+            <div class="mrtDiv-mrtlistBar-rightArrow" onclick="moveLeft()"></div>
+        </div>
+    </div>
+
+    <div class="bottomDiv">
+        <div class="bottomDiv-container">
+            <!-- <div class="bottomDiv-container-element">
+                <div class="bottomDiv-container-image">
+                    <div class="bottomDiv-container-attractionBackground">
+                        <div class="bottomDiv-container-attractionName">平安鐘</div>
+                    </div>
+                </div>
+                <div class="bottomDiv-container-intro">
+                    <p class="bottomDiv-container-mrt">忠孝復興</p>
+                    <p class="bottomDiv-container-category">公共藝術</p>
+                </div>
             </div> -->
         </div>
-        <div class="mrtDiv-mrtlistBar-rightArrow" onclick="moveLeft()"></div>
     </div>
-</div>
 
-<div class="bottomDiv">
-    <div class="bottomDiv-container">
-        <!-- <div class="bottomDiv-container-element">
-            <div class="bottomDiv-container-image">
-                <div class="bottomDiv-container-attractionBackground">
-                    <div class="bottomDiv-container-attractionName">平安鐘</div>
-                </div>
-            </div>
-            <div class="bottomDiv-container-intro">
-                <p class="bottomDiv-container-mrt">忠孝復興</p>
-                <p class="bottomDiv-container-category">公共藝術</p>
-            </div>
-        </div> -->
+
+
+    <div class="footerDiv">
+        <div class="footerDiv-text">COPYRIGHT © 2021 台北一日遊</div>
     </div>
-</div>
 
+    <!-- Custom script -->
+    <script src="../static/javascript.js"></script>
 
-
-{% include "footer.html" %}
+</body>
+</html>

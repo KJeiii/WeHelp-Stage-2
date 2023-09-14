@@ -4,6 +4,7 @@ listOfURL = attractionURL.split("/"),
 lenOfList = listOfURL.length,
 fetchURL = `/api/attraction/${listOfURL[lenOfList-1]}`;
 
+// ----- auto fill content using /api/attraction/<attraction_id> -----
 
 const fillContent = (cssSelector, content) => {
     let element = document.querySelector(cssSelector);
@@ -52,3 +53,21 @@ const loadPage = async () => {
 };
 
 loadPage();
+
+
+// ----- interval fee exchange-----
+const feeExchange = () => {
+
+    let //
+    beforenoonChecked = document.querySelector(".interval-beforenoon").checked,
+    afternoonChecked = document.querySelector(".interval-afternoon").checked,
+    feeSpan = document.querySelector(".interval-fee");
+
+    if (beforenoonChecked) {
+        feeSpan.textContent = "新台幣 2000 元";
+    };
+
+    if (afternoonChecked) {
+        feeSpan.textContent = "新台幣 2500 元";
+    };
+}

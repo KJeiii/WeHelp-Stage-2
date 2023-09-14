@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taiper Travel</title>
+    <title>Taipei Travel</title>
 
     <!-- Custome css -->
     <link rel="stylesheet" href="../static/attraction_style.css">
@@ -37,14 +37,14 @@
                         <br>
                         <div class="attraction-menu-interval">
                             <label for="interval">選擇時間：</label>
-                            <input type="radio" name="interval" value="beforenoon" checked>
+                            <input type="radio" name="interval" value="beforenoon" class="interval-beforenoon" onclick="feeExchange()" checked>
                             <label for="beforenoon" class="attraction-form-interval">上半天</label>
-                            <input type="radio" name="interval" value="afternoon">
+                            <input type="radio" name="interval" value="afternoon" class="interval-afternoon" onclick="feeExchange()">
                             <label for="beforenoon" class="attraction-form-interval">下半天</label>
                             <br>
                         </div>
                         <label for="fee">導覽費用：</label>
-                        <span>新台幣2000元</span>
+                        <span class="interval-fee">新台幣 2000 元</span>
                         <br>
                         <input type="submit" value="開始預約行程">
                     </form>

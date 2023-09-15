@@ -12,6 +12,7 @@ body {
     position: sticky;
     top: 0;
     background-color: white;
+    z-index: 5;
 }
 
 .topDiv-navbar {
@@ -82,13 +83,71 @@ body {
 
 }
 
-.attraction-booking-img {
+.attraction-booking-imgGallery {
     width: 540px;
     height: 406px;
     margin: 0 15px;
     /* background-image: url(../static/image/attraction-test.png); */
+    /* background-size: cover;
+    background-position: center; */
+}
+
+.attraction-imgGallery-elements {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+/* .mrtDiv-mrtlistBar-item {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #666666;
+    padding: 5px 15px 5px 15px;
+} */
+
+.attraction-imgGallery-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    bottom: 58%;
+}
+
+.attraction-imgGallery-left {
+    width: 36px;
+    height: 36px;
+    background-image: url(../static/image/attraction-leftArrow.png);
     background-size: cover;
     background-position: center;
+    margin-right: 224px;
+    opacity: 70%;
+}
+
+.attraction-imgGallery-right {
+    width: 36px;
+    height: 36px;
+    background-image: url(../static/image/attraction-rightArrow.png);
+    background-size: cover;
+    background-position: center;
+    margin-left: 224px;
+    opacity: 70%;
+}
+
+.attraction-imgGallery-dotsContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 15%;
+}
+
+.attraction-imgGallery-dotsContainer img {
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
 }
 
 .attraction-booking-schedule {

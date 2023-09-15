@@ -23,11 +23,11 @@ const loadPage = async () => {
 
     // create elements
     // attraction-booking-img
-    let //
-    imgDiv = document.querySelector(".attraction-booking-img"),
-    images = result["images"];
+    // let //
+    // imgDiv = document.querySelector(".attraction-booking-imgGallery"),
+    // images = result["images"];
 
-    imgDiv.style.backgroundImage = "url(" + images[0] +")";
+    // imgDiv.style.backgroundImage = "url(" + images[0] +")";
     
     // attraction-booking-name
     fillContent(".attraction-booking-name", result["name"]);

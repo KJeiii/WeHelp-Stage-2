@@ -1,6 +1,3 @@
-// aws "http://3.106.20.120:3000/api/attractions"
-// local "/api/attractions"
-
 // ----- build function for creating html element -----
 const createElement = (TagName, className) => {
     const element = document.createElement(TagName);

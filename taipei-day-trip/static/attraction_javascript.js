@@ -4,6 +4,8 @@ listOfURL = attractionURL.split("/"),
 lenOfList = listOfURL.length,
 fetchURL = `/api/attraction/${listOfURL[lenOfList-1]}`;
 
+let amountOfImages;
+
 // ----- auto fill content using /api/attraction/<attraction_id> -----
 
 const fillContent = (cssSelector, content) => {
@@ -23,11 +25,19 @@ const loadPage = async () => {
 
     // create elements
     // attraction-booking-img
-    // let //
-    // imgDiv = document.querySelector(".attraction-booking-imgGallery"),
-    // images = result["images"];
+    let //
+    imgGalleryElements = document.querySelector(".attraction-imgGallery-elements"),
+    images = result["images"];
+    console.log(images.length);
 
-    // imgDiv.style.backgroundImage = "url(" + images[0] +")";
+    images.forEach(image => {
+        let imageItem = document.createElement("img");
+        imageItem.setAttribute("src", image);
+        // imageItem.style.zIndex = 1;
+        imgGalleryElements.appendChild(imageItem);
+
+        console.log('Done')
+    });
     
     // attraction-booking-name
     fillContent(".attraction-booking-name", result["name"]);
@@ -71,3 +81,22 @@ const feeExchange = () => {
         feeSpan.textContent = "新台幣 2500 元";
     };
 }
+
+
+// ----- scroll left or right when clicking arrow -----
+const moveLeft = () => {
+    let //
+    elements = document.querySelector(".attraction-imgGallery-elements"),
+    movingLength = elements.clientWidth;
+    
+    elements.scrollLeft -= movingLength;
+};
+
+const moveRight = () => {
+    let //
+    elements = document.querySelector(".attraction-imgGallery-elements"),
+    movingLength = elements.clientWidth;
+
+    elements.scrollLeft += movingLength;
+
+};

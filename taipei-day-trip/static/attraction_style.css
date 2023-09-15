@@ -87,9 +87,6 @@ body {
     width: 540px;
     height: 406px;
     margin: 0 15px;
-    /* background-image: url(../static/image/attraction-test.png); */
-    /* background-size: cover;
-    background-position: center; */
 }
 
 .attraction-imgGallery-elements {
@@ -101,13 +98,10 @@ body {
     scroll-behavior: smooth;
 }
 
-/* .mrtDiv-mrtlistBar-item {
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    color: #666666;
-    padding: 5px 15px 5px 15px;
-} */
+.attraction-imgGallery-elements img {
+    width: 100%;
+    height: 100%;
+}
 
 .attraction-imgGallery-arrow {
     display: flex;

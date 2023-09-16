@@ -4,6 +4,7 @@ listOfURL = attractionURL.split("/"),
 lenOfList = listOfURL.length,
 fetchURL = `/api/attraction/${listOfURL[lenOfList-1]}`;
 
+// create global varibles to record images amount and dot status
 var//
 imagesAmount,
 dotmonitered = 0;
@@ -39,8 +40,9 @@ const loadPage = async () => {
     console.log(`imagesAmount: ${imagesAmount}`);
 
     images.forEach(image => {
-        let imageItem = document.createElement("img");
-        imageItem.setAttribute("src", image);
+        let imageItem = document.createElement("div");
+        imageItem.setAttribute("class", "attraction-imgGallery-item");
+        imageItem.style.backgroundImage = `url(${image})`;
         imgGalleryElements.appendChild(imageItem);
 
         let//
@@ -51,6 +53,7 @@ const loadPage = async () => {
         dotsContainer.appendChild(dots);
     });
 
+    // replace first white dot with black dot
     let firstDot = document.querySelectorAll(".attraction-imgGallery-dotsContainer img")[0];
     firstDot.setAttribute("src", "../static/image/attraction-dot-black.svg");
     
@@ -117,8 +120,6 @@ const moveLeft = () => {
         dots[dotmonitered].setAttribute("src", "../static/image/attraction-dot-white.svg");
         dots[dotmonitered - 1].setAttribute("src", "../static/image/attraction-dot-black.svg");
         dotmonitered -= 1;
-        console.log(dotmonitered);
-
     }
 };
 
@@ -140,6 +141,5 @@ const moveRight = () => {
         dots[dotmonitered].setAttribute("src", "../static/image/attraction-dot-white.svg");
         dots[dotmonitered + 1].setAttribute("src", "../static/image/attraction-dot-black.svg");
         dotmonitered += 1;
-        console.log(dotmonitered);
     }
 };

@@ -80,7 +80,6 @@ body {
     color:#666666;
     height: 443px;
     border-bottom: 1px solid #e8e8e8;
-
 }
 
 .attraction-booking-imgGallery {
@@ -98,10 +97,19 @@ body {
     scroll-behavior: smooth;
 }
 
-.attraction-imgGallery-elements img {
+.attraction-imgGallery-item {
+    flex: none;
     width: 100%;
     height: 100%;
+    /* background-image: url(); */
+    background-size: cover;
+    background-position: center;
 }
+
+/* .attraction-imgGallery-elements img {
+    width: 100%;
+    height: 100%;
+} */
 
 .attraction-imgGallery-arrow {
     display: flex;
@@ -117,7 +125,7 @@ body {
     background-image: url(../static/image/attraction-leftArrow.png);
     background-size: cover;
     background-position: center;
-    margin-right: 224px;
+    margin-right: 448px;
     opacity: 70%;
 }
 
@@ -127,7 +135,6 @@ body {
     background-image: url(../static/image/attraction-rightArrow.png);
     background-size: cover;
     background-position: center;
-    margin-left: 224px;
     opacity: 70%;
 }
 
@@ -149,10 +156,6 @@ body {
     margin: 0 15px;
 }
 
-.attraction-booking-menu {
-    text-align: start;
-}
-
 .attraction-booking-name {
     font-size: 24px;
     font-style: normal;
@@ -169,6 +172,7 @@ body {
 
 .attraction-booking-menu {
     background-color: #e8e8e8;
+    text-align: start;
     padding: 15px 20px;
     border-radius: 5px;
 }
@@ -186,6 +190,12 @@ body {
     font-weight: 500;
     margin: 15px 0;
 }
+
+.bottomDiv-container-element {
+    text-decoration: none;
+  }
+  
+
 
 /* general style of form */
 .attraction-menu-form label {
@@ -319,4 +329,77 @@ body {
     font-style: normal;
     font-weight: 700;
     color: #FFFFFF;
+}
+
+
+/* RWD for 900px-1200px */
+@media (max-width:1200px) {
+    .attraction-booking {
+        width: 100%;
+    }
+
+    .attraction-booking-imgGallery {
+        flex: none;
+        width: calc( (100% - 60px) / 2 );
+        height: 406px;
+        margin: 0 15px;
+    }
+
+    .attraction-imgGallery-left {
+        margin-right: calc( 95% - 72px );
+    }
+
+    .attraction-booking-schedule {
+        flex: none;
+        width: calc( (100% - 60px) / 2 );
+        margin: 0 15px;
+    }
+
+    .detail {
+        padding: 10px 30px;
+    }
+}
+
+/* RWD for 500px-875px */
+@media (max-width: 875px) {
+    .attraction-menu-form input[type=submit] {
+        margin: 25px 0 18.5px 0;
+    }
+}
+
+/* RWD for 360px-708px */
+@media (max-width: 708px) {
+    .attraction-booking {
+        flex-direction: column;
+        align-items: center;
+        height:fit-content;
+    }
+
+    .attraction-booking-imgGallery {
+        flex: none;
+        width: 100%;
+        height: 350px;
+        margin: 0;
+    }
+
+    .attraction-booking-schedule {
+        flex: none;
+        width: calc(100% - 20px);
+        margin: 20px 0 40px 0;
+    }
+
+    .attraction-booking-menu {
+        background-color: #e8e8e8;
+        padding: 15px 20px;
+        border-radius: 5px;
+    }
+
+    .attraction-menu-form input[type=submit] {
+        margin: 25px 0 0 0;
+    }
+
+    .detail {
+        padding: 10px;
+        margin-bottom: 134px;
+    }
 }

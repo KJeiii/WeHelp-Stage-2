@@ -35,14 +35,10 @@
                 </div>
 
                 <div class="attraction-imgGallery-dotsContainer">
-                    <!-- <img src="../static/image/attraction-dot-black.svg" alt=""> -->
-                    <!-- <img src="../static/image/attraction-dot-white.svg" alt="">
-                    <img src="../static/image/attraction-dot-white.svg" alt=""> -->
+                    <!-- dynamically create dots by JS -->
                 </div>
-                
-
-
             </div>
+
             <div class="attraction-booking-schedule">
                 <p class="attraction-booking-name"></p>
                 <p class="attraction-booking-CatMRT"></p>
@@ -51,7 +47,7 @@
                     <p class="attraction-booking-intro">以此景點為中心的一日行程，帶您探索城市角落故事</p>
                     <form class="attraction-menu-form" action="">
                         <label for="date">選擇日期：</label>
-                        <input type="date" name="date">
+                        <input type="date" name="date" pattern="d{2}/d{2}/d{4}">
                         <br>
                         <div class="attraction-menu-interval">
                             <label for="interval">選擇時間：</label>

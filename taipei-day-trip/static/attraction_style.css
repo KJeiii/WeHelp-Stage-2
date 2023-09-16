@@ -13,6 +13,7 @@ body {
     top: 0;
     background-color: white;
     z-index: 5;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .topDiv-navbar {
@@ -195,8 +196,6 @@ body {
     text-decoration: none;
   }
   
-
-
 /* general style of form */
 .attraction-menu-form label {
     font-size: 16px;
@@ -370,6 +369,7 @@ body {
 /* RWD for 360px-708px */
 @media (max-width: 708px) {
     .attraction-booking {
+        margin-top: 0px;
         flex-direction: column;
         align-items: center;
         height:fit-content;

@@ -4,7 +4,11 @@ listOfURL = attractionURL.split("/"),
 lenOfList = listOfURL.length,
 fetchURL = `/api/attraction/${listOfURL[lenOfList-1]}`;
 
-let amountOfImages;
+var//
+imagesAmount,
+dotmonitered = 0;
+console.log(`dotmonitered: ${dotmonitered}`);
+
 
 // ----- auto fill content using /api/attraction/<attraction_id> -----
 
@@ -28,16 +32,27 @@ const loadPage = async () => {
     let //
     imgGalleryElements = document.querySelector(".attraction-imgGallery-elements"),
     images = result["images"];
-    console.log(images.length);
+
+    // image dots
+    // recored imagesAmount to global variable
+    imagesAmount = images.length;
+    console.log(`imagesAmount: ${imagesAmount}`);
 
     images.forEach(image => {
         let imageItem = document.createElement("img");
         imageItem.setAttribute("src", image);
-        // imageItem.style.zIndex = 1;
         imgGalleryElements.appendChild(imageItem);
 
-        console.log('Done')
+        let//
+        dotsContainer = document.querySelector(".attraction-imgGallery-dotsContainer"),
+        dots = document.createElement("img");
+        dots.setAttribute("src", "../static/image/attraction-dot-white.svg");
+
+        dotsContainer.appendChild(dots);
     });
+
+    let firstDot = document.querySelectorAll(".attraction-imgGallery-dotsContainer img")[0];
+    firstDot.setAttribute("src", "../static/image/attraction-dot-black.svg");
     
     // attraction-booking-name
     fillContent(".attraction-booking-name", result["name"]);
@@ -85,18 +100,46 @@ const feeExchange = () => {
 
 // ----- scroll left or right when clicking arrow -----
 const moveLeft = () => {
+
+    // scroll images
     let //
     elements = document.querySelector(".attraction-imgGallery-elements"),
     movingLength = elements.clientWidth;
     
     elements.scrollLeft -= movingLength;
+
+    // scroll dots
+    let//
+    dots = document.querySelectorAll(".attraction-imgGallery-dotsContainer img");
+
+    // change dotmonitered to white and "dotmonitered - 1" to black
+    if (dotmonitered - 1 >= 0) {
+        dots[dotmonitered].setAttribute("src", "../static/image/attraction-dot-white.svg");
+        dots[dotmonitered - 1].setAttribute("src", "../static/image/attraction-dot-black.svg");
+        dotmonitered -= 1;
+        console.log(dotmonitered);
+
+    }
 };
 
 const moveRight = () => {
+
+    // scroll images
     let //
     elements = document.querySelector(".attraction-imgGallery-elements"),
     movingLength = elements.clientWidth;
 
     elements.scrollLeft += movingLength;
 
+    // scroll dots
+    let//
+    dots = document.querySelectorAll(".attraction-imgGallery-dotsContainer img");
+
+    // change dotmonitered to white and "dotmonitered + 1" to black
+    if (dotmonitered + 1 < imagesAmount) {
+        dots[dotmonitered].setAttribute("src", "../static/image/attraction-dot-white.svg");
+        dots[dotmonitered + 1].setAttribute("src", "../static/image/attraction-dot-black.svg");
+        dotmonitered += 1;
+        console.log(dotmonitered);
+    }
 };

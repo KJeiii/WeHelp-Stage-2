@@ -1,6 +1,11 @@
 from flask import *
-import TaipeiTravel.AttractionTool
+import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool
 import math
+from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
+import os
+import datetime as dt
+
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -9,6 +14,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 
 # build MySQL connection
 attrTool = TaipeiTravel.AttractionTool.attrTool()
+memberTool = TaipeiTravel.MemberTool.memberTool()
 
 # build funfciton for json format 
 def to_dict(attraction_result:list, image_result:dict):
@@ -46,7 +52,8 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-# API
+# ----------  API  ----------  
+# ------ Attraction -------
 @app.route("/api/attractions")
 def attractions():
 
@@ -181,5 +188,99 @@ def mrts():
 		}
 		return jsonify(response), 500
 
+
+# ------ Member -------
+
+@app.route("/api/user", methods = ["POST"])
+def signup():
+	if request.method == "POST":
+		user_name = request.form["user_name"]
+		email = request.form["email"]
+		password = generate_password_hash(request.form["password"])
+		
+		same_email_amount = len(memberTool.SearchMember(email = email))
+
+		try:
+			if same_email_amount == 0:
+				memberTool.SignUp(
+				user_name = user_name,
+				email = email,
+				password = password)
+
+				response = {"ok": True}
+				return jsonify(response), 200
+			
+			response = {
+				"error": True,
+				"message": "註冊失敗，重複的Email或其他原因"
+			  }
+			return jsonify(response), 400
+		
+		except:
+			response = {
+				"error": True,
+				"message": "伺服器內部錯誤"
+			}
+			return jsonify(response), 500
+
+
+@app.route("/api/user/auth", methods = ["PUT", "GET"])
+def signin():
+	if request.method == "PUT":
+		try:
+			email = request.form["email"]
+			password = request.form["password"]
+			member_info = memberTool.SearchMember(email)[0]
+			hashed_password = member_info["password"]
+
+			if check_password_hash(hashed_password, password):
+				payload = {
+					"usi" : member_info["user_id"],
+					"usn" : member_info["user_name"],
+					"eml" : member_info["email"],
+					"exp" : dt.datetime.utcnow() + dt.timedelta(days=7),
+					"iat" : dt.datetime.utcnow()
+				}
+
+				JWT = jwt.encode(payload, os.environ.get("JWTsecret"), "HS256")
+				respone = {
+					"token": JWT
+				}
+				return jsonify(respone), 200
+			
+			respone = {
+				"error": True,
+				"message": "登入失敗，帳號或密碼錯誤或其他原因"
+			}
+			return jsonify(respone), 400
+
+		except Exception as error:
+			print(error)
+			respone = {
+				"error": True,
+				"message": "伺服器內部錯誤"
+			}
+			return jsonify(respone), 500
+		
+	if request.method == "GET":
+		try: 
+			JWT = request.headers.get("authorization").split(" ")[1]
+			payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+			# print(payload)
+			response = {
+				"data": {
+					"id": payload["usi"],
+					"name": payload["usn"],
+					"email": payload["eml"]
+				}
+			}
+			return jsonify(response), 200
+		
+		except Exception as error:
+			print(error)
+			response = {
+				"data": None
+			}
+			return jsonify(response), 200
 
 app.run(host="0.0.0.0", port=3000, debug=True)

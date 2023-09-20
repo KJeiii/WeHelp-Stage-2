@@ -1,5 +1,4 @@
 from mysql.connector import connect, cursor, pooling
-from mysql.connector.conversion import MySQLConverter
 import os
 
 db_config = {

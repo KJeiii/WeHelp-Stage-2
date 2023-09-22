@@ -10,7 +10,7 @@ body {
     height: 100%;
     position:absolute;
     top: 0;
-    display: flex;
+    display: none;
     justify-content: center;
     background-color: rgba(0,0,0,0.25);
     z-index: 10;
@@ -19,7 +19,7 @@ body {
 .memberDiv {
     background-color: #FFFFFF;
     width: 340px;
-    height: 332px;
+    height: fit-content;
     text-align: center;
     margin-top: 80px;
     border-radius: 6px; 
@@ -63,7 +63,7 @@ body {
     color: #757575;
 }
 
-.memberDiv input[type=submit] {
+.memberDiv input[type=button]  {
     width: 310px;
     height: 47px;
     margin: 5px 15px;
@@ -77,19 +77,25 @@ body {
     color: #FFFFFF;
 }
 
-.memberDiv a {
-    display: block;
-    text-decoration: none;
+.switch {
     margin: 5px 15px 15px 15px;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
-}
-
-.memberDiv a:visited {
     color: #666666;
 }
 
+.message {
+    margin: 5px 15px 15px 15px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #000000;
+}
+
+.memberDiv-Signin {
+    display: none;
+}
 
 /* --- topDiv --- */
 .topDiv {

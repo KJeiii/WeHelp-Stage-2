@@ -193,10 +193,11 @@ def mrts():
 
 @app.route("/api/user", methods = ["POST"])
 def signup():
-	if request.method == "POST":
-		user_name = request.form["user_name"]
-		email = request.form["email"]
-		password = generate_password_hash(request.form["password"])
+	# if request.method == "POST":
+		user_name = request.json["user_name"]
+		email = request.json["email"]
+		password = generate_password_hash(request.json["password"])
+		# print(user_name,email,password)
 		
 		same_email_amount = len(memberTool.SearchMember(email = email))
 

@@ -14,26 +14,37 @@
     <div class="memberOuter">
         <div class="memberDiv">
             <div class="memberDiv-borderTop"></div>
-            <div class="memberDiv-cross">X</div>
-            <p class="memberTitle">註冊會員帳號</p>
-            <form action="" method="POST">
+            <div class="memberDiv-cross" onclick="Cancel()">X</div>
+            <div class="memberDiv-Signup">
+                <p class="memberTitle">註冊會員帳號</p>
                 <div>
-                    <label for="username" ></label>
-                    <input type="text" name="username" placeholder="輸入姓名" required>
+                    <input type="text" class="signup_user_name" placeholder="輸入姓名" required>
                 </div>
                 <div>
-                    <label for="email"></label>
-                    <input type="email" name="email" placeholder="輸入電子郵件" required>
+                    <input type="email" class = "signup_email" placeholder="輸入電子郵件" required>
                 </div>
                 <div>
-                    <label for="password"></label>
-                    <input type="password" name="password" placeholder=輸入密碼 required> 
+                    <input type="password" class="signup_password" placeholder=輸入密碼 required> 
                 </div>
                 <div>
-                    <input type="submit" value="註冊新帳戶">
+                    <input type="button" value="註冊新帳戶" onclick="SignUp()">
                 </div>
-            </form>
-            <a href="">已經有帳戶了？點此登入</a>
+                <div class="switch" onclick="SignInSwitch()">已經有帳戶了？點此登入</div>
+            </div>
+
+            <div class="memberDiv-Signin">
+                <p class="memberTitle">登入會員帳號</p>
+                <div>
+                    <input type="email" class="signin_email" placeholder="輸入電子郵件" required>
+                </div>
+                <div>
+                    <input type="password" class="signin_password" placeholder=輸入密碼 required> 
+                </div>
+                <div>
+                    <input type="button" value="登入帳戶">
+                </div>
+                <div class="switch" onclick="SignUpSwitch()">還沒有帳戶了？點此註冊</div>
+            </div>
         </div>
     </div>
 
@@ -44,7 +55,7 @@
             </div>
             <div class="topDiv-navbar-btn">
                 <div class="topDiv-navbar-schedule">預定行程</div>
-                <div class="topDiv-navbar-sign">登入/註冊</div>
+                <div class="topDiv-navbar-sign" onclick="Member()">登入/註冊</div>
             </div>
         </div>
     </div>
@@ -100,6 +111,7 @@
 
     <!-- Custom script -->
     <script src="../static/index_javascript.js"></script>
+    <script src="../static/member.js"></script>
 
 </body>
 </html>

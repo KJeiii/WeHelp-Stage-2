@@ -4,6 +4,93 @@ body {
     margin: 0px;
 }
 
+/* member div */
+.memberOuter {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.25);
+    z-index: 10;
+}
+
+.memberDiv {
+    background-color: #FFFFFF;
+    width: 340px;
+    height: 332px;
+    text-align: center;
+    margin-top: 80px;
+    border-radius: 6px; 
+    box-shadow: 0px 4px 60px 0px #AAA;
+}
+
+.memberDiv-cross {
+    width: 16px;
+    height: 16px;
+    background-color: wheat;
+    position: absolute;
+    top: 100px;
+
+}
+
+.memberDiv-borderTop {
+    width: 100%;
+    height: 10px;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(270deg, #378, #6AB);
+}
+
+.memberDiv p {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    color: #666666;
+    margin: 15px 15px 10px 15px;
+}
+
+.memberDiv input{
+    width: 278px;
+    height: 15px;
+    margin: 5px 15px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #757575;
+}
+
+.memberDiv input[type=submit] {
+    width: 310px;
+    height: 47px;
+    margin: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #448899;
+    padding: 10px 20px;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.memberDiv a {
+    display: block;
+    text-decoration: none;
+    margin: 5px 15px 15px 15px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.memberDiv a:visited {
+    color: #666666;
+}
+
+
 /* --- topDiv --- */
 .topDiv {
     display: flex;

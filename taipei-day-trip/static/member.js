@@ -40,6 +40,13 @@ function SignUpSwitch () {
 function Close () {
     let memberOuter = document.querySelector(".memberOuter");
     memberOuter.style.display = "none";
+
+    let//
+    messageDiv = document.querySelector(".message");
+    if (messageDiv !== null) {
+        let memberDiv = document.querySelector(".memberDiv");
+        memberDiv.removeChild(messageDiv);
+    };
 }
 
 // new member registration

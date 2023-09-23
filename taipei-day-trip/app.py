@@ -1,6 +1,11 @@
 from flask import *
-from MySQLTool import MySQLTool
+import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool
 import math
+from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
+import os
+import datetime as dt
+
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -8,7 +13,8 @@ app.json.ensure_ascii = False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
 # build MySQL connection
-db = MySQLTool()
+attrTool = TaipeiTravel.AttractionTool.attrTool()
+memberTool = TaipeiTravel.MemberTool.memberTool()
 
 # build funfciton for json format 
 def to_dict(attraction_result:list, image_result:dict):
@@ -46,7 +52,8 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-# API
+# ----------  API  ----------  
+# ------ Attraction -------
 @app.route("/api/attractions")
 def attractions():
 
@@ -58,7 +65,7 @@ def attractions():
 		# count total data and total pages matching keyword 
 		if keyword == None:
 			keyword = ""
-		total_attraction_amount = db.total_attractions(keyword = keyword)
+		total_attraction_amount = attrTool.total_attractions(keyword = keyword)
 		total_pages = int(math.ceil(total_attraction_amount/12))
 
 		# build page_attraction_dict
@@ -75,7 +82,7 @@ def attractions():
 		# search MySQL data by keyword
 		limit = (page*12, page_attraction_dict[page])
 		# print(limit)
-		attraction_result = db.Search_attraction(keyword = keyword, limit = limit)
+		attraction_result = attrTool.Search_attraction(keyword = keyword, limit = limit)
 
 		# # set nextPage value
 		if page + 1 == total_pages:
@@ -85,7 +92,7 @@ def attractions():
 
 		# # search image
 		attraction_id_list = [_["attraction_id"] for _ in attraction_result]
-		image_list = db.Search_image(attraction_id_list=attraction_id_list)
+		image_list = attrTool.Search_image(attraction_id_list=attraction_id_list)
 		image_result = {}
 		for id in attraction_id_list:
 			for _ in image_list:
@@ -117,7 +124,7 @@ def attractions():
 @app.route("/api/attraction/<attraction_id>")
 def attraction_by_id(attraction_id):
 	# count total attractions data and total pages 
-	total_attraction_amount = db.total_attractions()
+	total_attraction_amount = attrTool.total_attractions()
 
 	try:
 		# ------- Response error if attraction_id is incorrect --------
@@ -132,12 +139,12 @@ def attraction_by_id(attraction_id):
 		# ------ Reponse data, if attraction_id is given correctly. ------
 		
 		# search attraction
-		attraction_result = db.Search_attraction(attraction_id = attraction_id)
+		attraction_result = attrTool.Search_attraction(attraction_id = attraction_id)
 
 		# search image
 		attraction_id_list = [attraction_result[0]["attraction_id"]]
 
-		image_list = db.Search_image(attraction_id_list=attraction_id_list)
+		image_list = attrTool.Search_image(attraction_id_list=attraction_id_list)
 		image_result = {}
 		for id in attraction_id_list:
 			for _ in image_list:
@@ -169,7 +176,7 @@ def attraction_by_id(attraction_id):
 @app.route("/api/mrts")
 def mrts():
 	try:
-		result = db.Search_mrt()
+		result = attrTool.Search_mrt()
 		mrt_list = [_["mrt_name"] for _ in result]
 		response = {"data": mrt_list}
 		return jsonify(response)
@@ -181,5 +188,104 @@ def mrts():
 		}
 		return jsonify(response), 500
 
+
+# ------ Member -------
+
+@app.route("/api/user", methods = ["POST"])
+def signup():
+	# if request.method == "POST":
+		user_name = request.json["user_name"]
+		email = request.json["email"]
+		password = generate_password_hash(request.json["password"])
+		
+		same_email_amount = len(memberTool.SearchMember(email = email))
+
+		try:
+			if same_email_amount == 0:
+				memberTool.SignUp(
+				user_name = user_name,
+				email = email,
+				password = password)
+
+				response = {"ok": True}
+				return jsonify(response), 200
+			
+			response = {
+				"error": True,
+				"message": "註冊失敗，重複的Email或其他原因"
+			  }
+			return jsonify(response), 400
+		
+		except:
+			response = {
+				"error": True,
+				"message": "伺服器內部錯誤"
+			}
+			return jsonify(response), 500
+
+
+@app.route("/api/user/auth", methods = ["PUT", "GET"])
+def signin():
+	if request.method == "PUT":
+		try:
+			email = request.json["email"]
+			password = str(request.json["password"])
+
+			# check if email is registered
+			if len(memberTool.SearchMember(email)) != 0:
+				member_info = memberTool.SearchMember(email)[0]
+				hashed_password = member_info["password"]
+
+				# check if password is correct
+				if check_password_hash(hashed_password, password):
+					payload = {
+						"usi" : member_info["user_id"],
+						"usn" : member_info["user_name"],
+						"eml" : member_info["email"],
+						"exp" : dt.datetime.utcnow() + dt.timedelta(days=7),
+						"iat" : dt.datetime.utcnow()
+					}
+
+
+					JWT = jwt.encode(payload, os.environ.get("JWTsecret"), "HS256")
+
+					response = {
+						"token": JWT
+					}
+					return jsonify(response), 200
+			
+			response = {
+				"error": True,
+				"message": "登入失敗，帳號或密碼錯誤或其他原因"
+			}
+			return jsonify(response), 400
+
+		except Exception as error:
+			print(f'Error in SignIn (PUT) : {error}')
+			response = {
+				"error": True,
+				"message": "伺服器內部錯誤"
+			}
+			return jsonify(response), 500
+		
+	if request.method == "GET":
+		try: 
+			JWT = request.headers.get("authorization").split(" ")[1]
+			payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+			response = {
+				"data": {
+					"id": payload["usi"],
+					"name": payload["usn"],
+					"email": payload["eml"]
+				}
+			}
+			return jsonify(response), 200
+		
+		except Exception as error:
+			print(f'Error in SignIn (GET) : {error}')
+			response = {
+				"data": None
+			}
+			return jsonify(response), 200
 
 app.run(host="0.0.0.0", port=3000, debug=True)

@@ -1,5 +1,4 @@
 from mysql.connector import connect, cursor, pooling
-from mysql.connector.conversion import MySQLConverter
 import os
 
 db_config = {
@@ -9,7 +8,7 @@ db_config = {
     "database": "taipei_travel"
 }
 
-class MySQLTool(pooling.MySQLConnectionPool):
+class attrTool(pooling.MySQLConnectionPool):
     def __init__(self, **kargs):
         super().__init__(pool_name = "travel",
                          pool_size = 10,

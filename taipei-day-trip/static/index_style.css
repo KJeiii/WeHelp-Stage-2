@@ -154,7 +154,15 @@ body {
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
+}
 
+.topDiv-navbar-signout {
+    display: none;
+    color:#666666;
+    margin: 10px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
 }
 
 /* --- midDiv --- */

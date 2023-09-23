@@ -197,7 +197,6 @@ def signup():
 		user_name = request.json["user_name"]
 		email = request.json["email"]
 		password = generate_password_hash(request.json["password"])
-		# print(user_name,email,password)
 		
 		same_email_amount = len(memberTool.SearchMember(email = email))
 
@@ -229,45 +228,50 @@ def signup():
 def signin():
 	if request.method == "PUT":
 		try:
-			email = request.form["email"]
-			password = request.form["password"]
-			member_info = memberTool.SearchMember(email)[0]
-			hashed_password = member_info["password"]
+			email = request.json["email"]
+			password = str(request.json["password"])
 
-			if check_password_hash(hashed_password, password):
-				payload = {
-					"usi" : member_info["user_id"],
-					"usn" : member_info["user_name"],
-					"eml" : member_info["email"],
-					"exp" : dt.datetime.utcnow() + dt.timedelta(days=7),
-					"iat" : dt.datetime.utcnow()
-				}
+			# check if email is registered
+			if len(memberTool.SearchMember(email)) != 0:
+				member_info = memberTool.SearchMember(email)[0]
+				hashed_password = member_info["password"]
 
-				JWT = jwt.encode(payload, os.environ.get("JWTsecret"), "HS256")
-				respone = {
-					"token": JWT
-				}
-				return jsonify(respone), 200
+				# check if password is correct
+				if check_password_hash(hashed_password, password):
+					payload = {
+						"usi" : member_info["user_id"],
+						"usn" : member_info["user_name"],
+						"eml" : member_info["email"],
+						"exp" : dt.datetime.utcnow() + dt.timedelta(days=7),
+						"iat" : dt.datetime.utcnow()
+					}
+
+
+					JWT = jwt.encode(payload, os.environ.get("JWTsecret"), "HS256")
+
+					response = {
+						"token": JWT
+					}
+					return jsonify(response), 200
 			
-			respone = {
+			response = {
 				"error": True,
 				"message": "登入失敗，帳號或密碼錯誤或其他原因"
 			}
-			return jsonify(respone), 400
+			return jsonify(response), 400
 
 		except Exception as error:
-			print(error)
-			respone = {
+			print(f'Error in SignIn (PUT) : {error}')
+			response = {
 				"error": True,
 				"message": "伺服器內部錯誤"
 			}
-			return jsonify(respone), 500
+			return jsonify(response), 500
 		
 	if request.method == "GET":
 		try: 
 			JWT = request.headers.get("authorization").split(" ")[1]
 			payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
-			# print(payload)
 			response = {
 				"data": {
 					"id": payload["usi"],
@@ -278,7 +282,7 @@ def signin():
 			return jsonify(response), 200
 		
 		except Exception as error:
-			print(error)
+			print(f'Error in SignIn (GET) : {error}')
 			response = {
 				"data": None
 			}

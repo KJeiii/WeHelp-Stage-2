@@ -171,7 +171,7 @@ async function SignStatus() {
     };
 };
 
-// launch SignStatus function at each page loadind
+// launch SignStatus function at each page loading
 SignStatus();
 
 // member sign out

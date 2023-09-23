@@ -37,7 +37,7 @@ function SignUpSwitch () {
 };
 
 // leave member page
-function Cancel () {
+function Close () {
     let memberOuter = document.querySelector(".memberOuter");
     memberOuter.style.display = "none";
 }

@@ -77,6 +77,32 @@ INSERT INTO `image` VALUES (1,1,'https://www.travel.taipei/d_upload_ttn/sceneadm
 UNLOCK TABLES;
 
 --
+-- Table structure for table `member`
+--
+
+DROP TABLE IF EXISTS `member`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `member` (
+  `user_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) NOT NULL,
+  `email` text NOT NULL,
+  `password` text NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `member`
+--
+
+LOCK TABLES `member` WRITE;
+/*!40000 ALTER TABLE `member` DISABLE KEYS */;
+INSERT INTO `member` VALUES (1,'test','test@mail','pbkdf2:sha256:260000$tWlXCbyka7vIRVQn$97e6f5a5dd2530d4a9c2c0f68402271f5ef8af933aeed5cb04490b3f05eb8551'),(2,'Anna','test1@mail','pbkdf2:sha256:260000$CrjzcRQzbSYuigj7$bc193729969182a40975d8544379e0b704428bd6a67d1fc77f1e1c384daf577d'),(3,'Bob','test2@mail','pbkdf2:sha256:260000$LYMvbtCMGDH2E0Sq$15da38b367d05c81898b9e85260edda6b72d96326e7f0bb7ba65fbf74c51f854'),(4,'David','test3@mail','pbkdf2:sha256:260000$KYH3jck2OdZN139b$0f7092130eda27585af3dc49894cd3e8ef9ab434e84dd8566d7cea295604c45a'),(5,'Ellen','test4@mail','pbkdf2:sha256:260000$pQPu1Iqy4Eg9OTSW$5d58f2e8e0d55f9295e75e35bc9efdd4fcef0eb2e18ae685721e388196bd825b'),(6,'123','123@mail','pbkdf2:sha256:260000$D4OpPsaOuI8AtY2z$252e474f5a78368d93294151691c5dca897fa4a854c8e37cd952aa0f5da63540');
+/*!40000 ALTER TABLE `member` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `mrt`
 --
 
@@ -112,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-02 13:16:55
+-- Dump completed on 2023-09-23 16:24:40

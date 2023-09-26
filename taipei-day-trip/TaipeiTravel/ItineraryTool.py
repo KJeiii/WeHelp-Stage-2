@@ -8,7 +8,7 @@ db_config = {
     "database": "taipei_travel"
 }
 
-class ItineraryTool(pooling.MySQLConnectionPool):
+class itineraryTool(pooling.MySQLConnectionPool):
     def __init__(self, **kargs):
         super().__init__(pool_name = "travel",
                          pool_size = 10,
@@ -35,8 +35,16 @@ class ItineraryTool(pooling.MySQLConnectionPool):
         cursor = connection.cursor(dictionary=True)
 
         select_string = (
-                        "select * from itinerary "
-                        "where user_id = %s"
+                        "select attraction.attraction_id,"
+                        "attraction.attraction_name,"
+                        "attraction.address,"
+                        "itinerary.date,"
+                        "itinerary.time,"
+                        "itinerary.price,"
+                        "image.image "
+                        "from attraction inner join (itinerary, image) "
+                        "on (itinerary.attraction_id = attraction.attraction_id and image.attraction_id = attraction.attraction_id)"
+                        "where attraction.attraction_id = (select attraction_id from itinerary where user_id = %s)"
                         )
         data_string = (user_id, )
                     
@@ -62,3 +70,13 @@ class ItineraryTool(pooling.MySQLConnectionPool):
 
 
 
+# test = itineraryTool().CreateItinerary(
+#     user_id=1,
+#     attraction_id=1,
+#     date="2023-9-25",
+#     time="afternoon",
+#     price=2500
+# )
+
+test = itineraryTool().SearchItinerary(1)
+print(test)

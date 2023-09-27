@@ -13,58 +13,9 @@
 </head>
 
 <body>
-    <div class="memberOuter">
-        <div class="memberDiv">
-            <div class="memberDiv-borderTop"></div>
-            <div class="memberDiv-close" onclick="Close()"></div>
-            <div class="memberDiv-Signup">
-                <p class="memberTitle">註冊會員帳號</p>
-                <div>
-                    <input type="text" class="signup_user_name" placeholder="輸入姓名" required>
-                </div>
-                <div>
-                    <input type="email" class = "signup_email" placeholder="輸入電子郵件" required>
-                </div>
-                <div>
-                    <input type="password" class="signup_password" placeholder=輸入密碼 required> 
-                </div>
-                <div>
-                    <input type="button" value="註冊新帳戶" onclick="SignUp()">
-                </div>
-                <div class="switch" onclick="SignInSwitch()">已經有帳戶了？點此登入</div>
-            </div>
 
-            <div class="memberDiv-Signin">
-                <p class="memberTitle">登入會員帳號</p>
-                <div>
-                    <input type="email" class="signin_email" placeholder="輸入電子郵件" required>
-                </div>
-                <div>
-                    <input type="password" class="signin_password" placeholder=輸入密碼 required> 
-                </div>
-                <div>
-                    <input type="button" value="登入帳戶" onclick="SignIn()">
-                </div>
-                <div class="switch" onclick="SignUpSwitch()">還沒有帳戶？點此註冊</div>
-            </div>
-        </div>
-    </div>
-
+    {% include "member.html" %}
     {% include "header.html" %}
-
-    <!-- <div class="topDiv">
-        <div class="topDiv-navbar">
-            <div class="topDiv-navbar-title">
-                <a class="navbar-title-link" href="/">台北一日遊</a>
-            </div>
-            <div class="topDiv-navbar-btn">
-                <div class="topDiv-navbar-schedule">預定行程</div>
-                <div class="topDiv-navbar-sign" onclick="Member()">登入/註冊</div>
-                <div class="topDiv-navbar-signout" onclick="SignOut()">登出系統</div>
-            </div>
-        </div>
-    </div> -->
-
 
     <div class="midDiv">
         <div class="midDiv-container">
@@ -109,10 +60,6 @@
     </div>
 
     {% include "footer.html" %}
-
-    <!-- <div class="footerDiv">
-        <div class="footerDiv-text">COPYRIGHT © 2021 台北一日遊</div>
-    </div> -->
 
     <!-- Custom script -->
     <script src="../static/index_javascript.js"></script>

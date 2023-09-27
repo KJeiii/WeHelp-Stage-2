@@ -41,10 +41,11 @@ class itineraryTool(pooling.MySQLConnectionPool):
                         "itinerary.date,"
                         "itinerary.time,"
                         "itinerary.price,"
-                        "image.image "
+                        "json_arrayagg(image.image) as images "
                         "from attraction inner join (itinerary, image) "
                         "on (itinerary.attraction_id = attraction.attraction_id and image.attraction_id = attraction.attraction_id)"
-                        "where attraction.attraction_id = (select attraction_id from itinerary where user_id = %s)"
+                        "where attraction.attraction_id = (select attraction_id from itinerary where user_id = %s) "
+                        "group by attraction_id, attraction_name, address, date, time, price"
                         )
         data_string = (user_id, )
                     
@@ -78,5 +79,6 @@ class itineraryTool(pooling.MySQLConnectionPool):
 #     price=2500
 # )
 
-test = itineraryTool().SearchItinerary(1)
-print(test)
+test = itineraryTool().SearchItinerary(1)[0]["images"]
+images = test.replace("[", "").replace("]", "").replace('"', "").split(", ")
+print(images)

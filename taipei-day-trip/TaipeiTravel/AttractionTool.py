@@ -117,7 +117,6 @@ class attrTool(pooling.MySQLConnectionPool):
         cursor.execute(select_string, data_string)
         result = cursor.fetchall()
         connection.close()
-
         return result
     
 
@@ -130,8 +129,9 @@ class attrTool(pooling.MySQLConnectionPool):
 
         # create string for selecting data
         select_string_part1 = (
-                        "select * from image "
-                        "where attraction_id in (")
+                                "select * from image "
+                                "where attraction_id in ("
+                                )
         
         variable_part = "%s, "*(attraction_amount-1) + "%s)"
         select_string_part2 = select_string_part1 + variable_part

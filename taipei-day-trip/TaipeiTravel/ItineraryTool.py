@@ -90,14 +90,18 @@ class itineraryTool(pooling.MySQLConnectionPool):
 
 
 
-test = itineraryTool().UpdateItinerary(
-    user_id=1,
-    attraction_id=2,
-    date="2023-9-27",
-    time="beforenoon",
-    price=2000
-)
+# test = itineraryTool().UpdateItinerary(
+#     user_id=1,
+#     attraction_id=2,
+#     date="2023-9-27",
+#     time="beforenoon",
+#     price=2000
+# )
 
-# test = itineraryTool().SearchItinerary(1)[0]["images"]
-# images = test.replace("[", "").replace("]", "").replace('"', "").split(", ")
-# print(images)
+# test = itineraryTool().CreateItinerary(
+#     user_id=6,
+#     attraction_id=20,
+#     date="2023-10-10",
+#     time="afternoon",
+#     price=2500
+# )

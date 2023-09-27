@@ -15,7 +15,7 @@ class itineraryTool(pooling.MySQLConnectionPool):
                          pool_reset_session = True,
                          **db_config)
         
-    def CreateItinerary(self, user_id, attraction_id, date, time, price):
+    def CreateItinerary(self, user_id: int, attraction_id: int, date: str, time: str, price: int):
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -30,7 +30,7 @@ class itineraryTool(pooling.MySQLConnectionPool):
         connection.commit()
         connection.close()
 
-    def SearchItinerary(self, user_id):
+    def SearchItinerary(self, user_id: int):
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -56,7 +56,7 @@ class itineraryTool(pooling.MySQLConnectionPool):
 
         return result
     
-    def DeleteItinerary(self, user_id):
+    def DeleteItinerary(self, user_id: int):
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 

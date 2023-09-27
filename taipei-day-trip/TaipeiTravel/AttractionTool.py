@@ -22,7 +22,7 @@ class attrTool(pooling.MySQLConnectionPool):
         self.mrts_to_update = kargs.get("mrts_to_update")
     
 
-    def Update_mrt(self):
+    def Update_mrt(self) -> None:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -42,7 +42,7 @@ class attrTool(pooling.MySQLConnectionPool):
         connection.close()
 
 
-    def Update_attraction(self):
+    def Update_attraction(self) -> None :
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -70,7 +70,7 @@ class attrTool(pooling.MySQLConnectionPool):
         connection.close()
 
 
-    def Update_image(self):
+    def Update_image(self) -> None:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -88,7 +88,7 @@ class attrTool(pooling.MySQLConnectionPool):
         connection.close()
         
 
-    def Search_attraction(self, **kwarg):      
+    def Search_attraction(self, **kwarg) -> list:      
         keyword = kwarg.get("keyword")
         attraction_id = kwarg.get("attraction_id")
         limit = kwarg.get("limit")
@@ -121,7 +121,7 @@ class attrTool(pooling.MySQLConnectionPool):
         return result
     
 
-    def Search_image(self, attraction_id_list:list):
+    def Search_image(self, attraction_id_list:list) -> list:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -143,7 +143,7 @@ class attrTool(pooling.MySQLConnectionPool):
         return result
     
 
-    def total_attractions(self, **kwarg):
+    def total_attractions(self, **kwarg) -> int:
         keyword = kwarg.get("keyword")
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
@@ -166,7 +166,7 @@ class attrTool(pooling.MySQLConnectionPool):
         connection.close()
         return result
     
-    def Search_mrt(self):
+    def Search_mrt(self) -> list:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 

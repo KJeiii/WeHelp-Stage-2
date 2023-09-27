@@ -35,15 +35,16 @@ class itineraryTool(pooling.MySQLConnectionPool):
         cursor = connection.cursor(dictionary=True)
 
         select_string = (
-                        "select attraction.attraction_id,"
-                        "attraction.attraction_name,"
-                        "attraction.address,"
-                        "itinerary.date,"
-                        "itinerary.time,"
-                        "itinerary.price,"
+                        "select "
+                        "attraction.attraction_id, "
+                        "attraction.attraction_name, "
+                        "attraction.address, "
+                        "itinerary.date, "
+                        "itinerary.time, "
+                        "itinerary.price, "
                         "json_arrayagg(image.image) as images "
                         "from attraction inner join (itinerary, image) "
-                        "on (itinerary.attraction_id = attraction.attraction_id and image.attraction_id = attraction.attraction_id)"
+                        "on (itinerary.attraction_id = attraction.attraction_id and image.attraction_id = attraction.attraction_id) "
                         "where attraction.attraction_id = (select attraction_id from itinerary where user_id = %s) "
                         "group by attraction_id, attraction_name, address, date, time, price"
                         )

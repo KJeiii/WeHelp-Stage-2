@@ -56,6 +56,24 @@ class itineraryTool(pooling.MySQLConnectionPool):
 
         return result
     
+    def UpdateItinerary(self, user_id: int, attraction_id: int, date: str, time: str, price: int) -> None:
+        connection = self.get_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        update_string = (
+                        "update itinerary "
+                        "set attraction_id = %s, "
+                        "date = %s, "
+                        "time = %s, "
+                        "price = %s "
+                        "where user_id = %s"
+                        )
+        data_string = (attraction_id, date, time, price, user_id)
+                    
+        cursor.execute(update_string, data_string)
+        connection.commit()
+        connection.close()        
+
     def DeleteItinerary(self, user_id: int) -> None:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
@@ -72,14 +90,14 @@ class itineraryTool(pooling.MySQLConnectionPool):
 
 
 
-# test = itineraryTool().CreateItinerary(
-#     user_id=1,
-#     attraction_id=1,
-#     date="2023-9-25",
-#     time="afternoon",
-#     price=2500
-# )
+test = itineraryTool().UpdateItinerary(
+    user_id=1,
+    attraction_id=2,
+    date="2023-9-27",
+    time="beforenoon",
+    price=2000
+)
 
-test = itineraryTool().SearchItinerary(1)[0]["images"]
-images = test.replace("[", "").replace("]", "").replace('"', "").split(", ")
-print(images)
+# test = itineraryTool().SearchItinerary(1)[0]["images"]
+# images = test.replace("[", "").replace("]", "").replace('"', "").split(", ")
+# print(images)

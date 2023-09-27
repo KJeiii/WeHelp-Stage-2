@@ -11,7 +11,7 @@ async function createItinerary () {
     let response = fetch("/api/booking",{
         method: "POST",
         headers: {
-            "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2kiOjYsInVzbiI6IjEyMyIsImVtbCI6IjEyM0BtYWlsIiwiZXhwIjoxNjk2NDI3NzExLCJpYXQiOjE2OTU4MjI5MTF9.hY0qUQhhLxY-GX-MW-JjH0nkpr7k9w6p8mBm2L4keEA",
+            "authorization": `Bearer ${}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(itineraryInfo)

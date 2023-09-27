@@ -1,9 +1,7 @@
 from flask import *
-import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool
-import math
+import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool, TaipeiTravel.ItineraryTool
+import math, jwt, os
 from werkzeug.security import generate_password_hash, check_password_hash
-import jwt
-import os
 import datetime as dt
 
 
@@ -12,9 +10,10 @@ app.config["JSON_AS_ASCII"]=False
 app.json.ensure_ascii = False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
-# build MySQL connection
+# use TaipeiTravel module package 
 attrTool = TaipeiTravel.AttractionTool.attrTool()
 memberTool = TaipeiTravel.MemberTool.memberTool()
+itinTool = TaipeiTravel.ItineraryTool.itineraryTool()
 
 # build funfciton for json format 
 def to_dict(attraction_result:list, image_result:dict):
@@ -52,8 +51,7 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-# ----------  API  ----------  
-# ------ Attraction -------
+# ------ Attraction API -------
 @app.route("/api/attractions")
 def attractions():
 
@@ -189,11 +187,11 @@ def mrts():
 		return jsonify(response), 500
 
 
-# ------ Member -------
+# ------ Member API -------
 
 @app.route("/api/user", methods = ["POST"])
 def signup():
-	# if request.method == "POST":
+	if request.method == "POST":
 		user_name = request.json["user_name"]
 		email = request.json["email"]
 		password = generate_password_hash(request.json["password"])
@@ -246,7 +244,6 @@ def signin():
 						"iat" : dt.datetime.utcnow()
 					}
 
-
 					JWT = jwt.encode(payload, os.environ.get("JWTsecret"), "HS256")
 
 					response = {
@@ -287,5 +284,128 @@ def signin():
 				"data": None
 			}
 			return jsonify(response), 200
+		
+# ----- Itienrary API -----
+
+@app.route("/api/booking", methods = ["GET", "POST", "DELETE"])
+def itinerary():
+	BearerJWT = request.headers.get("authorization")
+
+	# Allow request API when BearerJWT is provided
+	if BearerJWT != None:
+
+		# GET for searching itinerary
+		if request.method == "GET":
+			try:
+				JWT = request.headers.get("authorization").split(" ")[1]
+				payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+
+
+				itinerary = itinTool.SearchItinerary(payload["usi"])
+				if len(itinerary) > 0:
+					itinerary_info = itinerary[0]
+					response = {
+						"data": {
+							"attraction": {
+								"id": itinerary_info["attraction_id"],
+								"name": itinerary_info["attraction_name"],
+								"address": itinerary_info["address"],
+								"image": itinerary_info["images"][0]
+							},
+						"date": itinerary_info["date"],
+						"time": itinerary_info["time"],
+						"price": itinerary_info["price"]
+						}
+					}
+					return jsonify(response), 200
+				else:
+					response = {
+						"data": None
+					}
+					return jsonify(response), 200
+
+			
+			except Exception as error:
+				print(f'Error in itinerary(GET) : {error}')
+				response = {
+					"error": True,
+					"message": "伺服器內部錯誤"
+				}
+
+				return jsonify(response), 500
+
+		# POST for creating new itinerary
+		if request.method == "POST":
+			try:
+				JWT = request.headers.get("authorization").split(" ")[1]
+				payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+
+				try: 
+					# check whether user has already booked itinerary
+					if len(itinTool.SearchItinerary(user_id = payload["usi"])) > 0:
+						print(request.json)
+
+						itinTool.UpdateItinerary(
+							user_id = payload["usi"],
+							attraction_id = request.json["attraction_id"],
+							date = request.json["date"],
+							time = request.json["time"],
+							price = request.json["price"]
+						)
+					else:
+						itinTool.CreateItinerary(
+						user_id = payload["usi"],
+						attraction_id = request.json["attraction_id"],
+						date = request.json["date"],
+						time = request.json["time"],
+						price = request.json["price"]
+						)
+				except Exception as error:
+					print(f'Error in itinerary(POST)-update itinerary : {error}')
+					response = {
+						"error": True,
+						"message": "建立失敗，輸入不正確或其他原因"
+					}
+					return jsonify(response), 400
+
+				else:
+					response = {
+						"ok": True
+					}
+					return jsonify(response), 200
+			
+			except Exception as error:
+				print(f'Error in itinerary(POST) : {error}')
+				response = {
+					"error": True,
+					"message": "伺服器內部錯誤"
+				}
+				return jsonify(response), 500
+			
+		# DELETE itinerary
+		if request.method == "DELETE":
+			try:
+				JWT = request.headers.get("authorization").split(" ")[1]
+				payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+
+				itinTool.DeleteItinerary(user_id = payload["usi"])
+
+				response = {
+					"ok": True
+				}
+				return jsonify(response), 200
+
+			except Exception as error:
+				print(f'Error in itinerary(DELETE) : {error}')
+
+	
+	# Deny access to API when BearerJWT is not provided
+	response = {
+		"error": True,
+		"message": "未登入系統，拒絕存取"
+	}
+
+	return jsonify(response), 403
+
 
 app.run(host="0.0.0.0", port=3000, debug=True)

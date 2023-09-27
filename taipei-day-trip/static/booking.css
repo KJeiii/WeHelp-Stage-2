@@ -1,0 +1,11 @@
+/* General style */
+body {
+    font-family: "Noto Sans TC";
+    margin: 0px;
+}
+
+/* navbar */
+.topDiv {
+    z-index: 5;
+    border-bottom: 1px solid #e8e8e8;
+}

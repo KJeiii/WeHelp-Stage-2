@@ -17,48 +17,73 @@
     {% include "member.html" %}
 
     <!-- itinerary info -->
-    <section class = "itinerary">
-        <p>您好，Mark，待預訂的行程如下：</p>
-        <div>
-            <figure>
-
-            </figure>
-
-            <article>
-                <p></p>
-                <p>日期：</p>
-                <p>時間：</p>
-                <p>費用：</p>
-                <p>地點：</p>
-            </article>
+    <section class = "topSection">
+        <div class="itineraryOuter">
+            <div class="itineraryInner">
+                <p class="welcomeMsg">您好，Mark，待預訂的行程如下：</p>
+                <div class="itinerary">
+                    <figure>
+                        <img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="attraction-img">
+                    </figure>
+                    <article>
+                        <p class = "itineray-title">台北一日遊：平安鐘</p>
+                        <div><p class="itinerary-item">日期：</p><p>2021-04-23</p></div>
+                        <div><p class="itinerary-item">時間：</p><p>早上 9 點到下午 4 點</p></div>
+                        <div><p class="itinerary-item">費用：</p><p>新台幣 2000 元</p></div>
+                        <div><p class="itinerary-item">地點：</p><p>台北市 大安區忠孝東路4段</p></div>
+                    </article>
+                    <img class = "bin" src="../static/image/bin.png" alt="bin">
+                </div>
+            </div>
         </div>
     </section>
-    <br>
 
-    <section>
-        <form action="">
-             <!-- member contact info -->
-            <p>您的聯絡資訊</p>
-            <label for="contact-name">聯絡姓名：</label>
-            <input type="text" name="contact-name">
-            <label for="contact-email">連絡信箱：</label>
-            <input type="text" name="contact-email">
-            <label for="contact-phone">手機號碼：</label>
-            <input type="text" name="contact-phone">
-            <br>
-
+    <section class="bottomSection">
+        <form class="payment" action="">
+            <!-- member contact info -->
+            <div class="memberContact-outer">
+                <div class="memberContact-inner">
+                    <p class="formTitle">您的聯絡資訊</p>
+                    <div>
+                        <label for="contact-name">聯絡姓名：</label>
+                        <input type="text" name="contact-name">
+                    </div>
+                    <div>
+                        <label for="contact-email">連絡信箱：</label>
+                        <input type="text" name="contact-email">
+                    </div>
+                    <div>
+                        <label for="contact-phone">手機號碼：</label>
+                        <input type="text" name="contact-phone">
+                    </div>
+                    <p class="formMemo">請保持手機暢通，準備到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+                </div>
+            </div>
             <!-- credit card info -->
-            <p>信用卡付款資訊</p>
-            <label for="cardnumber">卡片號碼：</label>
-            <input type="text" name="cardnumber">
-            <label for="expiration">過期時間：</label>
-            <input type="text" name="expiration" placeholder="MM / YY">
-            <label for="cvv">驗證密碼：</label>
-            <input type="text" name="cvv" placeholder="CVV">
-            <br>
+            <div class="creditcard-outer">
+                <div class="creditcard-inner">
+                    <p class="formTitle">信用卡付款資訊</p>
+                    <div>
+                        <label for="cardnumber">卡片號碼：</label>
+                        <input type="text" name="cardnumber">
+                    </div>
+                    <div>
+                        <label for="expiration">過期時間：</label>
+                        <input type="text" name="expiration" placeholder="MM / YY">
+                    </div>
+                    <div>
+                        <label for="cvv">驗證密碼：</label>
+                        <input type="text" name="cvv" placeholder="CVV">
+                    </div>
+                </div>
+            </div>
 
-            <p>總價：新台幣2000元</p>
-            <input type="submit" value="確認訂購並付款">
+            <div class="checkbill-outer">
+                <div class="checkbill-inner">
+                    <p>總價：新台幣2000元</p>
+                    <input type="submit" value="確認訂購並付款">
+                </div>
+            </div>
         </form>
     </section>
 

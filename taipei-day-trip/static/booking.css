@@ -64,7 +64,7 @@ article p {
     margin: 0;
 }
 
-.itineray-title {
+.itinerary-title {
     font-size: 16px;
     font-style: normal;
     font-weight: 700;  
@@ -202,4 +202,12 @@ form input[type=text] {
     font-weight: 400;
     color: #FFFFFF;
     line-height: 16px;
+}
+
+.no-itinerary {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #666666;
+    margin: 31px 0 40px 0;
 }

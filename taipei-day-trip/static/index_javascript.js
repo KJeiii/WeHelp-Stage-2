@@ -251,10 +251,13 @@ const searchMrt = element => {
 // itinerary cart
 function itineraryCart () {
     SignStatus().then((result) => {
-        if (result === true) {
+        if (result["ok"] === true) {
             console.log(result);
             window.location.replace("/booking");
         }
-        else{Member()}
+        else{
+            Member();
+            SignInSwitch();
+        }
     })
 };

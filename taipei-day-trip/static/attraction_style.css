@@ -211,7 +211,7 @@ body {
 
 
 /* submit-typed input*/
-.attraction-menu-form input[type=submit] {
+.attraction-menu-form input[type=button] {
     width: 154px;
     height: 36px;
     padding: 10px 20px;

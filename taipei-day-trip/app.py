@@ -310,7 +310,7 @@ def itinerary():
 								"id": itinerary_info["attraction_id"],
 								"name": itinerary_info["attraction_name"],
 								"address": itinerary_info["address"],
-								"image": itinerary_info["images"][0]
+								"image": itinerary_info["images"].replace("[", "").replace("]", "").replace('"',"").split(", ")[0]
 							},
 						"date": itinerary_info["date"],
 						"time": itinerary_info["time"],
@@ -339,26 +339,26 @@ def itinerary():
 			try:
 				JWT = request.headers.get("authorization").split(" ")[1]
 				payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+				print(request.json)
 
 				try: 
 					# check whether user has already booked itinerary
 					if len(itinTool.SearchItinerary(user_id = payload["usi"])) > 0:
-						print(request.json)
 
 						itinTool.UpdateItinerary(
 							user_id = payload["usi"],
-							attraction_id = request.json["attraction_id"],
+							attraction_id = int(request.json["attraction_id"]),
 							date = request.json["date"],
 							time = request.json["time"],
-							price = request.json["price"]
+							price = int(request.json["price"])
 						)
 					else:
 						itinTool.CreateItinerary(
 						user_id = payload["usi"],
-						attraction_id = request.json["attraction_id"],
+						attraction_id = int(request.json["attraction_id"]),
 						date = request.json["date"],
 						time = request.json["time"],
-						price = request.json["price"]
+						price = int(request.json["price"])
 						)
 				except Exception as error:
 					print(f'Error in itinerary(POST)-update itinerary : {error}')

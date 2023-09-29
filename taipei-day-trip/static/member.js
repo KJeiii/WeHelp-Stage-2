@@ -163,23 +163,44 @@ async function SignStatus() {
                 }
             });
 
-            let member_info = await response.json()["data"];
+            let// 
+            data = await response.json(),
+            member_info = await data["data"];
+            // console.log(member_info);
+            
             if (member_info !== null) {
                 let//
                 signDiv = document.querySelector(".topDiv-navbar-sign"),
                 signOutDiv = document.querySelector(".topDiv-navbar-signout");
                 signDiv.style.display = "none";
                 signOutDiv.style.display = "block";
-                return true
+
+                let result = {
+                    "ok": true,
+                    "data": {
+                        "id": member_info["id"],
+                        "name": member_info["name"],
+                        "email": member_info["email"]
+                    } 
+                }
+                return result
             };
-            return false
+
+            let result = {
+                "ok": false,
+                "data": null
+            }
+            return result
         }
         catch(error) {
             console.log(error);
         }
     };
-
-    return false
+    let result = {
+        "ok": false,
+        "data": null
+    }
+    return result
 };
 
 // launch SignStatus function at each page loading

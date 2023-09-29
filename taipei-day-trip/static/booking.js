@@ -47,7 +47,8 @@ function loadPage() {
                     fee = itineraryValues[2],
                     address = itineraryValues[3],
                     contactName = document.querySelector("input[name=contact-name]"),
-                    contactEmail = document.querySelector("input[name=contact-email]");
+                    contactEmail = document.querySelector("input[name=contact-email]"),
+                    totalPrice = document.querySelector(".checkbill-inner p");
         
                     // modify html elements
                     welceomMsg.textContent = `您好，${result["data"]["name"]}，待預訂的行程如下：`;
@@ -66,6 +67,7 @@ function loadPage() {
                     address.textContent = itineraryInfo["attraction"]["address"];
                     contactName.value = result["data"]["name"];
                     contactEmail.value = result["data"]["email"];
+                    totalPrice.textContent = `總價：新台幣${itineraryInfo["price"]}元`;
                     }
                     else{
                         let// 

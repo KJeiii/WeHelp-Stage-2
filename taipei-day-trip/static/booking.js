@@ -95,5 +95,21 @@ function loadPage() {
 loadPage();
 
 async function deleteItinerary() {
-
+    SignStatus().then((result) => {
+        if (result["ok"] === true){
+         fetch("api/booking", {
+            method: "DELETE",
+            headers: {
+                "authorization": `Bearer ${window.localStorage.getItem("token")}`
+            }
+         })
+         .then(res => {
+            window.location.replace(window.location.href);
+            return res.json()})
+         .then(data => {
+            console.log(data);
+         })
+         .catch(error => {console.log(error)})
+        }
+    });
 };

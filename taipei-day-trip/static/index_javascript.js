@@ -246,3 +246,15 @@ const searchMrt = element => {
     // update attraction
     loadPage(nextPage, keywordRecord);
 };
+
+
+// itinerary cart
+function itineraryCart () {
+    SignStatus().then((result) => {
+        if (result === true) {
+            console.log(result);
+            window.location.replace("/booking");
+        }
+        else{Member()}
+    })
+};

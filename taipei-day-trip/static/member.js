@@ -170,12 +170,16 @@ async function SignStatus() {
                 signOutDiv = document.querySelector(".topDiv-navbar-signout");
                 signDiv.style.display = "none";
                 signOutDiv.style.display = "block";
+                return true
             };
+            return false
         }
         catch(error) {
             console.log(error);
         }
     };
+
+    return false
 };
 
 // launch SignStatus function at each page loading

@@ -226,6 +226,14 @@ body {
     margin: 25px 0 41px 0;
 }
 
+.attraction-menu-form input[type=date]::-webkit-calendar-picker-indicator:hover,
+.attraction-menu-form input[type=radio]:hover,
+.attraction-menu-form input[type=button]:hover,
+.attraction-imgGallery-left:hover,
+.attraction-imgGallery-right:hover {
+    cursor: pointer;
+}
+
 
 /* detail part */
 .detail-outer {

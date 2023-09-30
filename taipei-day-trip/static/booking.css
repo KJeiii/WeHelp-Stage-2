@@ -118,7 +118,6 @@ article div p {
 
 .creditcard-inner {
     width: 1004px;
-    /* padding-left: 8px; */
     margin: 40px 0 25px 8px;
 }
 
@@ -170,7 +169,6 @@ form input[type=text] {
 
 .checkbill-inner {
     width: 1004px;
-    /* padding-left: 8px; */
     margin: 40px 0 25px 8px;
     text-align: end;
 }
@@ -204,6 +202,12 @@ form input[type=text] {
     font-weight: 500;
     color: #666666;
     margin: 31px 0 40px 0;
+}
+
+/* hover effect */
+.bin:hover,
+.checkbill-inner input:hover {
+    cursor: pointer;
 }
 
 @media (max-width:1200px) {

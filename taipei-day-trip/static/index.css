@@ -173,6 +173,10 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
+.bottomDiv-container-element:-webkit-any-link {
+    text-decoration: none;
+}
+
 .bottomDiv-container-attractionBackground {
     display: flex;
     align-items: center;

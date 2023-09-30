@@ -214,3 +214,16 @@ function SignOut() {
     window.location.replace(currentPage);
 };
 
+// itinerary cart
+function itineraryCart () {
+    SignStatus().then((result) => {
+        if (result["ok"] === true) {
+            console.log(result);
+            window.location.replace("/booking");
+        }
+        else{
+            Member();
+            SignInSwitch();
+        }
+    })
+};

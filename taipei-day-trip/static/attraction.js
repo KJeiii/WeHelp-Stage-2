@@ -143,3 +143,46 @@ const moveRight = () => {
         dotmonitered += 1;
     }
 };
+
+// booking itinerary
+function bookItinerary() {
+    SignStatus().then((result) => {
+        console.log(result);
+        if (result["ok"] === true) {
+            let// 
+            time = "beforenoon",
+            interval = document.querySelectorAll("input[type=radio]");
+
+            if (interval[1].checked === true) {
+                time = "afternoon";
+            }
+        
+            let itineraryInfo = {
+                "attraction_id": listOfURL[lenOfList-1],
+                "date": document.querySelector("input[type=date]").value,
+                "time": time,
+                "price": document.querySelector(".interval-fee").textContent.split(" ")[1]
+            };
+
+            fetch("/api/booking",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${window.localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(itineraryInfo)
+            })
+            .then((response) => {
+                console.log(response.json());
+                window.location.replace("/booking");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+        else {
+            Member();
+            SignInSwitch();
+        }
+    });
+};

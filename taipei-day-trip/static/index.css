@@ -4,184 +4,6 @@ body {
     margin: 0px;
 }
 
-/* member div */
-.memberOuter {
-    width: 100%;
-    height: 100%;
-    position:absolute;
-    top: 0;
-    display: none;
-    justify-content: center;
-    background-color: rgba(0,0,0,0.25);
-    z-index: 10;
-}
-
-.memberDiv {
-    background-color: #FFFFFF;
-    width: 340px;
-    height: fit-content;
-    text-align: center;
-    margin-top: 80px;
-    border-radius: 6px; 
-    box-shadow: 0px 4px 60px 0px #AAA;
-    position: absolute;
-}
-
-.memberDiv-close {
-    width: 16px;
-    height: 16px;
-    margin: 0px;
-    color: #666666;
-    position: absolute;
-    right: 10px;
-    top: 20px;
-    background-image: url("../static/image/member_close.png");
-    background-position: center;
-    background-size: cover;
-}
-
-.memberDiv-borderTop {
-    width: 100%;
-    height: 10px;
-    border-radius: 6px 6px 0 0;
-    background: linear-gradient(270deg, #378, #6AB);
-}
-
-.memberDiv p {
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    color: #666666;
-    margin: 15px 15px 10px 15px;
-}
-
-.memberDiv input{
-    width: 278px;
-    height: 15px;
-    margin: 5px 15px;
-    border: 1px solid #CCCCCC;
-    border-radius: 5px;
-    padding: 15px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    color: #757575;
-}
-
-.memberDiv input[type=button]  {
-    width: 310px;
-    height: 47px;
-    margin: 5px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #448899;
-    padding: 10px 20px;
-    font-size: 19px;
-    font-style: normal;
-    font-weight: 400;
-    color: #FFFFFF;
-}
-
-.switch {
-    margin: 5px 15px 15px 15px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    color: #666666;
-}
-
-.switch:hover {
-    color: #000000;
-}
-
-.message {
-    margin: 5px 15px 15px 15px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    color: #000000;
-}
-
-.memberDiv-Signin {
-    display: none;
-}
-
-/* --- topDiv --- */
-.topDiv {
-    display: flex;
-    justify-content: center;
-    padding: 0 10px 0 10px;
-    position: sticky;
-    top: 0;
-    background-color: white;
-}
-
-.topDiv-navbar {
-    display: flex;
-    width: 1200px;
-    margin: 10px 0 10px 0;
-    align-items: center;
-    justify-content: center;
-}
-
-.topDiv-navbar-title {
-    flex: none;
-    width: 150px;
-    color:#448899;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 700;
-    margin-left: 0px;
-}
-
-.navbar-title-link {
-    text-decoration: none;
-}
-
-.navbar-title-link:visited {
-    color: #448899;
-}
-
-.topDiv-navbar-btn {
-    display: flex;
-    flex: auto;
-    justify-content: end;
-    align-items: center;
-}
-
-.topDiv-navbar-schedule {
-    color:#666666;
-    margin: 10px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-}
-
-.topDiv-navbar-sign {
-    color:#666666;
-    margin: 10px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-}
-
-.topDiv-navbar-sign:hover {
-    color: #000000;    
-}
-
-.topDiv-navbar-signout {
-    display: none;
-    color:#666666;
-    margin: 10px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-}
-
-.topDiv-navbar-signout:hover {
-    color: #000000;
-}
-
 /* --- midDiv --- */
 .midDiv {
     display: flex;
@@ -247,6 +69,10 @@ body {
     background-color: #448899;
 }
 
+.midDiv-container-searchBar-btn:hover {
+    cursor: pointer;
+}
+
 /* ---  mrt-listBar --- */
 .mrtDiv {
     display: flex;
@@ -278,6 +104,7 @@ body {
     margin: 9px 0 9px 15px;
     background-image: url(../static/image/mrtbar-leftArrow-hover.png);
     background-size: 32px;
+    cursor: pointer;
 }
 
 .mrtDiv-mrtlistBar-rightArrow {
@@ -295,7 +122,7 @@ body {
     margin: 9px 15px 9px 0;
     background-image: url(../static/image/mrtbar-rightArrow-hover.png);
     background-size: 32px;
-
+    cursor: pointer;
 }
 
 .mrtDiv-mrtlistBar-content {
@@ -323,6 +150,7 @@ body {
     font-weight: 500;
     color: #000000;
     padding: 5px 15px 5px 15px;
+    cursor: pointer;
 }
 
 /* --- bottomDiv --- */
@@ -349,6 +177,10 @@ body {
     border-color: #e8e8e8;
     border-width: 1px;
     border-radius: 10px 10px 0 0;
+}
+
+.bottomDiv-container-element:link {
+    text-decoration: none;
 }
 
 .bottomDiv-container-attractionBackground {
@@ -392,25 +224,6 @@ body {
     width: calc(100% / 2);
     text-align: right;
     margin: 0px;
-}
-
-
-/* --- footerDiv --- */
-.footerDiv {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 104px;
-    background-color: #757575;
-
-}
-
-.footerDiv-text {
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    color: #FFFFFF;
 }
 
 /* RWD for 1200-360px */

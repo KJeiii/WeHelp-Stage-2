@@ -246,3 +246,5 @@ const searchMrt = element => {
     // update attraction
     loadPage(nextPage, keywordRecord);
 };
+
+

@@ -1,0 +1,268 @@
+/* General style */
+body {
+    font-family: "Noto Sans TC";
+    margin: 0px;
+}
+
+/* navbar */
+.topDiv {
+    z-index: 5;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+/* topSection and itinerary info */
+.topSection {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.itinerary-outer {
+    width: 1200px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    justify-content: center;
+}
+
+.itinerary-inner {
+    width: 1004px;
+}
+
+.itinerary {
+    display: flex;
+    margin-top: 30px;
+    position: relative;
+}
+
+.welcomeMsg {
+    font-style: 19px;
+    font-style: normal;
+    font-weight: 700;
+    color: #666;
+    margin: 0px;
+}
+
+figure {
+    width: 266px;
+    height: 200px;
+    margin: 0 30px 40px 8px;
+    background-size: cover;
+    background-position: center center;
+}
+
+article div {
+    display: flex;
+    margin: 10px 0 10px 0;
+}
+
+article p {
+    margin: 0;
+}
+
+.itinerary-title {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;  
+    color: #489;
+    margin: 5px 0 20px 0;
+}
+
+.itinerary-item {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;  
+    color: #666;
+}
+
+article div p {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;  
+    color: #666;
+}
+
+.bin {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: calc(100% - 30px);
+}
+
+/* bottomSection and payment info */
+.bottomSection {
+    display: flex;
+    justify-content: center;
+}
+
+.memberContact-outer {
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #e8e8e8;
+    margin: 0;
+}
+
+.memberContact-inner {
+    width: 1004px;
+    /* padding-left: 8px; */
+    margin: 40px 0 40px 8px;
+}
+
+.creditcard-outer {
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #e8e8e8;
+    margin: 0px;
+}
+
+.creditcard-inner {
+    width: 1004px;
+    margin: 40px 0 25px 8px;
+}
+
+.formTitle {
+    margin: 0 0 5px 0;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 700;
+    color: #666;
+}
+
+.formMemo {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    color: #666;
+    margin: 0;
+}
+
+.payment label {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #666;
+}
+
+form div {
+    margin: 15px 0;
+}
+
+form input[type=text] {
+    width: 180px;
+    height: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #e8e8e8;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #000;
+}
+
+.checkbill-outer {
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+}
+
+.checkbill-inner {
+    width: 1004px;
+    margin: 40px 0 25px 8px;
+    text-align: end;
+}
+
+.checkbill-inner p {
+    text-align: end;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    color: #666666;
+    margin: 0 0 25px 0;
+}
+
+.checkbill-inner input {
+    width: 173px;
+    height: 36px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border-style: none;
+    background-color: #448899;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 16px;
+}
+
+.no-itinerary {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #666666;
+    margin: 31px 0 40px 0;
+}
+
+/* hover effect */
+.bin:hover,
+.checkbill-inner input:hover {
+    cursor: pointer;
+}
+
+@media (max-width:1200px) {
+    .payment {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .itinerary-outer,
+    .memberContact-outer,
+    .creditcard-outer,
+    .checkbill-outer  {
+        width: 95%;
+    }
+
+    .itinerary-inner,
+    .memberContact-inner,
+    .creditcard-inner,
+    .checkbill-inner {
+        width: 84%;
+    }
+}
+
+@media (max-width:700px) {
+    .itinerary {
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+    .itinerary-outer,
+    .memberContact-outer,
+    .creditcard-outer,
+    .checkbill-outer  {
+        width: 94%;
+    }
+
+    .itinerary-inner,
+    .memberContact-inner,
+    .creditcard-inner,
+    .checkbill-inner {
+        width: 100%;
+    }
+
+    figure {
+        margin: 0 0 40px 0;
+        width: 100%;
+    }
+
+    .bin {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        left: calc(100% - 30px);
+        top: 100%;
+    }
+}

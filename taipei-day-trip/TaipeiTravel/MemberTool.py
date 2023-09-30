@@ -15,7 +15,7 @@ class memberTool(pooling.MySQLConnectionPool):
                          pool_reset_session = True,
                          **db_config)
         
-    def SearchMember(self, email):
+    def SearchMember(self, email: str) -> list:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 
@@ -25,7 +25,6 @@ class memberTool(pooling.MySQLConnectionPool):
 
         data_string = (email, )
                 
-
         cursor.execute(search_string, data_string)
         result = cursor.fetchall()
         connection.close()
@@ -33,7 +32,7 @@ class memberTool(pooling.MySQLConnectionPool):
         return result
 
         
-    def SignUp(self, user_name, email, password):
+    def SignUp(self, user_name: str, email: str, password: str) -> None:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
 

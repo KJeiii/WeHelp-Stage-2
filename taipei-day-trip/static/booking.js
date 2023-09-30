@@ -21,6 +21,9 @@ async function createItinerary () {
 function loadPage() {
     SignStatus().then((result) => {
         if (result["ok"] === true) {
+            let welceomMsg = document.querySelector(".welcomeMsg");
+            welceomMsg.textContent = `您好，${result["data"]["name"]}，待預訂的行程如下：`;
+
             fetch("api/booking", {
                 method: "GET",
                 headers: {
@@ -38,7 +41,6 @@ function loadPage() {
                     if (itineraryInfo !== null) {
                     // query all html elements need to be modified
                     let//
-                    welceomMsg = document.querySelector(".welcomeMsg"),
                     image = document.querySelector("figure img"),
                     itineraryTitle = document.querySelector(".itinerary-title"),
                     itineraryValues = document.querySelectorAll(".itinerary-value"),
@@ -51,7 +53,6 @@ function loadPage() {
                     totalPrice = document.querySelector(".checkbill-inner p");
         
                     // modify html elements
-                    welceomMsg.textContent = `您好，${result["data"]["name"]}，待預訂的行程如下：`;
                     image.setAttribute("src", itineraryInfo["attraction"]["image"]);
                     itineraryTitle.textContent = `台北一日遊：${itineraryInfo["attraction"]["name"]}`;
                     date.textContent = itineraryInfo["date"];

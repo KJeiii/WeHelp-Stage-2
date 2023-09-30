@@ -77,7 +77,7 @@ function loadPage() {
                     itineraryDiv = document.querySelector(".itinerary"),
                     bottomSection = document.querySelector(".bottomSection"),
                     noItinerary = document.createElement("p"),
-                    itineraryInner = document.querySelector(".itineraryInner");
+                    itineraryInner = document.querySelector(".itinerary-inner");
                     itineraryDiv.style.display = "none";
                     bottomSection.style.display = "none";
                     noItinerary.textContent = "目前沒有任何待預訂的行程";

@@ -17,14 +17,14 @@ body {
     margin-top: 40px;
 }
 
-.itineraryOuter {
+.itinerary-outer {
     width: 1200px;
     border-bottom: 1px solid #e8e8e8;
     display: flex;
     justify-content: center;
 }
 
-.itineraryInner {
+.itinerary-inner {
     width: 1004px;
 }
 
@@ -86,7 +86,6 @@ article div p {
     height: 30px;
     position: absolute;
     left: calc(100% - 30px);
-
 }
 
 /* bottomSection and payment info */
@@ -105,8 +104,8 @@ article div p {
 
 .memberContact-inner {
     width: 1004px;
-    padding-left: 8px;
-    margin: 40px 0;
+    /* padding-left: 8px; */
+    margin: 40px 0 40px 8px;
 }
 
 .creditcard-outer {
@@ -119,8 +118,8 @@ article div p {
 
 .creditcard-inner {
     width: 1004px;
-    padding-left: 8px;
-    margin: 40px 0 25px 0;
+    /* padding-left: 8px; */
+    margin: 40px 0 25px 8px;
 }
 
 .formTitle {
@@ -171,8 +170,8 @@ form input[type=text] {
 
 .checkbill-inner {
     width: 1004px;
-    padding-left: 8px;
-    margin: 40px 0 25px 0;
+    /* padding-left: 8px; */
+    margin: 40px 0 25px 8px;
     text-align: end;
 }
 
@@ -205,4 +204,61 @@ form input[type=text] {
     font-weight: 500;
     color: #666666;
     margin: 31px 0 40px 0;
+}
+
+@media (max-width:1200px) {
+    .payment {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .itinerary-outer,
+    .memberContact-outer,
+    .creditcard-outer,
+    .checkbill-outer  {
+        width: 95%;
+    }
+
+    .itinerary-inner,
+    .memberContact-inner,
+    .creditcard-inner,
+    .checkbill-inner {
+        width: 84%;
+    }
+}
+
+@media (max-width:700px) {
+    .itinerary {
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+    .itinerary-outer,
+    .memberContact-outer,
+    .creditcard-outer,
+    .checkbill-outer  {
+        width: 94%;
+    }
+
+    .itinerary-inner,
+    .memberContact-inner,
+    .creditcard-inner,
+    .checkbill-inner {
+        width: 100%;
+    }
+
+    figure {
+        margin: 0 0 40px 0;
+        width: 100%;
+    }
+
+    .bin {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        left: calc(100% - 30px);
+        top: 100%;
+    }
 }

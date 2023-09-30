@@ -248,16 +248,3 @@ const searchMrt = element => {
 };
 
 
-// itinerary cart
-function itineraryCart () {
-    SignStatus().then((result) => {
-        if (result["ok"] === true) {
-            console.log(result);
-            window.location.replace("/booking");
-        }
-        else{
-            Member();
-            SignInSwitch();
-        }
-    })
-};

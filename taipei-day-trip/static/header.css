@@ -49,20 +49,12 @@
     font-weight: 500;
 }
 
-.topDiv-navbar-schedule:hover {
-    color: #000000;
-}
-
 .topDiv-navbar-sign {
     color:#666666;
     margin: 10px;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
-}
-
-.topDiv-navbar-sign:hover {
-    color: #000000;    
 }
 
 .topDiv-navbar-signout {
@@ -74,6 +66,9 @@
     font-weight: 500;
 }
 
+.topDiv-navbar-schedule:hover,
+.topDiv-navbar-sign:hover,
 .topDiv-navbar-signout:hover {
     color: #000000;
+    cursor: pointer;
 }

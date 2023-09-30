@@ -46,13 +46,8 @@ figure {
     width: 266px;
     height: 200px;
     margin: 0 30px 40px 8px;
-}
-
-figure img {
-    display: block;
-    object-fit: cover;
-    object-position: center;
-    max-width: 100%;
+    background-size: cover;
+    background-position: center center;
 }
 
 article div {

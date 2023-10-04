@@ -1,3 +1,4 @@
+// booking function
 async function createItinerary () {
     let itineraryInfo = {
         "user_id": 6,
@@ -119,3 +120,42 @@ async function deleteItinerary() {
         console.log(error);
     });
 };
+
+// credit card tap pay SDK
+TPDirect.setupSDK(
+    appID = 137169,
+    appKey = "app_mb6V0dG1tbb6uz1CEVeP1uHHbleFJ8fRSqRnK64N2jL4PeLcx5BJwMicNA7i",
+    serverType = "sandbox"
+);
+
+let fields = {
+    number: {
+        element: "#card-number",
+        placeholder: "**** **** **** ****"
+    },
+    expirationDate: {
+        element: "#card-expiration-date",
+        placeholder: "MM / YY"
+    },
+    ccv: {
+        element: "#card-ccv",
+        placeholder: "後三碼"
+    }
+};
+
+TPDirect.card.setup({
+    fields: fields,
+    styles: {
+        "input": {
+            "width": "180px",
+            "height": "10px",
+            "padding": "10px",
+            "border-radius": "5px",
+            "border": "1px solid #e8e8e8",
+            "font-size": "16px",
+            "font-style": "normal",
+            "font-weight": "500",
+            "color": "#000"
+        }
+    }
+});

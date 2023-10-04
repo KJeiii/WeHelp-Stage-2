@@ -122,7 +122,7 @@ article div p {
 }
 
 .formTitle {
-    margin: 0 0 5px 0;
+    margin: 0 0 20px 0;
     font-size: 19px;
     font-style: normal;
     font-weight: 700;
@@ -157,7 +157,26 @@ form input[type=text] {
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
+    line-height: 13.3px;
     color: #000;
+}
+
+.tpfield {
+    width: 180px;
+    height: 20px;
+    padding: 5px 10px;
+    margin: 0;
+    border-radius: 5px;
+    border: 1px solid #e8e8e8;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #000;
+}
+
+.tpdiv {
+    display: flex;
+    align-items: center;
 }
 
 .checkbill-outer {

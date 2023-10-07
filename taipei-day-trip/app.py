@@ -1,5 +1,5 @@
 from flask import *
-import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool, TaipeiTravel.ItineraryTool
+import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool, TaipeiTravel.ItineraryTool, TaipeiTravel.PaymentTool
 import math, jwt, os, requests, json
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime as dt
@@ -14,6 +14,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 attrTool = TaipeiTravel.AttractionTool.attrTool()
 memberTool = TaipeiTravel.MemberTool.memberTool()
 itinTool = TaipeiTravel.ItineraryTool.itineraryTool()
+paymentTool = TaipeiTravel.PaymentTool.PaymentTool()
 
 # build funfciton for json format 
 def to_dict(attraction_result:list, image_result:dict):
@@ -474,16 +475,22 @@ def payment():
 		tappay_response = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime',
 						json = POST_request_body,
 						headers = POST_request_headers)
-		print(tappay_response.status_code, tappay_response.json())
-
 		payment_response = tappay_response.json()
+		# print(tappay_response.status_code, payment_response)
+
+		# create data in database (payment table)
+		paymentTool.CreatePayment(
+								payment_id = int(POST_request_body["order_number"]),
+								user_id = int(payload["usi"]),
+								phone = f"{order_info['contact']['phone']}",
+								payment_status = payment_response["status"]
+								)
+
+		# return payment status and message 
 		payment_status = payment_response["status"]
 		payment_message = "付款成功"
-
-
 		if payment_response["status"] != 0:
 			payment_message = "付款失敗"
-		print("Go through tappay_response")
 
 		response = {
 			"data": {
@@ -494,7 +501,8 @@ def payment():
 					}}
 		return jsonify(response), 200
 	
-	except:
+	except Exception as error:
+		print(error)
 		response = {
 			"error": True,
 			"message": "伺服器內部錯誤"

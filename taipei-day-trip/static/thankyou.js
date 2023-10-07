@@ -3,7 +3,7 @@ function loadPage() {
         .then((result) => {
             if (result["ok"] === true) {
                 let welceomMsg = document.querySelector(".welcomeMsg");
-                welceomMsg.textContent = `您好，${result["data"]["name"]}，購買的行程如下：`;
+                welceomMsg.textContent = `您好，${result["data"]["name"]}，感謝您的購買，您購買的行程如下：`;
 
                 let orderNumber = window.location.search.split("=")[1]*1
 
@@ -30,23 +30,23 @@ function loadPage() {
                         image = document.querySelector("figure"),
                         itineraryTitle = document.querySelector(".itinerary-title"),
                         itineraryValues = document.querySelectorAll(".itinerary-value"),
-                        date = itineraryValues[0],
-                        time = itineraryValues[1],
+                        dateAndTime = itineraryValues[0],
+                        address = itineraryValues[1],
                         fee = itineraryValues[2],
-                        address = itineraryValues[3],
+                        number = itineraryValues[3],
                         paymentStatus = itineraryValues[4]
             
                         // modify html elements
                         image.style.backgroundImage = `url(${orderInfo["trip"]["attraction"]["image"]})`;
                         itineraryTitle.textContent = `台北一日遊：${orderInfo["trip"]["attraction"]["name"]}`;
-                        date.textContent = orderInfo["trip"]["date"];
-                        time.textContent = "早上9點到下午4點"
+                        dateAndTime.textContent = `${orderInfo["trip"]["date"]} 早上9點到下午4點`;
                         fee.textContent = `新台幣${orderInfo["price"]}元`;
                         address.textContent = orderInfo["trip"]["attraction"]["address"];
+                        number.textContent = orderNumber;
                         paymentStatus.textContent = "未付款"
 
                         if (orderInfo["trip"]["time"] === "afternoon") {
-                            time.textContent = "下午4點到下午9點"
+                            dateAndTime.textContent = `${orderInfo["trip"]["date"]} 下午4點到下午9點`
                         }
 
                         if (orderInfo["status"] === 0) {

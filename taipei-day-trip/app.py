@@ -413,12 +413,34 @@ def itinerary():
 def payment():
 	BearerJWT = request.headers.get("authorization")
 
-	# Allow request API when BearerJWT is provided
-	if BearerJWT != None:
+	# Deny access to API when BearerJWT is not provided
+	if BearerJWT == None:
+		response = {
+			"error": True,
+			"message": "未登入系統，拒絕存取"
+		}
+		return jsonify(response), 403
+	
+	try:
 		JWT = request.headers.get("authorization").split(" ")[1]
 		payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
 
+		# Return 400 if one of prime, name, email, phone is empty.
 		order_info = request.json
+		conditions_for_create_order = [
+			order_info["prime"],
+			order_info["contact"]["name"],
+			order_info["contact"]["email"],
+			order_info["contact"]["phone"]
+		]
+		
+		if "" in conditions_for_create_order:
+			response = {
+				"error": True,
+				"message": "訂單建立失敗，輸入不正確或其他原因"
+			}
+			return jsonify(response), 400
+		
 		POST_request_headers = {
 			"Content-Type": "application/json",
 			"x-api-key": "partner_GTkXXVJq79qyvWZvJfM9I5sv3wSOv69IW13f7a3TXHyKse6kLaQidEGr"
@@ -449,21 +471,36 @@ def payment():
 			# }
 		}
 
-		print(POST_request_body)
+		tappay_response = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime',
+						json = POST_request_body,
+						headers = POST_request_headers)
+		print(tappay_response.status_code, tappay_response.json())
 
-		response = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime',
-						   json = POST_request_body,
-						   headers = POST_request_headers)
-		print(response.status_code, response.text)
-		return "ok"
+		payment_response = tappay_response.json()
+		payment_status = payment_response["status"]
+		payment_message = "付款成功"
 
-	else:
-		# Deny access to API when BearerJWT is not provided
+
+		if payment_response["status"] != 0:
+			payment_message = "付款失敗"
+		print("Go through tappay_response")
+
+		response = {
+			"data": {
+				"number": payment_response["order_number"],
+				"payment": {
+					"status": payment_status,
+					"message": payment_message}
+					}}
+		return jsonify(response), 200
+	
+	except:
 		response = {
 			"error": True,
-			"message": "未登入系統，拒絕存取"
+			"message": "伺服器內部錯誤"
 		}
+		return jsonify(response), 500
 
-		return jsonify(response), 403
+
 
 app.run(host="0.0.0.0", port=3000, debug=True)

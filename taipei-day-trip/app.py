@@ -478,19 +478,21 @@ def payment():
 		payment_response = tappay_response.json()
 		# print(tappay_response.status_code, payment_response)
 
+		# return payment status and message 
+		payment_status = payment_response["status"]
+		payment_message = "付款成功"
+		payment_description_mysql = "已付款"
+		if payment_response["status"] != 0:
+			payment_message = "付款失敗"
+			payment_description_mysql = "未付款"
+
 		# create data in database (payment table)
 		paymentTool.CreatePayment(
 								payment_id = int(POST_request_body["order_number"]),
 								user_id = int(payload["usi"]),
 								phone = f"{order_info['contact']['phone']}",
-								payment_status = payment_response["status"]
+								payment_status = payment_description_mysql
 								)
-
-		# return payment status and message 
-		payment_status = payment_response["status"]
-		payment_message = "付款成功"
-		if payment_response["status"] != 0:
-			payment_message = "付款失敗"
 
 		response = {
 			"data": {
@@ -508,6 +510,55 @@ def payment():
 			"message": "伺服器內部錯誤"
 		}
 		return jsonify(response), 500
+
+@app.route("/api/order/<orderNumber>", methods = ["GET"])
+def show_order(orderNumber):
+	BearerJWT = request.headers.get("authorization")
+	print(request.headers)
+
+	# Deny access to API when BearerJWT is not provided
+	if BearerJWT == None:
+		response = {
+			"error": True,
+			"message": "未登入系統，拒絕存取"
+		}
+		return jsonify(response), 403
+
+	try:
+		JWT = request.headers.get("authorization").split(" ")[1]
+		payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+		payment_info = paymentTool.SearchPayment(payment_id = orderNumber)
+		status = 0
+		if payment_info["payment_status"] != "已付款":
+			status = 1
+
+		response = {
+			"data": {
+				"number": payment_info["payment_id"],
+				"price": payment_info["price"],
+				"trip": {
+					"attraction": {
+						"id": payment_info["attraction_id"],
+						"name": payment_info["attraction_name"],
+						"address": payment_info["address"],
+						"image": payment_info["image"]
+					},
+					"date": payment_info["date"],
+					"time": payment_info["time"]
+				},
+				"contact": {
+					"name": payload["usn"],
+					"email": payload["eml"],
+					"phone": payment_info["phone"]
+				},
+				"status": status
+			}
+		}
+		return jsonify(response), 200
+
+	except Exception as error:
+		print(error)
+		raise error
 
 
 

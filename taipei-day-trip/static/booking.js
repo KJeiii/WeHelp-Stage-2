@@ -183,7 +183,8 @@ function checkBill() {
                                 "email": res["data"]["email"],
                                 "phone": document.querySelector("input[name=contact-phone]").value}
                             }
-                            console.log(orderInfo);
+                            // console.log(orderInfo);
+
                         // POST info
                         fetch("/api/orders", {
                             method: "POST",
@@ -193,7 +194,11 @@ function checkBill() {
                             },
                             body: JSON.stringify(orderInfo)
                         })
-                            .then(res => {console.log(res)})
+                            .then(res => {return res.json()})
+                            .then(result => {
+                                console.log(result)
+                                window.location.replace(`/thankyou?number=${result["data"]["number"]*1}`)
+                            })
                             .catch(err => {console.log(err)})
                     });
                 }

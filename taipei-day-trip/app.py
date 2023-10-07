@@ -514,7 +514,6 @@ def payment():
 @app.route("/api/order/<orderNumber>", methods = ["GET"])
 def show_order(orderNumber):
 	BearerJWT = request.headers.get("authorization")
-	print(request.headers)
 
 	# Deny access to API when BearerJWT is not provided
 	if BearerJWT == None:

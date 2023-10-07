@@ -12,6 +12,7 @@ body {
 
 /* topSection and itinerary info */
 .topSection {
+    height: calc(100vh - 206.5px);
     display: flex;
     justify-content: center;
     margin-top: 40px;
@@ -88,6 +89,10 @@ article div p {
 }
 
 @media (max-width:800px) {
+    .topSection {
+        height:fit-content;
+    }
+
     .itinerary {
         flex-wrap: wrap;
         margin-bottom: 50px;

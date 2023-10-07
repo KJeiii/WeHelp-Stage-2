@@ -493,7 +493,7 @@ def payment():
 								phone = f"{order_info['contact']['phone']}",
 								payment_status = payment_description_mysql
 								)
-
+		itinTool.DeleteItinerary(user_id = payload["usi"])
 		response = {
 			"data": {
 				"number": payment_response["order_number"],

@@ -444,12 +444,12 @@ def payment():
 		
 		POST_request_headers = {
 			"Content-Type": "application/json",
-			"x-api-key": "partner_GTkXXVJq79qyvWZvJfM9I5sv3wSOv69IW13f7a3TXHyKse6kLaQidEGr"
+			"x-api-key": os.environ.get("tappay_partner_key")
 		}
 
 		POST_request_body = {
 			"prime": order_info["prime"],
-			"partner_key": "partner_GTkXXVJq79qyvWZvJfM9I5sv3wSOv69IW13f7a3TXHyKse6kLaQidEGr",
+			"partner_key": os.environ.get("tappay_partner_key"),
 			"merchant_id": "mark81816_ESUN",
 			"amount": order_info["order"]["price"],
 			"order_number": dt.datetime.now().strftime("%Y%m%d%I%M%S"),

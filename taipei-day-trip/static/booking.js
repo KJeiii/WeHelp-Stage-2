@@ -1,3 +1,5 @@
+// import {TappayAppID, TappayAppKey} from "./apikey.js";
+
 var itineraryInfo=null;
 
 function loadPage() {
@@ -133,7 +135,6 @@ TPDirect.card.setup({
 function checkBill() {
     SignStatus()
         .then(res => {
-            console.log(TPDirect.paymentRequestApi.checkAvailability());
             if (res["ok"] === true) {
                 let TPfieldsStatus = TPDirect.card.getTappayFieldsStatus();
                 if ( TPfieldsStatus.canGetPrime === true) {

@@ -158,6 +158,7 @@ TPDirect.card.setup({
 function checkBill() {
     SignStatus()
         .then(res => {
+            console.log(TPDirect.paymentRequestApi.checkAvailability());
             if (res["ok"] === true) {
                 let TPfieldsStatus = TPDirect.card.getTappayFieldsStatus();
                 if ( TPfieldsStatus.canGetPrime === true) {
@@ -174,9 +175,9 @@ function checkBill() {
                                         "name": itineraryInfo["attraction"]["name"],
                                         "address": itineraryInfo["attraction"]["address"],
                                         "image": itineraryInfo["attraction"]["image"]
-                                    }},
-                                "date": itineraryInfo["date"],
-                                "time": itineraryInfo["time"]},
+                                    },
+                                    "date": itineraryInfo["date"],
+                                    "time": itineraryInfo["time"]}},
                             "contact": {
                                 "name": res["data"]["name"],
                                 "email": res["data"]["email"],

@@ -1,6 +1,6 @@
 from flask import *
 import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool, TaipeiTravel.ItineraryTool
-import math, jwt, os
+import math, jwt, os, requests, json
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime as dt
 
@@ -407,5 +407,63 @@ def itinerary():
 
 	return jsonify(response), 403
 
+
+# ----- payment API -----
+@app.route("/api/orders", methods = ["POST"])
+def payment():
+	BearerJWT = request.headers.get("authorization")
+
+	# Allow request API when BearerJWT is provided
+	if BearerJWT != None:
+		JWT = request.headers.get("authorization").split(" ")[1]
+		payload = jwt.decode(JWT, os.environ.get("JWTsecret"), algorithms = "HS256")
+
+		order_info = request.json
+		POST_request_headers = {
+			"Content-Type": "application/json",
+			"x-api-key": "partner_GTkXXVJq79qyvWZvJfM9I5sv3wSOv69IW13f7a3TXHyKse6kLaQidEGr"
+		}
+
+		POST_request_body = {
+			"prime": order_info["prime"],
+			"partner_key": "partner_GTkXXVJq79qyvWZvJfM9I5sv3wSOv69IW13f7a3TXHyKse6kLaQidEGr",
+			"merchant_id": "mark81816_ESUN",
+			"amount": order_info["order"]["price"],
+			"order_number": dt.datetime.now().strftime("%Y%m%d%I%M%S"),
+			"bank_transaction_id": f"BTID{dt.datetime.now().strftime('%Y%m%d%I%M%S')}",
+			"details": f"{order_info['order']['trip']['attraction']['name']}{order_info['order']['trip']['date']}{order_info['order']['trip']['time']}",
+			"cardholder": {
+				"phone_number": f"{order_info['contact']['phone']}",
+				"name": f"{order_info['contact']['name']}",
+				"email": f"{order_info['contact']['email']}",
+				"zip_code": "",
+				"address": "",
+				"national_id": "",
+			},
+			"product_image_url": order_info['order']['trip']['attraction']['image']
+			# "three_domain_secure": True,
+			# "result_url": {
+			# 	"frontend_redirect_url": url_for("thankyou"),
+			# 	"backend_notify_url": url_for("itinerary"),
+			# 	"go_back_url": url_for("itinerary")
+			# }
+		}
+
+		print(POST_request_body)
+
+		response = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime',
+						   json = POST_request_body,
+						   headers = POST_request_headers)
+		print(response.status_code, response.text)
+		return "ok"
+
+	else:
+		# Deny access to API when BearerJWT is not provided
+		response = {
+			"error": True,
+			"message": "未登入系統，拒絕存取"
+		}
+
+		return jsonify(response), 403
 
 app.run(host="0.0.0.0", port=3000, debug=True)

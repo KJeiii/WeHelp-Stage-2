@@ -1,0 +1,108 @@
+/* General style */
+body {
+    font-family: "Noto Sans TC";
+    margin: 0px;
+}
+
+/* navbar */
+.topDiv {
+    z-index: 5;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+/* topSection and itinerary info */
+.topSection {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.itinerary-outer {
+    width: 1200px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    justify-content: center;
+}
+
+.itinerary-inner {
+    width: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.itinerary {
+    flex: none;
+    width: 90%;
+    display: flex;
+    margin-top: 30px;
+}
+
+.welcomeMsg {
+    flex: none;
+    width: 90%;
+    font-style: 19px;
+    font-style: normal;
+    font-weight: 700;
+    color: #666;
+    margin: 0px;
+}
+
+figure {
+    width: 266px;
+    height: 200px;
+    margin: 0 30px 40px 8px;
+    background-size: cover;
+    background-position: center center;
+}
+
+article div {
+    display: flex;
+    margin: 10px 0 10px 0;
+}
+
+article p {
+    margin: 0;
+}
+
+.itinerary-title {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;  
+    color: #489;
+    margin: 5px 0 20px 0;
+}
+
+.itinerary-item {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;  
+    color: #666;
+}
+
+article div p {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;  
+    color: #666;
+}
+
+@media (max-width:800px) {
+    .itinerary {
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+    .itinerary-outer{
+        width: 94%;
+    }
+
+    .itinerary-inner{
+        width: 100%;
+    }
+
+    figure {
+        margin: 0 0 40px 0;
+        width: 100%;
+    }
+}

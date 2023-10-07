@@ -15,10 +15,30 @@
     {% include "header.html" %}
     {% include "member.html" %}
     
+     <!-- itinerary info -->
+     <section class = "topSection">
+        <div class="itinerary-outer">
+            <div class="itinerary-inner">
+                <p class="welcomeMsg"></p>
+                <div class="itinerary">
+                    <figure></figure>
+                    <article>
+                        <p class = "itinerary-title"></p>
+                        <div><p class="itinerary-item">日期：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">時間：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">費用：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">地點：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">付款狀況：</p><p class="itinerary-value"></p></div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
 
     {% include "footer.html" %}
 
     <!-- Custom script -->
     <script src="../static/header.js"></script>
+    <script src="../static/thankyou.js"></script>
 </body>
 </html>

@@ -18,7 +18,6 @@ class PaymentTool(pooling.MySQLConnectionPool):
     def CreatePayment(self, **kargs) -> None:
         connection = self.get_connection()
         cursor = connection.cursor(dictionary=True)
-        print(kargs)
         update_string = (
                         'insert into payment set '
                         'payment_id = %s, '
@@ -44,3 +43,34 @@ class PaymentTool(pooling.MySQLConnectionPool):
         cursor.execute(update_string, data_string)
         connection.commit()
         connection.close()
+    
+    def SearchPayment(self, payment_id):
+        connection = self.get_connection()
+        cursor = connection.cursor(dictionary=True)
+        search_string = (
+                        "select "
+                        "payment.payment_id, "
+                        "payment.price, "
+                        "payment.attraction_id, "
+                        "payment.date, "
+                        "payment.time, "
+                        "payment.phone, "
+                        "payment.payment_status, "
+                        "attraction.attraction_name, "
+                        "attraction.address, "
+                        "image.image "
+                        "from payment inner join (attraction, image) "
+                        "on (payment.attraction_id = attraction.attraction_id and image.attraction_id = payment.attraction_id) "
+                        "where payment.attraction_id = (select attraction_id from payment where payment_id = %s) "
+                        "limit 1"
+                        )
+        
+        data_string = (payment_id,)
+        cursor.execute(search_string, data_string)
+        result = cursor.fetchall()[0]
+        connection.close()
+        return result
+
+
+test = PaymentTool().SearchPayment(payment_id=20231007092905)
+print(test)

@@ -1,4 +1,4 @@
-// import {TappayAppID, TappayAppKey} from "./apikey.js";
+import { TappayAppID, TappayAppKey } from "./apikey.js";
 
 var itineraryInfo=null;
 
@@ -93,11 +93,7 @@ async function deleteItinerary() {
 
 // ----- credit card tap pay SDK -----
 // set up SDK
-TPDirect.setupSDK(
-    appID = 137169,
-    appKey = "app_mb6V0dG1tbb6uz1CEVeP1uHHbleFJ8fRSqRnK64N2jL4PeLcx5BJwMicNA7i",
-    serverType = "sandbox"
-);
+TPDirect.setupSDK(TappayAppID, TappayAppKey, "sandbox");
 
 // set up html input
 let fields = {

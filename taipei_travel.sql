@@ -91,11 +91,11 @@ CREATE TABLE `itinerary` (
   `time` varchar(255) DEFAULT NULL,
   `price` int unsigned NOT NULL,
   PRIMARY KEY (`itinerary_id`),
-  KEY `user_id` (`user_id`),
+  UNIQUE KEY `user_id` (`user_id`),
   KEY `attraction_id` (`attraction_id`),
   CONSTRAINT `itinerary_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `member` (`user_id`),
   CONSTRAINT `itinerary_ibfk_2` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`attraction_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `itinerary` (
 
 LOCK TABLES `itinerary` WRITE;
 /*!40000 ALTER TABLE `itinerary` DISABLE KEYS */;
-INSERT INTO `itinerary` VALUES (2,1,2,'2023-9-27','beforenoon',2000),(10,6,22,'2023-10-19','afternoon',2500),(12,7,54,'2023-10-11','afternoon',2500),(13,8,16,'2023-11-01','beforenoon',2000);
+INSERT INTO `itinerary` VALUES (2,5,44,'2023-11-22','afternoon',2500),(12,7,54,'2023-10-11','afternoon',2500),(13,8,26,'2023-10-30','beforenoon',2000);
 /*!40000 ALTER TABLE `itinerary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +191,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (20231007092905,8,37,'2023-10-25','beforenoon',2000,'12312312313','已付款'),(20231007103014,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103248,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103306,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103850,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103907,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007110020,6,22,'2023-10-19','afternoon',2500,'123123123','已付款'),(20231007114243,8,16,'2023-11-01','beforenoon',2000,'123123555','已付款');
+INSERT INTO `payment` VALUES (20231007092905,8,37,'2023-10-25','beforenoon',2000,'12312312313','已付款'),(20231007103014,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103248,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103306,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103850,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103907,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007110020,6,22,'2023-10-19','afternoon',2500,'123123123','已付款'),(20231007114243,8,16,'2023-11-01','beforenoon',2000,'123123555','已付款'),(20231008020328,6,20,'2023-10-23','afternoon',2500,'123123','已付款'),(20231008125858,6,22,'2023-10-19','afternoon',2500,'123123','已付款');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -204,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-08  0:29:03
+-- Dump completed on 2023-10-08 15:04:41

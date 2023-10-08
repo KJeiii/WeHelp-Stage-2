@@ -343,24 +343,20 @@ def itinerary():
 				print(request.json)
 
 				try: 
-					# check whether user has already booked itinerary
-					if len(itinTool.SearchItinerary(user_id = payload["usi"])) > 0:
-
-						itinTool.UpdateItinerary(
-							user_id = payload["usi"],
-							attraction_id = int(request.json["attraction_id"]),
-							date = request.json["date"],
-							time = request.json["time"],
-							price = int(request.json["price"])
-						)
-					else:
-						itinTool.CreateItinerary(
+					# 1. update itinerary if user has already booked
+					# 2. otherwise; create itinerary
+					itinTool.UpdateItinerary(
 						user_id = payload["usi"],
 						attraction_id = int(request.json["attraction_id"]),
 						date = request.json["date"],
 						time = request.json["time"],
 						price = int(request.json["price"])
-						)
+					)
+					response = {
+						"ok": True
+					}
+					return jsonify(response), 200
+
 				except Exception as error:
 					print(f'Error in itinerary(POST)-update itinerary : {error}')
 					response = {
@@ -369,12 +365,7 @@ def itinerary():
 					}
 					return jsonify(response), 400
 
-				else:
-					response = {
-						"ok": True
-					}
-					return jsonify(response), 200
-			
+
 			except Exception as error:
 				print(f'Error in itinerary(POST) : {error}')
 				response = {

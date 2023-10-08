@@ -61,14 +61,17 @@ class itineraryTool(pooling.MySQLConnectionPool):
         cursor = connection.cursor(dictionary=True)
 
         update_string = (
-                        "update itinerary "
-                        "set attraction_id = %s, "
-                        "date = %s, "
-                        "time = %s, "
-                        "price = %s "
-                        "where user_id = %s"
+                        "insert into itinerary "
+                        "(user_id, attraction_id, date, time, price) "
+                        "values (%s, %s, %s, %s, %s)"
+                        "on duplicate key update "
+                        "attraction_id = values(attraction_id), "
+                        "date = values(date), "
+                        "time = values(time), "
+                        "price = values(price)"
                         )
-        data_string = (attraction_id, date, time, price, user_id)
+        data_string = (user_id, attraction_id, date, time, price)
+        print(data_string)
                     
         cursor.execute(update_string, data_string)
         connection.commit()

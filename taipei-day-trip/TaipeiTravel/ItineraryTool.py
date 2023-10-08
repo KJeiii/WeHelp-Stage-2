@@ -71,7 +71,6 @@ class itineraryTool(pooling.MySQLConnectionPool):
                         "price = values(price)"
                         )
         data_string = (user_id, attraction_id, date, time, price)
-        print(data_string)
                     
         cursor.execute(update_string, data_string)
         connection.commit()

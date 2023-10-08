@@ -72,5 +72,5 @@ class PaymentTool(pooling.MySQLConnectionPool):
         return result
 
 
-test = PaymentTool().SearchPayment(payment_id=20231007092905)
-print(test)
+# test = PaymentTool().SearchPayment(payment_id=20231007092905)
+# print(test)

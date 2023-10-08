@@ -95,7 +95,7 @@ CREATE TABLE `itinerary` (
   KEY `attraction_id` (`attraction_id`),
   CONSTRAINT `itinerary_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `member` (`user_id`),
   CONSTRAINT `itinerary_ibfk_2` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`attraction_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `itinerary` (
 
 LOCK TABLES `itinerary` WRITE;
 /*!40000 ALTER TABLE `itinerary` DISABLE KEYS */;
-INSERT INTO `itinerary` VALUES (2,1,2,'2023-9-27','beforenoon',2000),(8,6,25,'2023-08-29','afternoon',2500);
+INSERT INTO `itinerary` VALUES (2,1,2,'2023-9-27','beforenoon',2000),(10,6,22,'2023-10-19','afternoon',2500),(12,7,54,'2023-10-11','afternoon',2500),(13,8,16,'2023-11-01','beforenoon',2000);
 /*!40000 ALTER TABLE `itinerary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,6 +160,40 @@ LOCK TABLES `mrt` WRITE;
 INSERT INTO `mrt` VALUES (1,'市政府',2),(2,'新北投',6),(3,'象山',1),(4,'國父紀念館',1),(5,'文德',1),(6,'龍山寺',3),(7,'芝山',1),(8,'大安森林公園',1),(9,'西門',1),(10,'葫洲',1),(11,'行天宮',1),(12,'中山',3),(13,'公館',1),(14,'北投',1),(15,'唭哩岸',1),(16,'大湖公園',1),(17,'關渡',4),(18,'劍潭',4),(19,'臺大醫院',2),(20,'台北101／世貿',1),(21,'忠孝新生',2),(22,'圓山',3),(23,'動物園',3),(24,'石牌',1),(25,'松山',1),(26,'雙連',2),(27,'大直',1),(28,'忠義',1),(29,NULL,1),(30,'中正紀念堂',2),(31,'士林',2),(32,'木柵',1),(33,'松江南京',1);
 /*!40000 ALTER TABLE `mrt` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `payment_id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `attraction_id` bigint NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `time` varchar(255) NOT NULL,
+  `price` int unsigned NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `payment_status` varchar(255) NOT NULL DEFAULT (_utf8mb4'未付款'),
+  PRIMARY KEY (`payment_id`),
+  KEY `user_id` (`user_id`),
+  KEY `attraction_id` (`attraction_id`),
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `member` (`user_id`),
+  CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`attraction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (20231007092905,8,37,'2023-10-25','beforenoon',2000,'12312312313','已付款'),(20231007103014,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103248,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103306,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103850,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007103907,6,22,'2023-10-19','afternoon',2500,'12312312312','已付款'),(20231007110020,6,22,'2023-10-19','afternoon',2500,'123123123','已付款'),(20231007114243,8,16,'2023-11-01','beforenoon',2000,'123123555','已付款');
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -170,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-30 14:12:51
+-- Dump completed on 2023-10-08  0:29:03

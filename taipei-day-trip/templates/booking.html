@@ -60,8 +60,23 @@
             <!-- credit card info -->
             <div class="creditcard-outer">
                 <div class="creditcard-inner">
-                    <p class="formTitle">信用卡付款資訊</p>
-                    <div>
+                    <p class="formTitle">信用卡付款資訊</p>   
+
+                    <div class="tpdiv">
+                        <label for="cardnumber">卡片號碼：</label>
+                        <div class="tpfield" id="card-number"></div>
+                    </div>
+                    <div class="tpdiv">
+                        <label for="expiration">過期時間：</label>
+                        <div class="tpfield" id="card-expiration-date"></div>
+                    </div>
+                    <div class="tpdiv">
+                        <label for="cvv">驗證密碼：</label>
+                        <div  class="tpfield" id="card-ccv"></div>
+                    </div>
+
+
+                    <!-- <div>
                         <label for="cardnumber">卡片號碼：</label>
                         <input type="text" name="cardnumber" placeholder="**** **** **** ****">
                     </div>
@@ -72,14 +87,14 @@
                     <div>
                         <label for="cvv">驗證密碼：</label>
                         <input type="text" name="cvv" placeholder="CVV">
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
             <div class="checkbill-outer">
                 <div class="checkbill-inner">
                     <p>總價：新台幣2000元</p>
-                    <input type="submit" value="確認訂購並付款">
+                    <input type="button" value="確認訂購並付款" onclick="checkBill()">
                 </div>
             </div>
         </form>
@@ -88,7 +103,7 @@
 
 
     {% include "footer.html" %}
-
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
     <script src="../static/header.js"></script>
     <script src="../static/booking.js"></script>
 </body>

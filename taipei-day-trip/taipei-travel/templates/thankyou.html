@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taipei Travel</title>
+
+    <!-- Custome css -->
+    <link rel="stylesheet" href="../static/member.css">
+    <link rel="stylesheet" href="../static/header.css">
+    <link rel="stylesheet" href="../static/footer.css">
+    <link rel="stylesheet" href="../static/thankyou.css">
+</head>
+<body>
+    {% include "header.html" %}
+    {% include "member.html" %}
+    
+     <!-- itinerary info -->
+     <section class = "topSection">
+        <div class="itinerary-outer">
+            <div class="itinerary-inner">
+                <p class="welcomeMsg"></p>
+                <div class="itinerary">
+                    <figure></figure>
+                    <article>
+                        <p class = "itinerary-title"></p>
+                        <div><p class="itinerary-item">日期/時間：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">地點：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">費用：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">訂單編號：</p><p class="itinerary-value"></p></div>
+                        <div><p class="itinerary-item">付款狀況：</p><p class="itinerary-value"></p></div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include "footer.html" %}
+
+    <!-- Custom script -->
+    <script src="../static/header.js"></script>
+    <script src="../static/thankyou.js"></script>
+</body>
+</html>

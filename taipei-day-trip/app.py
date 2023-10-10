@@ -3,6 +3,8 @@ import TaipeiTravel.AttractionTool, TaipeiTravel.MemberTool, TaipeiTravel.Itiner
 import math, jwt, os, requests, json
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime as dt
+from dotenv import load_dotenv
+load_dotenv()
 
 
 app=Flask(__name__)

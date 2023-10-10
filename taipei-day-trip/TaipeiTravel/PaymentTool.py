@@ -3,13 +3,6 @@ import os
 from TaipeiTravel import db_config
 
 
-# db_config = {
-#     "host": "localhost",
-#     "user": "root",
-#     "password": os.environ.get("dbpassword"),
-#     "database": "taipei_travel"
-# }
-
 class PaymentTool(pooling.MySQLConnectionPool):
     def __init__(self, **kargs):
         super().__init__(pool_name = "travel",

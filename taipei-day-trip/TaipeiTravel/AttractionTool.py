@@ -3,7 +3,6 @@ import os
 from TaipeiTravel import db_config
 
 
-
 class attrTool(pooling.MySQLConnectionPool):
     def __init__(self, **kargs):
         super().__init__(pool_name = "travel",

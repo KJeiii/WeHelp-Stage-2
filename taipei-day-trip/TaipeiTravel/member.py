@@ -1,5 +1,5 @@
 from TaipeiTravel import app
-from models import MemberTool
+from TaipeiTravel.models import MemberTool
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import request, jsonify, render_template
 import datetime as dt

@@ -1,13 +1,10 @@
 from TaipeiTravel import app
 import jwt, os
 from flask import request, jsonify, render_template
-from models import ItineraryTool
+from TaipeiTravel.models import ItineraryTool
 
 itinTool = ItineraryTool.itineraryTool()
 
-@app.route("/booking")
-def booking():
-	return render_template("booking.html")
 
 		
 # ----- Itienrary API -----

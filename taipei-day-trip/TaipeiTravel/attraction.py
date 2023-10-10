@@ -1,20 +1,9 @@
 from TaipeiTravel import app
 import math
-from flask import request, jsonify, render_template
-from models import AttractionTool
+from flask import request, jsonify
+from TaipeiTravel.models import AttractionTool
 
-attrTool = AttractionTool.attrTool
-
-# Pages
-@app.route("/")
-def index():
-	return render_template("index.html")
-
-
-@app.route("/attraction/<id>")
-def attraction(id):
-	return render_template("attraction.html")
-
+attrTool = AttractionTool.attrTool()
 
 # ------ Attraction API -------
 # build funfciton for json format 

@@ -1,7 +1,7 @@
 from TaipeiTravel import app
 import jwt, os, requests
 from flask import request, jsonify, render_template
-from models import PaymentTool, ItineraryTool
+from TaipeiTravel.models import PaymentTool, ItineraryTool
 import datetime as dt
 
 

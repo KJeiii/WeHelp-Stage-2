@@ -1,5 +1,5 @@
 from mysql.connector import pooling
-from models import db_config
+from TaipeiTravel.models import db_config
 
 
 class attrTool(pooling.MySQLConnectionPool):

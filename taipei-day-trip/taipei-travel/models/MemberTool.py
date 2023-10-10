@@ -1,6 +1,5 @@
-from mysql.connector import connect, cursor, pooling
-import os
-from TaipeiTravel import db_config
+from mysql.connector import pooling
+from models import db_config
 
 
 class memberTool(pooling.MySQLConnectionPool):

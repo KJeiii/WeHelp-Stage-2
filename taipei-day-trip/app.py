@@ -4,9 +4,8 @@ import math, jwt, os, requests, json
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime as dt
 from dotenv import load_dotenv
+
 load_dotenv()
-
-
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.json.ensure_ascii = False

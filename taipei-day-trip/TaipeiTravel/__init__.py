@@ -15,7 +15,6 @@ app.config["JSON_AS_ASCII"]=False
 app.json.ensure_ascii = False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
-from TaipeiTravel.views.views import *
 
 
 # app.register_blueprint(attraction_bp)

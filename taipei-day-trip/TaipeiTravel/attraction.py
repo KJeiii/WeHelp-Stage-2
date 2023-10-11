@@ -3,7 +3,10 @@ from flask import request, jsonify, Blueprint, render_template
 from TaipeiTravel.models import AttractionTool
 
 attrTool = AttractionTool.attrTool()
-attraction_bp = Blueprint("attraction_bp", __name__)
+attraction_bp = Blueprint("attraction_bp", 
+						  __name__, 
+						  template_folder="templates",
+						  static_folder="static")
 
 
 # attraction pages
@@ -130,7 +133,7 @@ def attraction_by_id(attraction_id):
 			for _ in image_list:
 				if _["attraction_id"] == id:
 					try:
-						image_result[id].attraction_bpend(_["image"])
+						image_result[id].append(_["image"])
 					except:
 						image_result[id] = [_["image"]]
 

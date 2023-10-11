@@ -1,5 +1,5 @@
 import jwt, os, requests
-from flask import request, jsonify, render_template, Blueprint
+from flask import request, jsonify, Blueprint
 from TaipeiTravel.models import PaymentTool, ItineraryTool
 import datetime as dt
 

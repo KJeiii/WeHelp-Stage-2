@@ -1,6 +1,6 @@
 from TaipeiTravel.models import MemberTool
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import request, jsonify, render_template, Blueprint
+from flask import request, jsonify, Blueprint
 import datetime as dt
 import jwt, os
 

@@ -1,9 +1,21 @@
-from TaipeiTravel import app
 import math
-from flask import request, jsonify
+from flask import request, jsonify, Blueprint, render_template
 from TaipeiTravel.models import AttractionTool
 
 attrTool = AttractionTool.attrTool()
+attraction_bp = Blueprint("attraction_bp", __name__)
+
+
+# attraction pages
+@attraction_bp.route("/")
+def index():
+	return render_template("index.html")
+
+
+@attraction_bp.route("/attraction/<id>")
+def attraction(id):
+	return render_template("attraction.html")
+
 
 # ------ Attraction API -------
 # build funfciton for json format 
@@ -22,7 +34,7 @@ def to_dict(attraction_result:list, image_result:dict):
 	} for _ in attraction_result]
 	return data
 
-@app.route("/api/attractions")
+@attraction_bp.route("/api/attractions")
 def attractions():
 
 	try: 
@@ -66,7 +78,7 @@ def attractions():
 			for _ in image_list:
 				if _["attraction_id"] == id:
 					try:
-						image_result[id].append(_["image"])
+						image_result[id].attraction_bpend(_["image"])
 					except:
 						image_result[id] = [_["image"]]
 
@@ -89,7 +101,7 @@ def attractions():
 	
 
 
-@app.route("/api/attraction/<attraction_id>")
+@attraction_bp.route("/api/attraction/<attraction_id>")
 def attraction_by_id(attraction_id):
 	# count total attractions data and total pages 
 	total_attraction_amount = attrTool.total_attractions()
@@ -118,7 +130,7 @@ def attraction_by_id(attraction_id):
 			for _ in image_list:
 				if _["attraction_id"] == id:
 					try:
-						image_result[id].append(_["image"])
+						image_result[id].attraction_bpend(_["image"])
 					except:
 						image_result[id] = [_["image"]]
 
@@ -141,7 +153,7 @@ def attraction_by_id(attraction_id):
 		return jsonify(response), 500
 
  
-@app.route("/api/mrts")
+@attraction_bp.route("/api/mrts")
 def mrts():
 	try:
 		result = attrTool.Search_mrt()

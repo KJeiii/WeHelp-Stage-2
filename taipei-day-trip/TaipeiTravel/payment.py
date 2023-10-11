@@ -1,16 +1,16 @@
-from TaipeiTravel import app
 import jwt, os, requests
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, Blueprint
 from TaipeiTravel.models import PaymentTool, ItineraryTool
 import datetime as dt
 
 
 paymentTool = PaymentTool.PaymentTool()
 itinTool = ItineraryTool.itineraryTool()
+payment_bp = Blueprint("payment_bp", __name__)
 
 
 # ----- payment API -----
-@app.route("/api/orders", methods = ["POST"])
+@payment_bp.route("/api/orders", methods = ["POST"])
 def payment():
 	BearerJWT = request.headers.get("authorization")
 
@@ -111,7 +111,7 @@ def payment():
 		}
 		return jsonify(response), 500
 
-@app.route("/api/order/<orderNumber>", methods = ["GET"])
+@payment_bp.route("/api/order/<orderNumber>", methods = ["GET"])
 def show_order(orderNumber):
 	BearerJWT = request.headers.get("authorization")
 

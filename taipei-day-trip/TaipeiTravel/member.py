@@ -1,16 +1,16 @@
-from TaipeiTravel import app
 from TaipeiTravel.models import MemberTool
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, Blueprint
 import datetime as dt
 import jwt, os
 
 
 memberTool = MemberTool.memberTool()
+member_bp = Blueprint("member_bp", __name__)
 
 # ------ Member API -------
 
-@app.route("/api/user", methods = ["POST"])
+@member_bp.route("/api/user", methods = ["POST"])
 def signup():
 	if request.method == "POST":
 		user_name = request.json["user_name"]
@@ -43,7 +43,7 @@ def signup():
 			return jsonify(response), 500
 
 
-@app.route("/api/user/auth", methods = ["PUT", "GET"])
+@member_bp.route("/api/user/auth", methods = ["PUT", "GET"])
 def signin():
 	if request.method == "PUT":
 		try:

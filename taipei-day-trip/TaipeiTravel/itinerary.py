@@ -1,15 +1,19 @@
-from TaipeiTravel import app
 import jwt, os
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, Blueprint
 from TaipeiTravel.models import ItineraryTool
 
 itinTool = ItineraryTool.itineraryTool()
+itinerary_bp = Blueprint("itinerary_bp", __name__)
 
+# booking page
+@itinerary_bp.route("/booking")
+def booking():
+	return render_template("booking.html")
 
 		
 # ----- Itienrary API -----
 
-@app.route("/api/booking", methods = ["GET", "POST", "DELETE"])
+@itinerary_bp.route("/api/booking", methods = ["GET", "POST", "DELETE"])
 def itinerary():
 	BearerJWT = request.headers.get("authorization")
 

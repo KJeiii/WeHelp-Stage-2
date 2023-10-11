@@ -71,25 +71,46 @@ function loadPage() {
 
 loadPage();
 
-async function deleteItinerary() {
+// function deleteItinerary() {
+//     SignStatus()
+//         .then((result) => {
+//             if (result["ok"] === true) {
+//                 fetch("api/booking", {
+//                     method: "DELETE",
+//                     headers: {
+//                         "authorization": `Bearer ${window.localStorage.getItem("token")}`
+//                     }
+//                 })
+//                     .then(res => {
+//                         window.location.replace(window.location.href);
+//                         return res.json()})
+//                     .then(data => {console.log(data)})
+//                     .catch(error => {console.log(error)})
+//             };
+//         })
+//         .catch(error => {console.log(error)});
+// };
+
+let bin = document.querySelector(".bin");
+bin.addEventListener("click",() => {
     SignStatus()
-        .then((result) => {
-            if (result["ok"] === true) {
-                fetch("api/booking", {
-                    method: "DELETE",
-                    headers: {
-                        "authorization": `Bearer ${window.localStorage.getItem("token")}`
-                    }
-                })
-                    .then(res => {
-                        window.location.replace(window.location.href);
-                        return res.json()})
-                    .then(data => {console.log(data)})
-                    .catch(error => {console.log(error)})
-            };
-        })
-        .catch(error => {console.log(error)});
-};
+    .then((result) => {
+        if (result["ok"] === true) {
+            fetch("api/booking", {
+                method: "DELETE",
+                headers: {
+                    "authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            })
+                .then(res => {
+                    window.location.replace(window.location.href);
+                    return res.json()})
+                .then(data => {console.log(data)})
+                .catch(error => {console.log(error)})
+        };
+    })
+    .catch(error => {console.log(error)});
+})
 
 // ----- credit card tap pay SDK -----
 // set up SDK
@@ -128,54 +149,105 @@ TPDirect.card.setup({
 });
 
 // POST payment information
-function checkBill() {
-    SignStatus()
-        .then(res => {
-            if (res["ok"] === true) {
-                let TPfieldsStatus = TPDirect.card.getTappayFieldsStatus();
-                if ( TPfieldsStatus.canGetPrime === true) {
-                    TPDirect.card.getPrime(result => {
+// function checkBill() {
+//     SignStatus()
+//         .then(res => {
+//             if (res["ok"] === true) {
+//                 let TPfieldsStatus = TPDirect.card.getTappayFieldsStatus();
+//                 if ( TPfieldsStatus.canGetPrime === true) {
+//                     TPDirect.card.getPrime(result => {
             
-                        // orgainze order info for database storage
-                        let orderInfo = {
-                            "prime": result.card.prime,
-                            "order": {
-                                "price": itineraryInfo["price"],
-                                "trip": {
-                                    "attraction": {
-                                        "id": itineraryInfo["attraction"]["id"],
-                                        "name": itineraryInfo["attraction"]["name"],
-                                        "address": itineraryInfo["attraction"]["address"],
-                                        "image": itineraryInfo["attraction"]["image"]
-                                    },
-                                    "date": itineraryInfo["date"],
-                                    "time": itineraryInfo["time"]}},
-                            "contact": {
-                                "name": res["data"]["name"],
-                                "email": res["data"]["email"],
-                                "phone": document.querySelector("input[name=contact-phone]").value}
-                            }
-                            // console.log(orderInfo);
+//                         // orgainze order info for database storage
+//                         let orderInfo = {
+//                             "prime": result.card.prime,
+//                             "order": {
+//                                 "price": itineraryInfo["price"],
+//                                 "trip": {
+//                                     "attraction": {
+//                                         "id": itineraryInfo["attraction"]["id"],
+//                                         "name": itineraryInfo["attraction"]["name"],
+//                                         "address": itineraryInfo["attraction"]["address"],
+//                                         "image": itineraryInfo["attraction"]["image"]
+//                                     },
+//                                     "date": itineraryInfo["date"],
+//                                     "time": itineraryInfo["time"]}},
+//                             "contact": {
+//                                 "name": res["data"]["name"],
+//                                 "email": res["data"]["email"],
+//                                 "phone": document.querySelector("input[name=contact-phone]").value}
+//                             }
+//                             // console.log(orderInfo);
 
-                        // POST info
-                        fetch("/api/orders", {
-                            method: "POST",
-                            headers: {
-                                "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(orderInfo)
+//                         // POST info
+//                         fetch("/api/orders", {
+//                             method: "POST",
+//                             headers: {
+//                                 "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+//                                 "Content-Type": "application/json"
+//                             },
+//                             body: JSON.stringify(orderInfo)
+//                         })
+//                             .then(res => {return res.json()})
+//                             .then(result => {
+//                                 console.log(result)
+//                                 window.location.replace(`/thankyou?number=${result["data"]["number"]*1}`)
+//                             })
+//                             .catch(err => {console.log(err)})
+//                     });
+//                 }
+//             }
+//         })
+//         .catch(error => {console.log(error)})
+// };
+
+let checkBill = document.querySelector(".checkbill-inner > input[type=button]");
+checkBill.addEventListener("click", () => {
+    SignStatus()
+    .then(res => {
+        if (res["ok"] === true) {
+            let TPfieldsStatus = TPDirect.card.getTappayFieldsStatus();
+            if ( TPfieldsStatus.canGetPrime === true) {
+                TPDirect.card.getPrime(result => {
+        
+                    // orgainze order info for database storage
+                    let orderInfo = {
+                        "prime": result.card.prime,
+                        "order": {
+                            "price": itineraryInfo["price"],
+                            "trip": {
+                                "attraction": {
+                                    "id": itineraryInfo["attraction"]["id"],
+                                    "name": itineraryInfo["attraction"]["name"],
+                                    "address": itineraryInfo["attraction"]["address"],
+                                    "image": itineraryInfo["attraction"]["image"]
+                                },
+                                "date": itineraryInfo["date"],
+                                "time": itineraryInfo["time"]}},
+                        "contact": {
+                            "name": res["data"]["name"],
+                            "email": res["data"]["email"],
+                            "phone": document.querySelector("input[name=contact-phone]").value}
+                        }
+                        // console.log(orderInfo);
+
+                    // POST info
+                    fetch("/api/orders", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(orderInfo)
+                    })
+                        .then(res => {return res.json()})
+                        .then(result => {
+                            console.log(result)
+                            window.location.replace(`/thankyou?number=${result["data"]["number"]*1}`)
                         })
-                            .then(res => {return res.json()})
-                            .then(result => {
-                                console.log(result)
-                                window.location.replace(`/thankyou?number=${result["data"]["number"]*1}`)
-                            })
-                            .catch(err => {console.log(err)})
-                    });
-                }
+                        .catch(err => {console.log(err)})
+                });
             }
-        })
-        .catch(error => {console.log(error)})
-};
-
+        }
+    })
+    .catch(error => {console.log(error)})
+})

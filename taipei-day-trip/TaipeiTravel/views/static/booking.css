@@ -22,7 +22,7 @@ body {
     font-weight: 700;
     color: #666;
     margin: 0;
-    width: 78%;
+    width: 1004px;
 }
 
 /* loading section */
@@ -255,6 +255,10 @@ form input[type=text] {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .welcomeMsgSection p {
+        width: 78%;
     }
 
     .itinerary-outer,

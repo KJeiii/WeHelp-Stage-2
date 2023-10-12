@@ -169,9 +169,13 @@ async function SignStatus() {
             // console.log(member_info);
             
             if (member_info !== null) {
+
+                // turn on signOutDiv and turn off others
                 let//
+                navbarLoading = document.querySelector(".navbar-loading"),
                 signDiv = document.querySelector(".topDiv-navbar-sign"),
                 signOutDiv = document.querySelector(".topDiv-navbar-signout");
+                navbarLoading.style.display = "none";
                 signDiv.style.display = "none";
                 signOutDiv.style.display = "block";
 
@@ -196,6 +200,16 @@ async function SignStatus() {
             console.log(error);
         }
     };
+
+    // turn on signDiv and turn off others
+    let//
+    navbarLoading = document.querySelector(".navbar-loading"),
+    signDiv = document.querySelector(".topDiv-navbar-sign"),
+    signOutDiv = document.querySelector(".topDiv-navbar-signout");
+    navbarLoading.style.display = "none";
+    signDiv.style.display = "block";
+    signOutDiv.style.display = "none";
+
     let result = {
         "ok": false,
         "data": null

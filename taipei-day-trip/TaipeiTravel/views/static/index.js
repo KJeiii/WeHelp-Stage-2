@@ -86,6 +86,30 @@ const loadPage = async(page, keyword) => {
             
             // turn off isloaded
             isloaded = false;
+
+            // add hover effect on every attraction element
+            let//
+            attractionElements = document.querySelectorAll(".bottomDiv-container-element"),
+            bottomDivCover = document.querySelector(".bottomDiv-cover"),
+            bottomDivContainerRect = document.querySelector(".bottomDiv-container").getBoundingClientRect();
+
+            attractionElements.forEach(element => {
+                element.addEventListener("mouseenter", () => {
+                    element.style.position = "relative";
+                    element.style.zIndex = "10";
+                    bottomDivCover.style.display = "block";
+                    bottomDivCover.style.width = `${bottomDivContainerRect["width"]}`;
+                    bottomDivCover.style.height = `${bottomDivContainerRect["height"]}`;
+                });
+                console.log(bottomDivCover.style.width, bottomDivCover.style.height);
+                element.addEventListener("mouseleave", () => {
+                    element.style.position = "static";
+                    element.style.zIndex = "0";
+                    bottomDivCover.style.display = "none";
+                });
+
+            });
+
         }
         catch (error){
             console.log(error);

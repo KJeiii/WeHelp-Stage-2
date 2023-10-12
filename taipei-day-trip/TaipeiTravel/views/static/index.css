@@ -226,6 +226,15 @@ body {
     margin: 0px;
 }
 
+.bottomDiv-cover {
+    display: none;
+    background-color: white;
+    opacity: 0.5;
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+}
+
 /* RWD for 1200-360px */
 @media (max-width: 1200px) {
     .topDiv {

@@ -8,6 +8,14 @@ function loadPage() {
             if (result["ok"] === true) {
                 let welceomMsg = document.querySelector(".welcomeMsg");
                 welceomMsg.textContent = `您好，${result["data"]["name"]}，待預訂的行程如下：`;
+                
+                // turn on loading img (default in css) and turn off all others views until fetch completes
+                let// 
+                topSection = document.querySelector(".topSection"),
+                bottomSection = document.querySelector(".bottomSection");
+                topSection.style.display = "none";
+                bottomSection.style.display = "none";
+
 
                 fetch("api/booking", {
                     method: "GET",
@@ -49,6 +57,15 @@ function loadPage() {
                                 contactName.value = result["data"]["name"];
                                 contactEmail.value = result["data"]["email"];
                                 totalPrice.textContent = `總價：新台幣${itineraryInfo["price"]}元`;
+
+                                // turn on views and turn off loading view
+                                let//
+                                loadingSection = document.querySelector(".loading"),
+                                topSection = document.querySelector(".topSection"),
+                                bottomSection = document.querySelector(".bottomSection");
+                                loadingSection.style.display = "none";
+                                topSection.style.display = "flex";
+                                bottomSection.style.display = "flex";
                         }
                         else{
                             let// 
@@ -61,6 +78,13 @@ function loadPage() {
                             noItinerary.textContent = "目前沒有任何待預訂的行程";
                             noItinerary.setAttribute("class", "no-itinerary");
                             itineraryInner.appendChild(noItinerary);
+                            
+                            // turn on views and turn off loading view
+                            let//
+                            loadingSection = document.querySelector(".loading"),
+                            topSection = document.querySelector(".topSection");
+                            loadingSection.style.display = "none";
+                            topSection.style.display = "flex";                            
                         };
                     })
                     .catch(error => {console.log(error)});

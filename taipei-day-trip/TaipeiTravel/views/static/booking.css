@@ -10,11 +10,38 @@ body {
     border-bottom: 1px solid #e8e8e8;
 }
 
+
+.welcomeMsgSection {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.welcomeMsgSection p {
+    font-style: 19px;
+    font-style: normal;
+    font-weight: 700;
+    color: #666;
+    margin: 0;
+    width: 78%;
+}
+
+/* loading section */
+.loading {
+    display: flex;
+    justify-content: center;
+}
+
+.loading img {
+    margin-top: 20px;
+}
+
+
 /* topSection and itinerary info */
 .topSection {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 10px;
+    display: none;
 }
 
 .itinerary-outer {
@@ -30,16 +57,8 @@ body {
 
 .itinerary {
     display: flex;
-    margin-top: 30px;
+    margin-top: 10px;
     position: relative;
-}
-
-.welcomeMsg {
-    font-style: 19px;
-    font-style: normal;
-    font-weight: 700;
-    color: #666;
-    margin: 0px;
 }
 
 figure {
@@ -92,6 +111,7 @@ article div p {
 .bottomSection {
     display: flex;
     justify-content: center;
+    display: none;
 }
 
 .memberContact-outer {
@@ -253,6 +273,10 @@ form input[type=text] {
 }
 
 @media (max-width:700px) {
+    .welcomeMsgSection p {
+        width: 94%;
+    }
+
     .itinerary {
         flex-wrap: wrap;
         margin-bottom: 50px;

@@ -91,17 +91,17 @@ const loadPage = async(page, keyword) => {
             let//
             attractionElements = document.querySelectorAll(".bottomDiv-container-element"),
             bottomDivCover = document.querySelector(".bottomDiv-cover"),
-            bottomDivContainerRect = document.querySelector(".bottomDiv-container").getBoundingClientRect();
+            bottomDivRect = document.querySelector(".bottomDiv").getBoundingClientRect();
 
             attractionElements.forEach(element => {
                 element.addEventListener("mouseenter", () => {
                     element.style.position = "relative";
                     element.style.zIndex = "10";
                     bottomDivCover.style.display = "block";
-                    bottomDivCover.style.width = `${bottomDivContainerRect["width"]}`;
-                    bottomDivCover.style.height = `${bottomDivContainerRect["height"]}`;
+                    bottomDivCover.style.width = `${bottomDivRect["width"]}px`;
+                    bottomDivCover.style.height = `${bottomDivRect["height"]}px`;
+
                 });
-                console.log(bottomDivCover.style.width, bottomDivCover.style.height);
                 element.addEventListener("mouseleave", () => {
                     element.style.position = "static";
                     element.style.zIndex = "0";
@@ -109,7 +109,6 @@ const loadPage = async(page, keyword) => {
                 });
 
             });
-
         }
         catch (error){
             console.log(error);

@@ -44,6 +44,25 @@ const createBottomDivElement = (element) => {
 var nextPage = 0;
 var keywordRecord;
 var isloaded = false;
+const opacityTransition = (cssSelector, gradient) => {
+    return new Promise((resolve, reject) => {
+        let element = document.querySelector(cssSelector);
+        
+        try {
+            setTimeout(() => {
+                let opacity = element.style.opacity*1 + gradient;
+                console.log(`opacity: ${opacity}`);
+                element.style.opacity = `${opacity}`;
+                console.log(`element opacity: ${element.style.opacity}`);
+                resolve()
+            }, 30);
+        }
+        catch(error) {
+            reject(error)
+        }
+    })
+};
+
 
 // ------ build function for create new attraction element ------
 const loadPage = async(page, keyword) => {
@@ -90,22 +109,40 @@ const loadPage = async(page, keyword) => {
             // add hover effect on every attraction element
             let//
             attractionElements = document.querySelectorAll(".bottomDiv-container-element"),
-            bottomDivCover = document.querySelector(".bottomDiv-cover"),
-            bottomDivRect = document.querySelector(".bottomDiv").getBoundingClientRect();
+            bottomDivCover = document.querySelector(".bottomDiv-cover");
 
             attractionElements.forEach(element => {
                 element.addEventListener("mouseenter", () => {
+                    let bottomDivRect = document.querySelector(".bottomDiv").getBoundingClientRect();
+
                     element.style.position = "relative";
                     element.style.zIndex = "10";
                     bottomDivCover.style.display = "block";
                     bottomDivCover.style.width = `${bottomDivRect["width"]}px`;
                     bottomDivCover.style.height = `${bottomDivRect["height"]}px`;
-
+                    opacityTransition(".bottomDiv-cover", 0.1)
+                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
+                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
+                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
+                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
+                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
+                        .then(() => {
+                            element.style.boxShadow = "2px 2px 10px black"
+                        })
+                        .catch(error => console.log(error));
                 });
                 element.addEventListener("mouseleave", () => {
-                    element.style.position = "static";
-                    element.style.zIndex = "0";
-                    bottomDivCover.style.display = "none";
+                    element.style.boxShadow = "none"
+                    opacityTransition(".bottomDiv-cover", -0.1)
+                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
+                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
+                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
+                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
+                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
+                    .then(() => bottomDivCover.style.display = "none")
+                    .then(() => element.style.position = "static")
+                    .then(() => element.style.zIndex = "0")
+                    .catch(error => console.log(error));
                 });
 
             });

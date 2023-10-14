@@ -44,34 +44,9 @@ const createBottomDivElement = (element) => {
 var nextPage = 0;
 var keywordRecord;
 var isloaded = false;
-// const opacityTransition = (cssSelector, gradient, delay) => {
-//     return new Promise((resolve, reject) => {
-//         let element = document.querySelector(cssSelector);
-//         let startOpacity = 0.1;
-//         if (gradient < 0) {startOpacity = 0.6};
 
-//         let currentOpacityDelta = Math.abs(element.style.opacity*1 - startOpacity);
 
-//         try {
-//             while (currentOpacityDelta < 0.5) {
-//                     let opacity = element.style.opacity*1 + gradient;
-//                     console.log(`opacity: ${opacity}`);
-                
-//                 setTimeout(() => {
-//                     element.style.opacity = `${opacity}`;
-//                 }, delay);
-
-//                 currentOpacityDelta = Math.abs(element.style.opacity*1 - startOpacity);
-//                     console.log(`element opacity: ${element.style.opacity}`);
-//             }
-//             resolve()
-//         }
-//         catch(error) {
-//             reject(error)
-//         }
-//     })
-// };
-
+// ----- create opacity transition function with Promise -----
 const opacityChange = (cssSelector, gradient, delay) => {
     return new Promise((resolve, reject) => {
         try {

@@ -44,23 +44,57 @@ const createBottomDivElement = (element) => {
 var nextPage = 0;
 var keywordRecord;
 var isloaded = false;
-const opacityTransition = (cssSelector, gradient) => {
+// const opacityTransition = (cssSelector, gradient, delay) => {
+//     return new Promise((resolve, reject) => {
+//         let element = document.querySelector(cssSelector);
+//         let startOpacity = 0.1;
+//         if (gradient < 0) {startOpacity = 0.6};
+
+//         let currentOpacityDelta = Math.abs(element.style.opacity*1 - startOpacity);
+
+//         try {
+//             while (currentOpacityDelta < 0.5) {
+//                     let opacity = element.style.opacity*1 + gradient;
+//                     console.log(`opacity: ${opacity}`);
+                
+//                 setTimeout(() => {
+//                     element.style.opacity = `${opacity}`;
+//                 }, delay);
+
+//                 currentOpacityDelta = Math.abs(element.style.opacity*1 - startOpacity);
+//                     console.log(`element opacity: ${element.style.opacity}`);
+//             }
+//             resolve()
+//         }
+//         catch(error) {
+//             reject(error)
+//         }
+//     })
+// };
+
+const opacityChange = (cssSelector, gradient, delay) => {
     return new Promise((resolve, reject) => {
-        let element = document.querySelector(cssSelector);
-        
         try {
+            let element = document.querySelector(cssSelector)
             setTimeout(() => {
-                let opacity = element.style.opacity*1 + gradient;
-                console.log(`opacity: ${opacity}`);
-                element.style.opacity = `${opacity}`;
-                console.log(`element opacity: ${element.style.opacity}`);
+                element.style.opacity = `${element.style.opacity*1 + gradient}`;
+                console.log(`bottomDivCover opacity : ${element.style.opacity}`);
                 resolve()
-            }, 30);
+            }, delay);
         }
         catch(error) {
+            console.log(error);
             reject(error)
         }
     })
+};
+
+const opacityTransition = async (cssSelector, gradient, delay) => {
+    await opacityChange(cssSelector, gradient, delay);
+    await opacityChange(cssSelector, gradient, delay);
+    await opacityChange(cssSelector, gradient, delay);
+    await opacityChange(cssSelector, gradient, delay);
+    await opacityChange(cssSelector, gradient, delay);
 };
 
 
@@ -107,44 +141,60 @@ const loadPage = async(page, keyword) => {
             isloaded = false;
 
             // add hover effect on every attraction element
-            let//
-            attractionElements = document.querySelectorAll(".bottomDiv-container-element"),
-            bottomDivCover = document.querySelector(".bottomDiv-cover");
+            let attractionElements = document.querySelectorAll(".bottomDiv-container-element");
 
+            let opacityCompleted = false;
             attractionElements.forEach(element => {
+        
+                let// 
+                bottomDivRect = document.querySelector(".bottomDiv").getBoundingClientRect(),
+                bottomDivCover = document.querySelector(".bottomDiv-cover");
+
                 element.addEventListener("mouseenter", () => {
-                    let bottomDivRect = document.querySelector(".bottomDiv").getBoundingClientRect();
+        
+                    // 這邊要修正，element還沒創造，無法查opacity
+                    if (document.querySelector(".bottomDiv-cover").style.opacity === 0) 
+                        {opacityCompleted = true}
 
-                    element.style.position = "relative";
-                    element.style.zIndex = "10";
-                    bottomDivCover.style.display = "block";
-                    bottomDivCover.style.width = `${bottomDivRect["width"]}px`;
-                    bottomDivCover.style.height = `${bottomDivRect["height"]}px`;
-                    opacityTransition(".bottomDiv-cover", 0.1)
-                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
-                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
-                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
-                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
-                        .then(() => opacityTransition(".bottomDiv-cover", 0.1))
-                        .then(() => {
-                            element.style.boxShadow = "2px 2px 10px black"
-                        })
-                        .catch(error => console.log(error));
+                    if (opacityCompleted = true) {
+                        element.style.position = "relative";
+                        element.style.zIndex = "10";
+
+                        // let//
+                        // bottomDivCover = document.createElement("div"),
+                        // bottomDiv = document.querySelector(".bottomDiv");
+        
+                        // bottomDivCover.setAttribute("class", "bottomDiv-cover");
+                        // bottomDiv.appendChild(bottomDivCover);  
+
+                        bottomDivCover.style.width = `${bottomDivRect["width"]}px`;
+                        bottomDivCover.style.height = `${bottomDivRect["height"]}px`;
+                        bottomDivCover.style.display = "block";
+                        opacityTransition(".bottomDiv-cover", 0.1, 10)
+                            .then(() => {
+                                document.querySelector(".bottomDiv-container-intro").style.borderStyle = "none"})
+                            .then(() => {element.style.boxShadow = "2px 2px 10px black"})
+                            .then(() => {bottomDivCover.style.opacity = "0.5"})
+                            .then(() => opacityCompleted = false)
+                            .catch(error => console.log(error));
+                    }
                 });
+
                 element.addEventListener("mouseleave", () => {
-                    element.style.boxShadow = "none"
-                    opacityTransition(".bottomDiv-cover", -0.1)
-                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
-                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
-                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
-                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
-                    .then(() => opacityTransition(".bottomDiv-cover", -0.1))
-                    .then(() => bottomDivCover.style.display = "none")
-                    .then(() => element.style.position = "static")
-                    .then(() => element.style.zIndex = "0")
-                    .catch(error => console.log(error));
-                });
+                    if (document.querySelector(".bottomDiv-cover").style.opacity === 0.5) 
+                        {opacityCompleted = true}
 
+                    if (opacityCompleted = true) {
+                        opacityTransition(".bottomDiv-cover", -0.1, 10)
+                            .then(() => element.style.boxShadow = "none")
+                            .then(() => bottomDivCover.style.display = "none")
+                            .then(() => element.style.position = "static")
+                            .then(() => element.style.zIndex = "0")
+                            .then(() => bottomDivCover.style.opacity = "0")
+                            .then(() => opacityCompleted = false)
+                            .catch(error => console.log(error));
+                    }
+                });
             });
         }
         catch (error){

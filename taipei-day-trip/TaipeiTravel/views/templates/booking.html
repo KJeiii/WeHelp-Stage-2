@@ -17,10 +17,15 @@
     {% include "member.html" %}
 
     <!-- itinerary info -->
+    <section class="welcomeMsgSection">
+        <p class="welcomeMsg"></p>
+    </section>
+    <section class="loading">
+        <img src="../static/image/loading-3.gif" alt="loading">
+    </section>
     <section class = "topSection">
         <div class="itinerary-outer">
             <div class="itinerary-inner">
-                <p class="welcomeMsg"></p>
                 <div class="itinerary">
                     <figure></figure>
                     <article>
@@ -30,7 +35,7 @@
                         <div><p class="itinerary-item">費用：</p><p class="itinerary-value"></p></div>
                         <div><p class="itinerary-item">地點：</p><p class="itinerary-value"></p></div>
                     </article>
-                    <img class = "bin" src="../static/image/bin.png" alt="bin" onclick="deleteItinerary()">
+                    <img class = "bin" src="../static/image/bin.png" alt="bin">
                 </div>
             </div>
         </div>
@@ -94,7 +99,7 @@
             <div class="checkbill-outer">
                 <div class="checkbill-inner">
                     <p>總價：新台幣2000元</p>
-                    <input type="button" value="確認訂購並付款" onclick="checkBill()">
+                    <input type="button" value="確認訂購並付款">
                 </div>
             </div>
         </form>
@@ -105,6 +110,6 @@
     {% include "footer.html" %}
     <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
     <script src="../static/header.js"></script>
-    <script src="../static/booking.js"></script>
+    <script src="../static/booking.js" type="module"></script>
 </body>
 </html>

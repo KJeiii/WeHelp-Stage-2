@@ -173,10 +173,14 @@ body {
     background-image: url(../static/image/test.png);
     background-size: cover;
     background-position: center;
-    border-style: solid;
+    /* border-style: solid; */
     border-color: #e8e8e8;
     border-width: 1px;
     border-radius: 10px 10px 0 0;
+}
+
+.bottomDiv-container-element {
+    border-radius: 10px;
 }
 
 .bottomDiv-container-element:link {
@@ -224,6 +228,13 @@ body {
     width: calc(100% / 2);
     text-align: right;
     margin: 0px;
+}
+
+.bottomDiv-cover {
+    display: none;
+    background-color: white;
+    opacity: 0;
+    position: absolute;
 }
 
 /* RWD for 1200-360px */
